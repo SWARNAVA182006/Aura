@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
-import { SITE_CONFIG } from "@/config/site";
+
+export const dynamic = "force-static";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -8,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: "/api/",
     },
-    sitemap: `${SITE_CONFIG.url}/sitemap.xml`,
+    sitemap: "https://swarnavasarkar.dev/sitemap.xml",
   };
 }

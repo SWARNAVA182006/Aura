@@ -1,45 +1,103 @@
-import { Project, SkillGroup, TimelineEntry, Essay, Achievement } from "@/types";
+import { Project, SkillGroup, TimelineEntry, Essay, Achievement, Chapter, EditorialPhoto } from "@/types";
+
+export const CHAPTERS: Chapter[] = [
+  {
+    id: "architect",
+    index: 0,
+    number: "01",
+    title: "THE ARCHITECT",
+    subtitle: "Origin, Philosophy & Industrial Foundation",
+    tag: "ORIGIN & PRINCIPLES",
+  },
+  {
+    id: "artifacts",
+    index: 1,
+    number: "02",
+    title: "THE ARTIFACTS",
+    subtitle: "Cinematic Real Project Case Studies",
+    tag: "SYSTEMS & ENGINEERING",
+  },
+  {
+    id: "expedition",
+    index: 2,
+    number: "03",
+    title: "THE EXPEDITION",
+    subtitle: "Interactive Journey Map & Skill Mesh",
+    tag: "TIMELINE & CAPABILITIES",
+  },
+  {
+    id: "journal",
+    index: 3,
+    number: "04",
+    title: "THE JOURNAL",
+    subtitle: "Technical Essays & Thought Leadership",
+    tag: "RESEARCH & REFLECTIONS",
+  },
+  {
+    id: "transmission",
+    index: 4,
+    number: "05",
+    title: "TRANSMISSION",
+    subtitle: "Future Vision & Direct Contact",
+    tag: "CONNECT & LEADERSHIP",
+  },
+];
+
+export const EDITORIAL_PHOTOS: EditorialPhoto[] = [
+  {
+    src: "/assets/me.jpg",
+    alt: "Swarnava Sarkar — AI Engineer & Software Architect",
+    caption: "Swarnava Sarkar • Systems & AI Engineer",
+    aspectRatio: "portrait",
+  },
+  {
+    src: "/assets/me1.png",
+    alt: "Swarnava Sarkar — Editorial Portrait",
+    caption: "Swarnava Sarkar • First-Principles Craft",
+    aspectRatio: "square",
+  },
+];
 
 export const HERO_DATA = {
   name: "SWARNAVA SARKAR",
-  tagline: "AI Engineer • Software Architect • Systems Builder",
-  bio: "I build real-world AI systems, high-performance web applications, and intelligent software architectures. My work spans deep learning vision pipelines, HPC developer tools, embedded IoT systems, and high-craft enterprise software.",
-  availability: "Available for AI Engineering, Research & Architectural Leadership",
+  tagline: "AI Engineer • Software Architect • Computer Science Researcher",
+  bio: "I design and build production-grade AI systems, high-performance web architectures, and deep computer vision pipelines. From seismic processing at ONGC to specialized HPC developer copilots, my work fuses first-principles engineering with luxury digital craft.",
+  availability: "Available for Senior AI Engineering & Architectural Leadership",
 };
 
 export const ENGINEERING_PHILOSOPHY = {
   overview:
-    "Engineering is the craft of turning complex theoretical possibilities into resilient, accessible, and high-performance software systems that solve human problems.",
+    "Software is not merely sequential instructions; it is dynamic engineering leverage that translates mathematical, physical, and business constraints into resilient digital systems.",
   principles: [
     {
       number: "01",
       title: "First-Principles Problem Solving",
       description:
-        "Before picking a framework or model, I analyze the underlying mathematical, physical, or business constraints. I build systems tailored to the core problem rather than forcing generic templates.",
+        "Before selecting a framework or AI model, I analyze the underlying mathematical and physical domain constraints to construct tailored architectures.",
     },
     {
       number: "02",
-      title: "Engineering Rigor & Code Quality",
+      title: "Engineering Rigor & Strict Typing",
       description:
-        "Clean architecture, strict static typing, comprehensive documentation, and modular separation of concerns are not optional. High-quality code is maintainable code.",
+        "Clean architecture, strict static typing, comprehensive documentation, and defensive modular boundaries ensure software maintainability at scale.",
     },
     {
       number: "03",
-      title: "Pragmatic AI & Machine Learning",
+      title: "Pragmatic AI & Deterministic Guardrails",
       description:
-        "AI is a powerful primitive, but it is not a silver bullet. I combine probabilistic ML models with deterministic state validation to build systems that are reliable in production.",
+        "AI is a powerful primitive, but probabilistic LLMs must be coupled with strict deterministic validation state machines for production reliability.",
     },
     {
       number: "04",
-      title: "User Experience & Craft",
+      title: "Luxury Craft & Perceived Speed",
       description:
-        "Performance, low latency, intuitive layout, and thoughtful micro-interactions build user trust. Excellent visual craft elevates great engineering.",
+        "Low latency, intuitive visual hierarchy, tactile micro-interactions, and high accessibility standards (WCAG AA) build long-term user trust.",
     },
   ],
   whySoftware:
-    "Software is one of the few mediums where a single engineer can conceptualize a solution, construct the underlying architecture, train intelligence models, and deploy value to thousands of people worldwide in real time.",
+    "Software allows a single engineer to conceptualize a solution, construct the underlying architecture, train intelligence models, and deploy value globally in real time.",
   whyAi:
-    "AI represents a paradigm shift where computers transition from executing static instructions to reasoning over ambiguous data. Building at this frontier allows me to push the boundaries of automated perception, scientific computing, and human enhancement.",
+    "AI transitions software from static execution to automated reasoning over ambiguous data. Building at this frontier allows me to push the boundaries of scientific computing and human agency.",
 };
 
 export const PROJECTS: Project[] = [

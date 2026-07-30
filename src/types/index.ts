@@ -79,3 +79,19 @@ export interface Achievement {
   description: string;
   badge: string;
 }
+
+export interface Chapter {
+  id: string;
+  index: number;
+  number: string;
+  title: string;
+  subtitle: string;
+  tag: string;
+}
+
+export interface EditorialPhoto {
+  src: string;
+  alt: string;
+  caption: string;
+  aspectRatio: string;
+}

@@ -1,11 +1,12 @@
 import { MetadataRoute } from "next";
-import { SITE_CONFIG } from "@/config/site";
+
+export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: SITE_CONFIG.url,
-      lastModified: new Date(),
+      url: "https://swarnavasarkar.dev",
+      lastModified: new Date().toISOString(),
       changeFrequency: "weekly",
       priority: 1.0,
     },
