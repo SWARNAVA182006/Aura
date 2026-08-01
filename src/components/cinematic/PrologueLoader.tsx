@@ -1,151 +1,294 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Terminal, Shield, Sparkles, Cpu, Radio, Activity } from "lucide-react";
+import { Play, Radio, Sparkles } from "lucide-react";
 import { soundFX } from "@/lib/sound";
-import { BrandLogo } from "@/components/ui/BrandLogo";
 
 interface PrologueProps {
   onComplete: () => void;
 }
 
-export function PrologueLoader({ onComplete }: PrologueProps) {
-  const [progress, setProgress] = useState(0);
-  const [bootLog, setBootLog] = useState("INITIALIZING HIGH-TECH KERNEL...");
-  const [completed, setCompleted] = useState(false);
+function SplitText({
+  text,
+  delay = 0,
+  className = "",
+}: {
+  text: string;
+  delay?: number;
+  className?: string;
+}) {
+  return (
+    <span className={className} style={{ display: "inline-flex", overflow: "hidden" }}>
+      {text.split("").map((char, i) => (
+        <motion.span
+          key={i}
+          initial={{ y: "110%", opacity: 0 }}
+          animate={{ y: "0%", opacity: 1 }}
+          transition={{
+            duration: 0.6,
+            delay: delay + i * 0.03,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          style={{ display: "inline-block", whiteSpace: char === " " ? "pre" : "normal" }}
+        >
+          {char}
+        </motion.span>
+      ))}
+    </span>
+  );
+}
 
-  useEffect(() => {
-    const logs = [
-      "INITIALIZING HIGH-TECH KERNEL...",
-      "LOADING AI VISION & SEISMIC SEGMENTATION PIPELINES...",
-      "COMPILING HPCC COPILOT & ECL RAG ENGINE...",
-      "FETCHING ONGC INDUSTRIAL GEOPHYSICAL DATASETS...",
-      "VERIFYING FIRST-PRINCIPLES ARCHITECTURE...",
-      "SWARNAVA SARKAR DIGITAL EXPERIENCE READY",
+export function PrologueLoader({ onComplete }: PrologueProps) {
+  const [started, setStarted] = useState(false);
+  const [phase, setPhase] = useState<"ready" | "scan" | "iris" | "dim" | "type" | "rule" | "done">("ready");
+  const [exiting, setExiting] = useState(false);
+  const startedRef = useRef(false);
+
+  const startSequence = () => {
+    if (startedRef.current) return;
+    startedRef.current = true;
+    setStarted(true);
+
+    // Audio context unlock & sci-fi boot sound
+    soundFX.playBootSubBass();
+
+    const t = (ms: number, fn: () => void) => setTimeout(fn, ms);
+
+    // Full 4-second loading timeline
+    const timers = [
+      t(400, () => {
+        soundFX.playScanBeam();
+        setPhase("iris");
+      }),
+      t(1400, () => setPhase("dim")),
+      t(2000, () => {
+        soundFX.playBootPowerUp();
+        setPhase("type");
+      }),
+      t(3200, () => setPhase("rule")),
+      t(4000, () => {
+        soundFX.playChapterSweep();
+        setExiting(true);
+        setTimeout(onComplete, 600);
+      }),
     ];
 
-    // 100 steps * 42ms = 4.2 seconds minimum loading time
-    const timer = setInterval(() => {
-      setProgress((prev) => {
-        const next = prev + 1;
-        const logIndex = Math.min(Math.floor((next / 100) * logs.length), logs.length - 1);
-        setBootLog(logs[logIndex]);
+    return () => timers.forEach(clearTimeout);
+  };
 
-        if (next === 25 || next === 60) {
-          soundFX.playSciFiHover();
-        }
-
-        if (next >= 100) {
-          clearInterval(timer);
-          soundFX.playBootPowerUp();
-          setTimeout(() => {
-            setCompleted(true);
-            setTimeout(onComplete, 600);
-          }, 500);
-          return 100;
-        }
-        return next;
-      });
-    }, 42);
-
-    return () => clearInterval(timer);
-  }, [onComplete]);
+  // Auto-start fallback after 2.5s if user hasn't clicked
+  useEffect(() => {
+    const autoTimer = setTimeout(() => {
+      startSequence();
+    }, 2500);
+    return () => clearTimeout(autoTimer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <AnimatePresence>
-      {!completed && (
+      {!exiting && (
         <motion.div
-          exit={{ opacity: 0, scale: 1.05 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#020204] text-white px-4 select-none"
+          key="prologue"
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0, filter: "blur(12px)", scale: 1.02 }}
+          transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+          onClick={startSequence}
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 9999,
+            background: "#030305",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            overflow: "hidden",
+            cursor: "pointer",
+            userSelect: "none",
+          }}
         >
-          {/* Ambient Background Glow */}
-          <div className="pointer-events-none absolute h-[650px] w-[650px] rounded-full bg-cyan-500/10 blur-[170px]" />
-          <div className="pointer-events-none absolute right-10 bottom-10 h-[450px] w-[450px] rounded-full bg-purple-500/10 blur-[170px]" />
+          {/* Ambient glow blobs */}
+          <div className="pointer-events-none absolute h-[650px] w-[650px] rounded-full bg-cyan-500/15 blur-[180px] animate-pulse" />
+          <div className="pointer-events-none absolute right-10 bottom-10 h-[550px] w-[550px] rounded-full bg-purple-600/15 blur-[180px]" />
 
-          {/* High-Tech Cybernetic Dual-Ring Container */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.85 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
-            className="relative flex flex-col items-center p-6 sm:p-8 rounded-3xl border border-cyan-500/40 bg-[#070712]/90 shadow-[0_0_80px_rgba(0,240,255,0.25)] backdrop-blur-2xl max-w-md w-full"
-          >
-            {/* Dual Rotating Cyber Ring Overlay */}
-            <div className="pointer-events-none absolute -inset-4 rounded-[40px] border border-cyan-500/20 opacity-40 animate-spin" style={{ animationDuration: '25s' }} />
-            <div className="pointer-events-none absolute -inset-8 rounded-[48px] border border-purple-500/20 opacity-30 animate-spin" style={{ animationDuration: '35s', animationDirection: 'reverse' }} />
-
-            {/* Top Diagnostic HUD Header */}
-            <div className="flex w-full items-center justify-between border-b border-white/10 pb-3 font-mono text-[10px] text-cyan-400">
-              <div className="flex items-center gap-1.5 font-bold">
-                <Radio className="h-3.5 w-3.5 animate-pulse text-cyan-400" />
-                <span>BOOT SEQUENCE • 4.2S CALIBRATED</span>
-              </div>
-              <span className="text-slate-400 font-mono">SYS v2.4</span>
-            </div>
-
-            {/* High-Tech Photo Preview Card with Scanlines */}
-            <div className="relative mt-6 flex h-36 w-36 items-center justify-center rounded-2xl overflow-hidden border border-cyan-500/40 bg-black/70 shadow-[0_0_30px_rgba(0,240,255,0.2)]">
-              <Image
-                src="/assets/me.jpg"
-                alt="Swarnava Sarkar"
-                fill
-                priority
-                className="object-cover opacity-90 filter contrast-110"
+          {/* Hairline Scan beam */}
+          <AnimatePresence>
+            {(phase === "ready" || phase === "scan" || phase === "iris") && (
+              <motion.div
+                key="scanline"
+                initial={{ top: "0%", opacity: 0 }}
+                animate={{ top: "100%", opacity: [0, 0.9, 0.9, 0] }}
+                transition={{ duration: 0.8, ease: "linear", times: [0, 0.05, 0.9, 1] }}
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  right: 0,
+                  height: 2,
+                  background: "linear-gradient(90deg, transparent, #00f0ff, transparent)",
+                  boxShadow: "0 0 20px rgba(0, 240, 255, 0.9)",
+                  pointerEvents: "none",
+                  zIndex: 30,
+                }}
               />
+            )}
+          </AnimatePresence>
 
-              {/* Animated Scanline Overlay */}
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-cyan-400/20 to-transparent animate-scanline" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#070712] via-transparent to-transparent opacity-80" />
+          {/* Full-viewport photo — iris aperture reveal */}
+          <motion.div
+            style={{
+              position: "absolute",
+              inset: 0,
+              overflow: "hidden",
+            }}
+            animate={{
+              clipPath: phase === "ready" ? "circle(0% at 50% 38%)" : "circle(120% at 50% 38%)",
+              opacity: ["ready", "scan", "iris"].includes(phase) ? 1 : 0.14,
+            }}
+            transition={{
+              clipPath: { duration: 1.2, ease: [0.16, 1, 0.3, 1] },
+              opacity: { duration: 0.8, ease: "easeOut" },
+            }}
+          >
+            <Image
+              src="/assets/me.jpg"
+              alt="Swarnava Sarkar"
+              fill
+              priority
+              sizes="100vw"
+              style={{
+                objectFit: "cover",
+                objectPosition: "center 30%",
+                transform: phase === "iris" ? "scale(0.88)" : "scale(0.82)",
+                transition: "transform 2s cubic-bezier(0.16, 1, 0.3, 1)",
+                filter: "saturate(0.95) contrast(1.08)",
+              }}
+            />
 
-              {/* Monogram emblem watermark */}
-              <div className="absolute bottom-2 font-mono font-bold text-gradient-cyan text-xl tracking-wider">
-                SS
-              </div>
-            </div>
-
-            {/* Brand Logo Telemetry Badges */}
-            <div className="mt-4 flex flex-wrap justify-center gap-1.5">
-              <BrandLogo name="ONGC" showText={false} className="h-3.5 w-3.5" />
-              <BrandLogo name="PyTorch" showText={false} className="h-3.5 w-3.5" />
-              <BrandLogo name="TypeScript" showText={false} className="h-3.5 w-3.5" />
-              <BrandLogo name="React" showText={false} className="h-3.5 w-3.5" />
-              <BrandLogo name="Next.js" showText={false} className="h-3.5 w-3.5" />
-              <BrandLogo name="Docker" showText={false} className="h-3.5 w-3.5" />
-            </div>
-
-            {/* Title */}
-            <h1 className="mt-4 font-mono text-base tracking-[0.4em] text-white font-extrabold uppercase text-center">
-              SWARNAVA SARKAR
-            </h1>
-            <p className="mt-1 font-mono text-[10px] text-cyan-400 tracking-widest uppercase">
-              HIGH-TECH DIGITAL IDENTITY
-            </p>
-
-            {/* Progress Bar & Percentage */}
-            <div className="mt-6 w-full">
-              <div className="flex items-center justify-between font-mono text-[10px] text-slate-400 mb-1.5">
-                <span className="flex items-center gap-1">
-                  <Activity className="h-3 w-3 text-cyan-400 animate-pulse" />
-                  INITIALIZING MODULES
-                </span>
-                <span className="text-cyan-400 font-bold font-mono">{progress}%</span>
-              </div>
-              <div className="h-2 w-full overflow-hidden rounded-full bg-white/10 relative">
-                <motion.div
-                  className="h-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 shadow-[0_0_15px_rgba(0,240,255,0.6)]"
-                  style={{ width: `${progress}%` }}
-                />
-              </div>
-            </div>
-
-            {/* Telemetry Log Stream */}
-            <div className="mt-4 flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-[10px] font-mono text-slate-300 w-full">
-              <Terminal className="h-3.5 w-3.5 text-cyan-400 shrink-0" />
-              <span className="truncate">{bootLog}</span>
-            </div>
+            {/* Color grade overlay */}
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: "linear-gradient(135deg, rgba(0,240,255,0.08) 0%, transparent 50%)",
+                mixBlendMode: "screen",
+              }}
+            />
           </motion.div>
+
+          {/* Deep vignette */}
+          <motion.div
+            style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
+            animate={{
+              background: ["dim", "type", "rule"].includes(phase)
+                ? "radial-gradient(ellipse at 50% 38%, transparent 0%, rgba(3,3,5,0.95) 65%)"
+                : "radial-gradient(ellipse at 50% 38%, transparent 0%, rgba(3,3,5,0.7) 100%)",
+            }}
+            transition={{ duration: 0.9, ease: "easeInOut" }}
+          />
+
+          {/* Top and Bottom gradient fade */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background:
+                "linear-gradient(to bottom, rgba(3,3,5,0.7) 0%, transparent 30%, transparent 55%, rgba(3,3,5,0.98) 100%)",
+              pointerEvents: "none",
+            }}
+          />
+
+          {/* High-Tech Tap to Enter Badge */}
+          {!started && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="relative z-30 flex items-center gap-3 rounded-full border border-cyan-400/50 bg-[#070712]/95 px-8 py-4 font-mono text-xs font-bold text-cyan-300 backdrop-blur-2xl shadow-[0_0_40px_rgba(0,240,255,0.35)] animate-pulse"
+            >
+              <Play className="h-4 w-4 fill-cyan-400 text-cyan-400" />
+              <span>TAP TO START EXPERIENCE &amp; UNLOCK AUDIO</span>
+            </motion.div>
+          )}
+
+          {/* Typography — appears after "type" phase */}
+          <AnimatePresence>
+            {["type", "rule", "done"].includes(phase) && (
+              <motion.div
+                key="typography"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.2 }}
+                style={{
+                  position: "relative",
+                  zIndex: 10,
+                  textAlign: "center",
+                  userSelect: "none",
+                }}
+              >
+                {/* Main name */}
+                <div
+                  style={{
+                    fontFamily: "var(--font-outfit), sans-serif",
+                    fontWeight: 900,
+                    letterSpacing: "-0.03em",
+                    lineHeight: 0.92,
+                    color: "#ffffff",
+                    fontSize: "clamp(3.5rem, 9vw, 9rem)",
+                  }}
+                >
+                  <div style={{ overflow: "hidden", display: "block" }}>
+                    <SplitText text="SWARNAVA" delay={0} />
+                  </div>
+                  <div style={{ overflow: "hidden", display: "block" }}>
+                    <SplitText
+                      text="SARKAR."
+                      delay={0.25}
+                      className="text-gradient-cyan"
+                    />
+                  </div>
+                </div>
+
+                {/* Subtitle */}
+                <motion.p
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.7, ease: "easeOut" }}
+                  style={{
+                    marginTop: "1.25rem",
+                    fontFamily: "var(--font-jetbrains), monospace",
+                    fontSize: "0.75rem",
+                    letterSpacing: "0.25em",
+                    color: "rgba(0, 240, 255, 0.9)",
+                    textTransform: "uppercase",
+                    fontWeight: 600,
+                  }}
+                >
+                  AI &amp; ML ENGINEER · SOFTWARE ENGINEER · AI RESEARCH ENTHUSIAST
+                </motion.p>
+
+                {/* Horizontal rule */}
+                {phase === "rule" && (
+                  <motion.div
+                    initial={{ scaleX: 0, opacity: 0 }}
+                    animate={{ scaleX: 1, opacity: 1 }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    style={{
+                      marginTop: "1.5rem",
+                      height: 1,
+                      background:
+                        "linear-gradient(90deg, transparent 0%, rgba(0,240,255,0.6) 30%, rgba(168,85,247,0.5) 70%, transparent 100%)",
+                      transformOrigin: "left center",
+                      width: "min(360px, 65vw)",
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                    }}
+                  />
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
       )}
     </AnimatePresence>

@@ -12,10 +12,12 @@ import { ChapterJournal } from "@/components/cinematic/ChapterJournal";
 import { ChapterTransmission } from "@/components/cinematic/ChapterTransmission";
 import { CommandMenu } from "@/components/ui/CommandMenu";
 import { CursorFollower } from "@/components/ui/CursorFollower";
+import { AuroraBackground } from "@/components/ui/AuroraBackground";
 
 export function ChapterController() {
   const [booted, setBooted] = useState(false);
   const [chapterIndex, setChapterIndex] = useState(0);
+  const [activeProjectId, setActiveProjectId] = useState<string>("seisvision-ai");
   const [cmdOpen, setCmdOpen] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
 
@@ -69,8 +71,11 @@ export function ChapterController() {
       {/* Magnetic Cursor */}
       <CursorFollower />
 
-      {/* 3D WebGL Scene backdrop */}
-      <CinematicCanvas chapterIndex={chapterIndex} />
+      {/* Living aurora background */}
+      <AuroraBackground chapterIndex={chapterIndex} />
+
+      {/* 3D WebGL Scene backdrop with World Shift Engine */}
+      <CinematicCanvas chapterIndex={chapterIndex} activeProjectId={chapterIndex === 1 ? activeProjectId : undefined} />
 
       {/* Floating HUD Bar */}
       <ChapterHUD
@@ -88,14 +93,20 @@ export function ChapterController() {
       <AnimatePresence mode="wait">
         <motion.div
           key={chapterIndex}
-          initial={{ opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 1.02 }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, filter: "blur(6px)" }}
+          animate={{ opacity: 1, filter: "blur(0px)" }}
+          exit={{ opacity: 0, filter: "blur(6px)" }}
+          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
           className="w-full"
         >
           {chapterIndex === 0 && <ChapterArchitect onNextChapter={nextChapter} />}
-          {chapterIndex === 1 && <ChapterArtifacts onNextChapter={nextChapter} />}
+          {chapterIndex === 1 && (
+            <ChapterArtifacts
+              onNextChapter={nextChapter}
+              selectedProjectId={activeProjectId}
+              onSelectProjectId={setActiveProjectId}
+            />
+          )}
           {chapterIndex === 2 && <ChapterExpedition onNextChapter={nextChapter} />}
           {chapterIndex === 3 && <ChapterJournal onNextChapter={nextChapter} />}
           {chapterIndex === 4 && <ChapterTransmission />}

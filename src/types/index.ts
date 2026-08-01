@@ -59,6 +59,7 @@ export interface TimelineEntry {
   description: string;
   highlights: string[];
   skillsUsed: string[];
+  logoSrc?: string;
 }
 
 export interface Essay {
@@ -78,6 +79,7 @@ export interface Achievement {
   year: string;
   description: string;
   badge: string;
+  logoSrc?: string;
 }
 
 export interface Chapter {

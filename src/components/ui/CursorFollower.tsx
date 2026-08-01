@@ -1,77 +1,147 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
 
+/**
+ * CursorFollower v4.1 — Precision Center-Anchored RAF Cursor
+ *
+ * Direct hardware-accelerated translate3d with translate(-50%, -50%).
+ * Zero offset shift on size/scale transitions. Instant dot tracking + 0.22 Lerp ring tracking.
+ */
 export function CursorFollower() {
-  const [mousePosition, setMousePosition] = useState({ x: -100, y: -100 });
-  const [isHovered, setIsHovered] = useState(false);
-  const [isPointer, setIsPointer] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const dotRef = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number>(0);
 
   useEffect(() => {
-    // Only run on desktop with fine pointers
-    if (typeof window === "undefined" || window.matchMedia("(pointer: coarse)").matches) {
+    if (
+      typeof window === "undefined" ||
+      window.matchMedia("(pointer: coarse)").matches
+    )
       return;
-    }
 
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-      if (!isVisible) setIsVisible(true);
+    const dot = dotRef.current;
+    const ring = ringRef.current;
+    if (!dot || !ring) return;
 
-      const target = e.target as HTMLElement | null;
+    let mouseX = -100;
+    let mouseY = -100;
+    let ringX = -100;
+    let ringY = -100;
+    let visible = false;
+
+    const LERP = 0.55; // Ultra-fast response lerp for zero mouse lag
+
+    const onMove = (e: MouseEvent) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+
+      if (!visible) {
+        visible = true;
+        dot.style.opacity = "1";
+        ring.style.opacity = "1";
+      }
+
+      // DOT: Instant hardware-accelerated centering
+      dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+
+      const target = e.target as HTMLElement;
       if (!target) return;
 
       const isInteractive =
         target.tagName === "BUTTON" ||
         target.tagName === "A" ||
-        target.closest("button") !== null ||
-        target.closest("a") !== null ||
+        target.tagName === "INPUT" ||
+        target.tagName === "TEXTAREA" ||
+        !!target.closest("button") ||
+        !!target.closest("a") ||
         target.getAttribute("role") === "button" ||
         target.hasAttribute("data-cursor-expand");
 
-      setIsPointer(isInteractive);
+      const isText =
+        (target.tagName === "P" ||
+          target.tagName === "SPAN" ||
+          target.tagName === "H1" ||
+          target.tagName === "H2" ||
+          target.tagName === "H3" ||
+          target.tagName === "H4") &&
+        !isInteractive;
+
+      ring.classList.toggle("cursor-interactive", isInteractive);
+      ring.classList.toggle("cursor-text", isText);
     };
 
-    const handleMouseLeave = () => setIsVisible(false);
-    const handleMouseEnter = () => setIsVisible(true);
+    const onLeave = () => {
+      visible = false;
+      dot.style.opacity = "0";
+      ring.style.opacity = "0";
+    };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseleave", handleMouseLeave);
-    document.addEventListener("mouseenter", handleMouseEnter);
+    const onEnter = () => {
+      visible = true;
+      dot.style.opacity = "1";
+      ring.style.opacity = "1";
+    };
+
+    window.addEventListener("mousemove", onMove, { passive: true });
+    document.addEventListener("mouseleave", onLeave);
+    document.addEventListener("mouseenter", onEnter);
+
+    const loop = () => {
+      ringX += (mouseX - ringX) * LERP;
+      ringY += (mouseY - ringY) * LERP;
+      ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+      rafRef.current = requestAnimationFrame(loop);
+    };
+    rafRef.current = requestAnimationFrame(loop);
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseleave", handleMouseLeave);
-      document.removeEventListener("mouseenter", handleMouseEnter);
+      window.removeEventListener("mousemove", onMove);
+      document.removeEventListener("mouseleave", onLeave);
+      document.removeEventListener("mouseenter", onEnter);
+      cancelAnimationFrame(rafRef.current);
     };
-  }, [isVisible]);
-
-  if (!isVisible) return null;
+  }, []);
 
   return (
     <>
-      {/* Small dot */}
-      <motion.div
-        className="pointer-events-none fixed top-0 left-0 z-50 h-2 w-2 rounded-full bg-cyan-400 mix-blend-difference"
-        animate={{
-          x: mousePosition.x - 4,
-          y: mousePosition.y - 4,
-          scale: isPointer ? 1.5 : 1,
+      <div
+        ref={dotRef}
+        aria-hidden="true"
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: 8,
+          height: 8,
+          borderRadius: "50%",
+          backgroundColor: "#00f0ff",
+          mixBlendMode: "difference",
+          pointerEvents: "none",
+          zIndex: 9999,
+          opacity: 0,
+          willChange: "transform",
         }}
-        transition={{ type: "spring", damping: 30, stiffness: 450, mass: 0.1 }}
       />
-      {/* Outer reactive ring */}
-      <motion.div
-        className="pointer-events-none fixed top-0 left-0 z-40 h-8 w-8 rounded-full border border-cyan-400/40 mix-blend-screen"
-        animate={{
-          x: mousePosition.x - 16,
-          y: mousePosition.y - 16,
-          scale: isPointer ? 1.8 : 1,
-          borderColor: isPointer ? "rgba(0, 240, 255, 0.8)" : "rgba(0, 240, 255, 0.3)",
-          backgroundColor: isPointer ? "rgba(0, 240, 255, 0.05)" : "rgba(0, 0, 0, 0)",
+      <div
+        ref={ringRef}
+        aria-hidden="true"
+        className="cursor-ring"
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: 36,
+          height: 36,
+          borderRadius: "50%",
+          border: "1px solid rgba(0, 240, 255, 0.6)",
+          mixBlendMode: "screen",
+          pointerEvents: "none",
+          zIndex: 9998,
+          opacity: 0,
+          willChange: "transform",
+          transition: "transform 0.05s ease-out, width 0.2s cubic-bezier(0.16, 1, 0.3, 1), height 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, background-color 0.2s ease, border-radius 0.2s ease",
         }}
-        transition={{ type: "spring", damping: 25, stiffness: 250, mass: 0.2 }}
       />
     </>
   );

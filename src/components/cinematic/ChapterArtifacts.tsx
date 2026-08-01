@@ -2,295 +2,302 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FolderGit2, Cpu, ArrowRight, Github, ExternalLink, ShieldCheck, Layers, CheckCircle2, ArrowUpRight } from "lucide-react";
+import { ArrowRight, Github, ExternalLink, Sparkles } from "lucide-react";
 import { PROJECTS } from "@/config/content";
-import { Project } from "@/types";
-import { Button } from "@/components/ui/Button";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import { soundFX } from "@/lib/sound";
 
 interface StageProps {
   onNextChapter: () => void;
+  selectedProjectId?: string;
+  onSelectProjectId?: (id: string) => void;
 }
 
-export function ChapterArtifacts({ onNextChapter }: StageProps) {
-  const [selectedProjectId, setSelectedProjectId] = useState<string>("seisvision-ai");
-  const [activeTab, setActiveTab] = useState<"overview" | "architecture" | "challenges">("overview");
+// Visual identity specs for each project world
+const PROJECT_WORLDS: Record<string, {
+  accent: string;
+  accentRgb: string;
+  category: string;
+  tagline: string;
+  metrics: { label: string; value: string }[];
+  visualEffect: string;
+}> = {
+  "seisvision-ai": {
+    accent: "#00E599",
+    accentRgb: "0,229,153",
+    category: "SEISMIC COMPUTER VISION · ONGC",
+    tagline: "Vision Transformers for Subsurface Seismic Fault & Horizon Segmentation.",
+    metrics: [
+      { label: "Segment IoU", value: "94.2%" },
+      { label: "Inference", value: "0.4s" },
+      { label: "Time Saved", value: "85%" },
+    ],
+    visualEffect: "Subsurface Wave Propagation · Deep Fault Lines",
+  },
+  "hpcc-copilot": {
+    accent: "#00F0FF",
+    accentRgb: "0,240,255",
+    category: "ENTERPRISE RAG · HPCC SYSTEMS",
+    tagline: "Domain-Specific Developer Copilot for ECL Clusters & Big Data Pipelines.",
+    metrics: [
+      { label: "RAG Accuracy", value: "96.8%" },
+      { label: "Query Speed", value: "<45ms" },
+      { label: "Latency Red.", value: "3.2x" },
+    ],
+    visualEffect: "ECL Token Matrix · High-Speed Vector Database Stream",
+  },
+  "forestnet": {
+    accent: "#FF2A6D",
+    accentRgb: "255,42,109",
+    category: "SATELLITE AI · ENVIRONMENTAL",
+    tagline: "Multi-Spectral Satellite Imagery Pipeline for Canopy Loss Detection.",
+    metrics: [
+      { label: "Resolution", value: "10m" },
+      { label: "Detection", value: "91.5%" },
+      { label: "Refresh", value: "Realtime" },
+    ],
+    visualEffect: "Infrared Canopy Mesh · Airborne Spore Particles",
+  },
+  "performpro": {
+    accent: "#818CF8",
+    accentRgb: "129,140,248",
+    category: "FULL-STACK ANALYTICS",
+    tagline: "Engineering Productivity Telemetry & Systems Output Monitor.",
+    metrics: [
+      { label: "Throughput", value: "10k/s" },
+      { label: "Uptime", value: "99.99%" },
+      { label: "Latency", value: "<12ms" },
+    ],
+    visualEffect: "Real-time Metric Vectors · Stream Telemetry",
+  },
+  "smart-irrigation": {
+    accent: "#10B981",
+    accentRgb: "16,185,129",
+    category: "IOT & EMBEDDED AI",
+    tagline: "Precision Soil Moisture Prediction & Automated Water Conservation.",
+    metrics: [
+      { label: "Water Saved", value: "40%" },
+      { label: "Node Mesh", value: "128" },
+      { label: "Efficiency", value: "+65%" },
+    ],
+    visualEffect: "Sensor Mesh Network · Moisture Telemetry",
+  },
+  "autism-detection-ai": {
+    accent: "#A855F7",
+    accentRgb: "168,85,247",
+    category: "HEALTHCARE COMPUTER VISION",
+    tagline: "Non-Invasive Early Gaze Pattern Analysis using Facial Vector Graphs.",
+    metrics: [
+      { label: "Precision", value: "93.4%" },
+      { label: "FPS", value: "60" },
+      { label: "Non-Invasive", value: "100%" },
+    ],
+    visualEffect: "Gaze Pattern Tracking · Vector Landmark Mesh",
+  },
+  "guidewire-devtrails": {
+    accent: "#2563EB",
+    accentRgb: "37,99,235",
+    category: "ENTERPRISE MICROSERVICES",
+    tagline: "Guidewire Policy Center Microservices & Stateful Transaction Engine.",
+    metrics: [
+      { label: "Transaction", value: "<25ms" },
+      { label: "Coverage", value: "98%" },
+      { label: "Scale", value: "Enterprise" },
+    ],
+    visualEffect: "State Machine Topology · Policy Transaction Matrix",
+  },
+};
 
-  const project = PROJECTS.find((p) => p.id === selectedProjectId) || PROJECTS[0];
-  const cs = project.caseStudy;
+export function ChapterArtifacts({ onNextChapter, selectedProjectId, onSelectProjectId }: StageProps) {
+  const [internalId, setInternalId] = useState<string>("seisvision-ai");
 
-  const handleSelectProject = (id: string) => {
+  const activeId = selectedProjectId || internalId;
+  const project = PROJECTS.find((p) => p.id === activeId) || PROJECTS[0];
+  const world = PROJECT_WORLDS[activeId] ?? PROJECT_WORLDS["seisvision-ai"];
+
+  const handleSelect = (id: string) => {
     soundFX.playClickSnap();
-    setSelectedProjectId(id);
-  };
-
-  const handleTabClick = (tab: "overview" | "architecture" | "challenges") => {
-    soundFX.playHoverBlip();
-    setActiveTab(tab);
+    if (onSelectProjectId) onSelectProjectId(id);
+    else setInternalId(id);
   };
 
   return (
-    <section className="relative flex min-h-screen w-full flex-col justify-center px-4 pt-28 pb-16 overflow-hidden bg-[#030305]">
-      {/* Ambient Radial Blur */}
-      <div className="pointer-events-none absolute right-1/4 top-1/4 -z-10 h-[500px] w-[500px] rounded-full bg-cyan-500/10 blur-[150px]" />
-      <div className="pointer-events-none absolute left-10 bottom-10 -z-10 h-[400px] w-[400px] rounded-full bg-purple-500/10 blur-[150px]" />
+    <section className="relative min-h-screen w-full overflow-hidden bg-[#030305] flex items-center">
+      {/* ── Dynamic Ambient World Glow ── */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeId}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1 }}
+          className="pointer-events-none absolute inset-0 z-0"
+          style={{
+            background: `radial-gradient(ellipse at 70% 50%, rgba(${world.accentRgb}, 0.16) 0%, transparent 60%), radial-gradient(ellipse at 20% 80%, rgba(${world.accentRgb}, 0.08) 0%, transparent 50%)`,
+          }}
+        />
+      </AnimatePresence>
 
-      <div className="mx-auto w-full max-w-7xl">
-        {/* Chapter Header */}
-        <div className="flex flex-col gap-2 border-b border-white/10 pb-6">
-          <div className="flex items-center justify-between">
-            <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/5 px-4 py-1.5 font-mono text-xs text-cyan-300">
-              <FolderGit2 className="h-3.5 w-3.5" />
-              <span>CHAPTER 02 • THE ARTIFACTS</span>
-            </div>
-            <span className="font-mono text-xs text-slate-400">REAL ENGINEERING CASE STUDIES</span>
-          </div>
-          <h1 className="mt-2 text-3xl font-extrabold text-white sm:text-4xl lg:text-5xl">
-            Authentic Systems & <span className="text-gradient-cyan">Engineering Case Studies</span>.
-          </h1>
-        </div>
-
-        {/* Project Selector Stage Ribbon */}
-        <div className="mt-6 flex flex-wrap gap-2 overflow-x-auto pb-2">
-          {PROJECTS.map((p) => {
-            const isSelected = p.id === selectedProjectId;
-            return (
-              <button
-                key={p.id}
-                onMouseEnter={() => soundFX.playHoverBlip()}
-                onClick={() => handleSelectProject(p.id)}
-                className={`flex items-center gap-2 rounded-xl px-4 py-2.5 font-mono text-xs transition ${
-                  isSelected
-                    ? "border border-cyan-500/40 bg-cyan-500/20 text-cyan-300 shadow-[0_0_20px_rgba(0,240,255,0.25)] font-bold"
-                    : "border border-white/10 bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white"
-                }`}
-              >
-                <BrandLogo name={p.title} showText={false} className="h-4 w-4" />
-                <span>{p.title}</span>
-                {p.featured && (
-                  <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse" />
-                )}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Selected Project Stage Display */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={project.id}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.4 }}
-            className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-12"
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pt-24 pb-16 lg:px-12">
+        {/* Header Tag */}
+        <div className="mb-6 flex items-center justify-between">
+          <div
+            className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 font-mono text-[11px] font-bold uppercase tracking-widest border backdrop-blur-md transition-colors duration-500"
+            style={{
+              color: world.accent,
+              borderColor: `rgba(${world.accentRgb}, 0.35)`,
+              background: `rgba(${world.accentRgb}, 0.08)`,
+            }}
           >
-            {/* Left Stage Box: Metadata, Impact Metrics, Quick Info */}
-            <div className="flex flex-col gap-6 lg:col-span-5">
-              <div className="rounded-3xl border border-cyan-500/30 bg-[#090914]/90 p-6 backdrop-blur-2xl shadow-2xl">
-                <div className="flex items-center justify-between font-mono text-xs text-slate-400">
-                  <span className="rounded-md border border-cyan-500/20 bg-cyan-500/10 px-2.5 py-1 text-cyan-400 font-bold">
-                    {project.category}
-                  </span>
-                  <span>{project.year}</span>
+            <span className="h-1.5 w-1.5 rounded-full animate-ping" style={{ background: world.accent }} />
+            02 — THE ARTIFACTS
+          </div>
+          <span className="hidden md:block font-mono text-[10px] text-slate-500 uppercase tracking-widest">
+            {world.visualEffect}
+          </span>
+        </div>
+
+        {/* Main Grid: Left Vertical Project Selector, Right World Canvas */}
+        <div className="grid grid-cols-12 gap-8 items-center">
+          {/* Left: Project Selector List */}
+          <div className="col-span-12 lg:col-span-4 flex flex-col gap-2">
+            {PROJECTS.map((p) => {
+              const w = PROJECT_WORLDS[p.id] ?? PROJECT_WORLDS["seisvision-ai"];
+              const isActive = p.id === activeId;
+              return (
+                <button
+                  key={p.id}
+                  onClick={() => handleSelect(p.id)}
+                  onMouseEnter={() => soundFX.playHoverBlip()}
+                  className="group relative w-full text-left rounded-2xl border p-3.5 transition-all duration-300 backdrop-blur-xl"
+                  style={{
+                    borderColor: isActive ? `rgba(${w.accentRgb}, 0.5)` : "rgba(255,255,255,0.06)",
+                    background: isActive ? `rgba(${w.accentRgb}, 0.1)` : "rgba(255,255,255,0.02)",
+                    boxShadow: isActive ? `0 0 25px rgba(${w.accentRgb}, 0.15)` : "none",
+                  }}
+                >
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="h-2 w-2 rounded-full transition-all duration-300"
+                      style={{
+                        background: w.accent,
+                        boxShadow: isActive ? `0 0 8px ${w.accent}` : "none",
+                        opacity: isActive ? 1 : 0.4,
+                      }}
+                    />
+                    <div className="flex-1 min-w-0">
+                      <div
+                        className="font-mono text-xs font-bold truncate transition-colors duration-300"
+                        style={{ color: isActive ? w.accent : "#94a3b8" }}
+                      >
+                        {p.title}
+                      </div>
+                      <div className="font-mono text-[10px] text-slate-500 truncate mt-0.5">
+                        {p.category}
+                      </div>
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Right: Immersive Project World View */}
+          <div className="col-span-12 lg:col-span-8">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeId}
+                initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, y: -20, filter: "blur(8px)" }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                className="relative rounded-3xl border p-8 lg:p-10 backdrop-blur-2xl overflow-hidden shadow-2xl"
+                style={{
+                  borderColor: `rgba(${world.accentRgb}, 0.35)`,
+                  background: `linear-gradient(135deg, rgba(7,7,18,0.92) 0%, rgba(${world.accentRgb}, 0.05) 100%)`,
+                }}
+              >
+                {/* World Category Tag */}
+                <div className="font-mono text-xs font-bold tracking-widest uppercase mb-3" style={{ color: world.accent }}>
+                  {world.category}
                 </div>
 
-                <h2 className="mt-4 text-2xl font-extrabold text-white">{project.title}</h2>
-                <p className="mt-1 font-mono text-xs text-slate-300">{project.subtitle}</p>
-                <p className="mt-3 text-xs text-slate-400 leading-relaxed">{project.description}</p>
+                {/* Huge Title */}
+                <h2 className="text-3xl lg:text-5xl font-black text-white tracking-tight mb-4 leading-tight">
+                  {project.title}
+                </h2>
 
-                {/* Key Metrics Grid */}
-                <div className="mt-6 grid grid-cols-3 gap-2">
-                  {project.impactMetrics.map((m, i) => (
-                    <div key={i} className="rounded-xl border border-cyan-500/20 bg-cyan-500/5 p-2.5 text-center">
-                      <div className="font-mono text-base font-bold text-cyan-300">{m.value}</div>
-                      <div className="text-[9px] text-slate-400 font-mono mt-0.5">{m.label}</div>
+                {/* 2-Line Tagline */}
+                <p className="text-base lg:text-lg text-slate-300 font-light leading-relaxed max-w-xl mb-8">
+                  {world.tagline}
+                </p>
+
+                {/* 3 Metric Badges */}
+                <div className="grid grid-cols-3 gap-4 mb-8">
+                  {world.metrics.map((m, idx) => (
+                    <div
+                      key={idx}
+                      className="rounded-2xl border p-4 text-center transition-all duration-300"
+                      style={{
+                        borderColor: `rgba(${world.accentRgb}, 0.25)`,
+                        background: `rgba(${world.accentRgb}, 0.06)`,
+                      }}
+                    >
+                      <div className="font-mono text-xl lg:text-3xl font-black" style={{ color: world.accent }}>
+                        {m.value}
+                      </div>
+                      <div className="font-mono text-[10px] text-slate-400 uppercase tracking-wider mt-1">
+                        {m.label}
+                      </div>
                     </div>
                   ))}
                 </div>
 
-                {/* Tech Stack Brand Badges */}
-                <div className="mt-6 border-t border-white/10 pt-4">
-                  <div className="font-mono text-[10px] text-slate-400 uppercase font-bold">Technology Stack & Brand Logos</div>
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {project.techStack.map((tech, i) => (
-                      <BrandLogo key={i} name={tech} />
-                    ))}
-                  </div>
+                {/* Tech Stack Brand Logos */}
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {project.techStack.map((tech, idx) => (
+                    <BrandLogo key={idx} name={tech} size="md" />
+                  ))}
                 </div>
 
-                {/* GitHub link */}
-                {project.githubUrl && (
-                  <div className="mt-6">
+                {/* Actions: GitHub & Next Chapter */}
+                <div className="flex items-center justify-between border-t border-white/10 pt-6">
+                  {project.githubUrl ? (
                     <a
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full"
-                      onMouseEnter={() => soundFX.playHoverBlip()}
-                      onClick={() => soundFX.playClickSnap()}
+                      className="flex items-center gap-2 font-mono text-xs font-bold transition-all duration-200 hover:opacity-80"
+                      style={{ color: world.accent }}
                     >
-                      <Button variant="secondary" size="sm" className="w-full justify-center" icon={<Github className="h-4 w-4" />}>
-                        View GitHub Repository
-                      </Button>
+                      <Github className="h-4 w-4" />
+                      <span>View GitHub Repository</span>
+                      <ExternalLink className="h-3 w-3" />
                     </a>
-                  </div>
-                )}
-              </div>
-            </div>
+                  ) : (
+                    <span className="font-mono text-xs text-slate-500">Internal Industrial Architecture</span>
+                  )}
 
-            {/* Right Stage Box: Interactive Architecture & Deep-Dive Tabs */}
-            <div className="flex flex-col gap-6 lg:col-span-7">
-              <div className="rounded-3xl border border-white/10 bg-[#090914]/90 p-6 backdrop-blur-2xl shadow-2xl flex flex-col justify-between h-full">
-                <div>
-                  {/* Tab Navigation */}
-                  <div className="flex gap-2 border-b border-white/10 pb-3 font-mono text-xs">
-                    <button
-                      onClick={() => handleTabClick("overview")}
-                      className={`px-3 py-1.5 rounded-lg transition ${
-                        activeTab === "overview"
-                          ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-bold"
-                          : "text-slate-400 hover:text-white"
-                      }`}
-                    >
-                      Problem & Motivation
-                    </button>
-                    <button
-                      onClick={() => handleTabClick("architecture")}
-                      className={`px-3 py-1.5 rounded-lg transition ${
-                        activeTab === "architecture"
-                          ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-bold"
-                          : "text-slate-400 hover:text-white"
-                      }`}
-                    >
-                      System Architecture
-                    </button>
-                    <button
-                      onClick={() => handleTabClick("challenges")}
-                      className={`px-3 py-1.5 rounded-lg transition ${
-                        activeTab === "challenges"
-                          ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-bold"
-                          : "text-slate-400 hover:text-white"
-                      }`}
-                    >
-                      Challenges & Impact
-                    </button>
-                  </div>
-
-                  {/* Tab Contents */}
-                  <div className="mt-6">
-                    {activeTab === "overview" && (
-                      <div className="flex flex-col gap-4 text-xs text-slate-300 leading-relaxed">
-                        <div className="rounded-xl border border-white/5 bg-white/[0.02] p-4">
-                          <h4 className="font-bold text-white mb-1">Problem Statement</h4>
-                          <p>{cs.problemStatement}</p>
-                        </div>
-                        <div className="rounded-xl border border-white/5 bg-white/[0.02] p-4">
-                          <h4 className="font-bold text-cyan-300 mb-1">Motivation</h4>
-                          <p>{cs.motivation}</p>
-                        </div>
-                        <div className="rounded-xl border border-white/5 bg-white/[0.02] p-4">
-                          <h4 className="font-bold text-purple-300 mb-1">Research & Technical Foundation</h4>
-                          <p>{cs.research}</p>
-                        </div>
-                      </div>
-                    )}
-
-                    {activeTab === "architecture" && (
-                      <div className="flex flex-col gap-4 text-xs text-slate-300">
-                        {/* Interactive Pipeline Nodes */}
-                        {project.pipelineDiagram && (
-                          <div className="rounded-2xl border border-cyan-500/20 bg-cyan-950/10 p-4">
-                            <h4 className="font-mono text-[11px] font-bold text-cyan-400 uppercase mb-3">
-                              Pipeline Execution Flow
-                            </h4>
-                            <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                              {project.pipelineDiagram.nodes.map((node, idx) => (
-                                <div key={node.id} className="rounded-xl border border-white/10 bg-black/40 p-2.5 text-center">
-                                  <div className="font-mono text-cyan-300 font-bold text-xs">0{idx + 1}</div>
-                                  <div className="font-bold text-white mt-1 text-[11px]">{node.label}</div>
-                                  <div className="text-[9px] text-slate-400 font-mono mt-0.5">{node.sub}</div>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-
-                        <div className="rounded-xl border border-white/5 bg-white/[0.02] p-4">
-                          <h4 className="font-bold text-white mb-2">Architecture Highlights</h4>
-                          <ul className="flex flex-col gap-2">
-                            {cs.systemArchitecture.map((arch, i) => (
-                              <li key={i} className="flex items-start gap-2">
-                                <span className="font-mono text-cyan-400">►</span>
-                                <span>{arch}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                    )}
-
-                    {activeTab === "challenges" && (
-                      <div className="flex flex-col gap-4 text-xs text-slate-300">
-                        <div className="flex flex-col gap-2">
-                          {cs.challengesAndSolutions.map((pair, i) => (
-                            <div key={i} className="rounded-xl border border-white/10 bg-white/5 p-3.5">
-                              <div className="font-bold text-red-400">Challenge: {pair.challenge}</div>
-                              <div className="mt-1 text-emerald-300">Solution: {pair.solution}</div>
-                            </div>
-                          ))}
-                        </div>
-
-                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                          <div className="rounded-xl border border-white/5 bg-white/[0.02] p-3.5">
-                            <h4 className="font-mono text-[10px] font-bold text-slate-400 uppercase">Impact Achieved</h4>
-                            <ul className="mt-2 flex flex-col gap-1">
-                              {cs.impact.map((imp, i) => (
-                                <li key={i} className="flex items-center gap-1.5 text-emerald-300">
-                                  <CheckCircle2 className="h-3.5 w-3.5 shrink-0" />
-                                  <span>{imp}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-
-                          <div className="rounded-xl border border-white/5 bg-white/[0.02] p-3.5">
-                            <h4 className="font-mono text-[10px] font-bold text-slate-400 uppercase">Lessons Learned</h4>
-                            <ul className="mt-2 flex flex-col gap-1">
-                              {cs.lessonsLearned.map((les, i) => (
-                                <li key={i} className="flex items-center gap-1.5 text-slate-300">
-                                  <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 shrink-0" />
-                                  <span>{les}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Bottom Stage Navigation */}
-                <div className="mt-8 border-t border-white/10 pt-4 flex justify-between items-center">
-                  <span className="font-mono text-xs text-slate-400">REAL PROJECT CASE STUDY</span>
-                  <Button
-                    variant="primary"
-                    size="sm"
+                  <button
                     onClick={() => {
-                      soundFX.playTransitionSweep();
+                      soundFX.playChapterSweep();
                       onNextChapter();
                     }}
-                    icon={<ArrowRight className="h-4 w-4" />}
+                    onMouseEnter={() => soundFX.playHoverBlip()}
+                    className="flex items-center gap-2 rounded-full px-6 py-3 font-mono text-xs font-bold text-black transition-all duration-300 hover:scale-105"
+                    style={{
+                      background: world.accent,
+                      boxShadow: `0 0 20px rgba(${world.accentRgb}, 0.4)`,
+                    }}
                   >
-                    Proceed to Chapter 03: Journey & Skills
-                  </Button>
+                    <span>Proceed to Expedition</span>
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
                 </div>
-              </div>
-            </div>
-          </motion.div>
-        </AnimatePresence>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
       </div>
     </section>
   );

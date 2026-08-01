@@ -1,79 +1,270 @@
 @import "tailwindcss";
 
+/* ─────────────────────────────────────────────────────────
+   DESIGN TOKENS
+───────────────────────────────────────────────────────── */
 @layer base {
   :root {
     --bg-obsidian: #030305;
     --bg-card: rgba(8, 8, 16, 0.72);
-    --bg-card-hover: rgba(14, 14, 26, 0.9);
-    --border-glass: rgba(255, 255, 255, 0.08);
-    --border-glass-hover: rgba(0, 240, 255, 0.35);
+    --border-glass: rgba(255, 255, 255, 0.07);
+    --border-cyan: rgba(0, 240, 255, 0.35);
 
     --accent-cyan: #00f0ff;
-    --accent-purple: #8a2be2;
+    --accent-purple: #7000ff;
+    --accent-violet: #8a2be2;
     --accent-gold: #ffd700;
 
     --text-primary: #f8fafc;
     --text-secondary: #94a3b8;
-    --text-muted: #64748b;
+    --text-muted: #475569;
+
+    /* Aurora orb positions — overridden per chapter via JS */
+    --aurora-x1: 20%;
+    --aurora-y1: 25%;
+    --aurora-x2: 75%;
+    --aurora-y2: 60%;
+    --aurora-x3: 50%;
+    --aurora-y3: 10%;
   }
 
   * {
-    border-color: var(--border-glass);
     box-sizing: border-box;
+    border-color: var(--border-glass);
   }
 
   html {
     color-scheme: dark;
     background-color: var(--bg-obsidian);
     color: var(--text-primary);
-    scroll-behavior: smooth;
-    font-family: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
   }
 
   body {
     overflow-x: hidden;
     background: #030305;
     color: #f8fafc;
-    selection-background-color: rgba(0, 240, 255, 0.25);
-    selection-color: #00f0ff;
   }
 
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: #030305;
-  }
-
+  /* Precision scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.14);
+    background: rgba(0, 240, 255, 0.2);
     border-radius: 9999px;
   }
-
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 240, 255, 0.4);
+    background: rgba(0, 240, 255, 0.5);
+  }
+
+  /* Hide native cursor on desktop (fine pointer) so custom cursor is the only one */
+  @media (pointer: fine) {
+    *, *::before, *::after { cursor: none !important; }
   }
 }
 
-html.lenis {
-  height: auto;
+/* ─────────────────────────────────────────────────────────
+   CUSTOM CURSOR RING STATES
+   Toggled via classList in CursorFollower.tsx — no React re-renders
+───────────────────────────────────────────────────────── */
+.cursor-ring.cursor-interactive {
+  width: 54px !important;
+  height: 54px !important;
+  border-color: rgba(0, 240, 255, 0.95) !important;
+  background-color: rgba(0, 240, 255, 0.08) !important;
 }
 
-.lenis.lenis-smooth {
-  scroll-behavior: auto;
+.cursor-ring.cursor-text {
+  width: 4px !important;
+  height: 28px !important;
+  border-radius: 2px !important;
+  border-color: rgba(255, 255, 255, 0.9) !important;
+  background-color: rgba(255, 255, 255, 0.9) !important;
 }
 
-.lenis.lenis-stopped {
-  overflow: hidden;
+/* ─────────────────────────────────────────────────────────
+   LENIS SMOOTH SCROLL
+───────────────────────────────────────────────────────── */
+html.lenis { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* ─────────────────────────────────────────────────────────
+   AURORA BACKGROUND ANIMATIONS
+───────────────────────────────────────────────────────── */
+@keyframes aurora-drift-1 {
+  0%   { transform: translate(0px, 0px) scale(1); }
+  33%  { transform: translate(60px, -40px) scale(1.08); }
+  66%  { transform: translate(-30px, 50px) scale(0.95); }
+  100% { transform: translate(0px, 0px) scale(1); }
 }
 
+@keyframes aurora-drift-2 {
+  0%   { transform: translate(0px, 0px) scale(1); }
+  40%  { transform: translate(-70px, 30px) scale(1.12); }
+  80%  { transform: translate(40px, -60px) scale(0.9); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+@keyframes aurora-drift-3 {
+  0%   { transform: translate(0px, 0px) scale(1); }
+  50%  { transform: translate(50px, 70px) scale(1.06); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+@keyframes aurora-pulse {
+  0%, 100% { opacity: 0.12; }
+  50%       { opacity: 0.22; }
+}
+
+@keyframes grain-shift {
+  0%   { transform: translate(0, 0); }
+  10%  { transform: translate(-5%, -10%); }
+  20%  { transform: translate(-15%, 5%); }
+  30%  { transform: translate(7%, -25%); }
+  40%  { transform: translate(-5%, 25%); }
+  50%  { transform: translate(-15%, 10%); }
+  60%  { transform: translate(15%, 0%); }
+  70%  { transform: translate(0%, 15%); }
+  80%  { transform: translate(3%, 35%); }
+  90%  { transform: translate(-10%, 10%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* ─────────────────────────────────────────────────────────
+   SCANLINE ANIMATION (portrait overlay effect)
+───────────────────────────────────────────────────────── */
+@keyframes scanline {
+  0%   { top: -100%; }
+  100% { top: 200%; }
+}
+.animate-scanline {
+  animation: scanline 3.5s linear infinite;
+}
+
+/* ─────────────────────────────────────────────────────────
+   TYPOGRAPHY UTILITIES
+───────────────────────────────────────────────────────── */
+
+/* Editorial display headline — responsive clamp */
+.text-display {
+  font-size: clamp(3rem, 8vw, 8rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  font-weight: 900;
+}
+
+.text-display-sm {
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+}
+
+/* Gradient fills */
 .text-gradient-cyan {
-  background: linear-gradient(135deg, #ffffff 0%, #00f0ff 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #00f0ff 60%, #7000ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
+.text-gradient-aurora {
+  background: linear-gradient(135deg, #00f0ff 0%, #7000ff 50%, #ff2a6d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─────────────────────────────────────────────────────────
+   TEXT MASK REVEAL UTILITY (clip-path animation)
+   Works with Framer Motion clipPath prop
+───────────────────────────────────────────────────────── */
+.text-reveal-wrapper {
+  overflow: hidden;
+  display: block;
+}
+
+/* ─────────────────────────────────────────────────────────
+   GLASS PANEL UTILITIES
+───────────────────────────────────────────────────────── */
+.glass-panel {
+  background: rgba(7, 7, 18, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.glass-panel-cyan {
+  background: rgba(0, 240, 255, 0.04);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* ─────────────────────────────────────────────────────────
+   MAGNETIC BUTTON GLOW
+───────────────────────────────────────────────────────── */
+.btn-primary-glow {
+  background: linear-gradient(135deg, #00f0ff 0%, #7000ff 100%);
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.3), 0 0 60px rgba(112, 0, 255, 0.15);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+.btn-primary-glow:hover {
+  box-shadow: 0 0 50px rgba(0, 240, 255, 0.5), 0 0 100px rgba(112, 0, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+/* ─────────────────────────────────────────────────────────
+   LOGO GLOW EFFECT
+───────────────────────────────────────────────────────── */
+.logo-glow {
+  filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.4));
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+.logo-glow:hover {
+  filter: drop-shadow(0 0 16px rgba(0, 240, 255, 0.7));
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* ─────────────────────────────────────────────────────────
+   EDITORIAL IMAGE MASK (photograph reveal)
+───────────────────────────────────────────────────────── */
+.image-editorial {
+  position: relative;
+  overflow: hidden;
+}
+.image-editorial::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    #030305 0%,
+    rgba(3, 3, 5, 0.7) 25%,
+    rgba(3, 3, 5, 0.1) 55%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────────────────────────
+   NOISE GRAIN OVERLAY
+───────────────────────────────────────────────────────── */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  animation: grain-shift 0.8s steps(1) infinite;
+}
+
+/* ─────────────────────────────────────────────────────────
+   PERFORMANCE: REDUCED MOTION
+───────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

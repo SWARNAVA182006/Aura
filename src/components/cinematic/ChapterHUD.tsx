@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Command, Volume2, VolumeX, Sparkles, ChevronUp, ChevronDown } from "lucide-react";
+import { Command, Volume2, VolumeX, ChevronUp, ChevronDown } from "lucide-react";
 import { CHAPTERS } from "@/config/content";
 import { soundFX } from "@/lib/sound";
 
@@ -20,8 +20,6 @@ export function ChapterHUD({
   isMuted,
   onToggleMute,
 }: HUDProps) {
-  const activeChapterData = CHAPTERS[currentChapter] || CHAPTERS[0];
-
   const handleChapterClick = (idx: number) => {
     soundFX.playClickSnap();
     onSelectChapter(idx);
@@ -33,9 +31,9 @@ export function ChapterHUD({
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 px-4 pt-4 pointer-events-none select-none">
+    <header className="fixed top-0 left-0 right-0 z-40 px-6 py-5 pointer-events-none select-none">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between pointer-events-auto">
-        {/* Brand Emblem */}
+        {/* Brand Emblem Logo */}
         <a
           href="#"
           onMouseEnter={() => soundFX.playHoverBlip()}
@@ -43,23 +41,23 @@ export function ChapterHUD({
             e.preventDefault();
             handleChapterClick(0);
           }}
-          className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-[#070712]/80 px-3 py-2 backdrop-blur-2xl transition hover:border-cyan-500/40 shadow-xl"
+          className="group flex items-center gap-3 transition-transform duration-300 hover:scale-105"
         >
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-cyan-500/30 bg-cyan-500/10 font-mono font-bold text-cyan-400">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-[#070712]/60 font-mono font-black text-cyan-400 text-sm backdrop-blur-xl shadow-lg transition-all duration-300 group-hover:border-cyan-500/50 group-hover:shadow-[0_0_20px_rgba(0,240,255,0.25)]">
             SS
           </div>
           <div className="flex flex-col">
-            <span className="text-xs font-extrabold tracking-wider text-slate-100 uppercase">
+            <span className="text-xs font-black tracking-widest text-white uppercase">
               SWARNAVA SARKAR
             </span>
-            <span className="font-mono text-[10px] text-cyan-400">
-              AI ENGINEER & ARCHITECT
+            <span className="font-mono text-[9px] text-cyan-400 tracking-wider font-semibold">
+              AI & ML ENGINEER
             </span>
           </div>
         </a>
 
-        {/* Floating Chapter Navigation Pills */}
-        <div className="hidden md:flex items-center gap-1.5 rounded-2xl border border-white/10 bg-[#070712]/80 p-1.5 backdrop-blur-2xl shadow-xl">
+        {/* Floating Minimal Chapter Indicator */}
+        <div className="hidden md:flex items-center gap-1 rounded-full border border-white/8 bg-[#070712]/60 px-3 py-1.5 backdrop-blur-2xl shadow-2xl">
           {CHAPTERS.map((ch) => {
             const isActive = currentChapter === ch.index;
             return (
@@ -67,81 +65,69 @@ export function ChapterHUD({
                 key={ch.id}
                 onMouseEnter={() => soundFX.playHoverBlip()}
                 onClick={() => handleChapterClick(ch.index)}
-                className={`group relative flex items-center gap-2 rounded-xl px-3 py-1.5 font-mono text-xs transition ${
+                className={`group relative flex items-center gap-1.5 rounded-full px-3 py-1 font-mono text-[11px] transition-all duration-300 ${
                   isActive
-                    ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-[0_0_15px_rgba(0,240,255,0.25)] font-bold"
-                    : "text-slate-400 hover:bg-white/5 hover:text-white"
+                    ? "bg-cyan-500/15 text-cyan-300 border border-cyan-500/40 font-bold shadow-[0_0_15px_rgba(0,240,255,0.2)]"
+                    : "text-slate-500 hover:text-slate-200"
                 }`}
               >
-                <span className="text-[10px] text-cyan-400">{ch.number}</span>
-                <span className="hidden xl:inline">{ch.title}</span>
+                <span className={isActive ? "text-cyan-400 font-extrabold" : "text-slate-600"}>
+                  {ch.number}
+                </span>
+                <span className="hidden xl:inline tracking-wider uppercase text-[10px]">
+                  {ch.title.replace("THE ", "")}
+                </span>
               </button>
             );
           })}
         </div>
 
-        {/* Right Controls: Command Menu + Audio Toggle + Navigation Controls */}
-        <div className="flex items-center gap-2 rounded-2xl border border-white/10 bg-[#070712]/80 p-1.5 backdrop-blur-2xl shadow-xl">
+        {/* Right Controls */}
+        <div className="flex items-center gap-2 rounded-full border border-white/8 bg-[#070712]/60 p-1.5 backdrop-blur-2xl shadow-2xl">
           {/* Mute Toggle */}
           <button
             onMouseEnter={() => soundFX.playHoverBlip()}
             onClick={handleMuteClick}
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-300 transition hover:border-cyan-500/40 hover:text-cyan-400"
-            title={isMuted ? "Unmute Ambient Sound" : "Mute Sound"}
+            className="flex h-8 w-8 items-center justify-center rounded-full border border-white/8 bg-white/3 text-slate-400 transition hover:border-cyan-500/40 hover:text-cyan-300"
+            title={isMuted ? "Unmute Sound" : "Mute Sound"}
           >
-            {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4 text-cyan-400 animate-pulse" />}
+            {isMuted ? <VolumeX className="h-3.5 w-3.5" /> : <Volume2 className="h-3.5 w-3.5 text-cyan-400 animate-pulse" />}
           </button>
 
-          {/* Cmd+K Palette */}
+          {/* Command Menu */}
           <button
             onMouseEnter={() => soundFX.playHoverBlip()}
             onClick={() => {
               soundFX.playClickSnap();
               onOpenCommand();
             }}
-            className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 font-mono text-xs text-slate-300 transition hover:border-cyan-500/40 hover:text-cyan-400"
+            className="flex h-8 items-center gap-1.5 rounded-full border border-white/8 bg-white/3 px-3 font-mono text-[10px] text-slate-400 transition hover:border-cyan-500/40 hover:text-cyan-300"
           >
-            <Command className="h-3.5 w-3.5" />
-            <span className="hidden sm:inline text-[10px]">⌘K</span>
+            <Command className="h-3 w-3" />
+            <span className="hidden sm:inline">⌘K</span>
           </button>
 
           {/* Up/Down Chapter Navigation Arrows */}
-          <div className="flex items-center border-l border-white/10 pl-2">
+          <div className="flex items-center border-l border-white/10 pl-1">
             <button
               onMouseEnter={() => soundFX.playHoverBlip()}
               onClick={() => handleChapterClick(Math.max(0, currentChapter - 1))}
               disabled={currentChapter === 0}
-              className="rounded-lg p-1.5 text-slate-400 transition hover:text-cyan-400 disabled:opacity-30 disabled:hover:text-slate-400"
-              title="Previous Chapter (Up Arrow)"
+              className="rounded-full p-1 text-slate-500 transition hover:text-cyan-400 disabled:opacity-20"
+              title="Previous Chapter"
             >
-              <ChevronUp className="h-4 w-4" />
+              <ChevronUp className="h-3.5 w-3.5" />
             </button>
             <button
               onMouseEnter={() => soundFX.playHoverBlip()}
               onClick={() => handleChapterClick(Math.min(CHAPTERS.length - 1, currentChapter + 1))}
               disabled={currentChapter === CHAPTERS.length - 1}
-              className="rounded-lg p-1.5 text-slate-400 transition hover:text-cyan-400 disabled:opacity-30 disabled:hover:text-slate-400"
-              title="Next Chapter (Down Arrow)"
+              className="rounded-full p-1 text-slate-500 transition hover:text-cyan-400 disabled:opacity-20"
+              title="Next Chapter"
             >
-              <ChevronDown className="h-4 w-4" />
+              <ChevronDown className="h-3.5 w-3.5" />
             </button>
           </div>
-        </div>
-      </div>
-
-      {/* Chapter Indicator Bar */}
-      <div className="mx-auto mt-3 flex w-full max-w-7xl justify-between items-center px-1 font-mono text-[10px] text-slate-400">
-        <div className="flex items-center gap-2">
-          <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-ping" />
-          <span className="text-cyan-300 font-bold">
-            CHAPTER {activeChapterData.number}: {activeChapterData.title}
-          </span>
-          <span className="hidden sm:inline text-slate-500">• {activeChapterData.subtitle}</span>
-        </div>
-        <div className="hidden lg:flex items-center gap-3 text-slate-500">
-          <span>PRESS [1-5] TO JUMP CHAPTERS</span>
-          <span>•</span>
-          <span>[↑ / ↓] TO NAVIGATE</span>
         </div>
       </div>
     </header>

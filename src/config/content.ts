@@ -46,34 +46,35 @@ export const CHAPTERS: Chapter[] = [
 export const EDITORIAL_PHOTOS: EditorialPhoto[] = [
   {
     src: "/assets/me.jpg",
-    alt: "Swarnava Sarkar — AI Engineer & Software Architect",
-    caption: "Swarnava Sarkar • Systems & AI Engineer",
+    alt: "Swarnava Sarkar — AI & ML Engineer",
+    caption: "Swarnava Sarkar • SRM Institute of Science & Technology",
     aspectRatio: "portrait",
   },
   {
     src: "/assets/me1.png",
     alt: "Swarnava Sarkar — Editorial Portrait",
-    caption: "Swarnava Sarkar • First-Principles Craft",
+    caption: "Swarnava Sarkar • First-Principles Systems Craft",
     aspectRatio: "square",
   },
 ];
 
 export const HERO_DATA = {
   name: "SWARNAVA SARKAR",
-  tagline: "AI Engineer • Software Architect • Computer Science Researcher",
-  bio: "I design and build production-grade AI systems, high-performance web architectures, and deep computer vision pipelines. From seismic processing at ONGC to specialized HPC developer copilots, my work fuses first-principles engineering with luxury digital craft.",
-  availability: "Available for Senior AI Engineering & Architectural Leadership",
+  tagline: "AI & ML Engineer • Software Architect • Computer Science Researcher",
+  institution: "SRM Institute of Science and Technology (B.Tech CS, AI & ML Specialization)",
+  bio: "I design and build production-grade AI systems, high-performance web architectures, and computer vision pipelines. From seismic processing at ONGC to specialized HPC developer copilots and Apple iOS development, my work fuses first-principles engineering with luxury digital craft.",
+  availability: "Available for Senior AI & ML Engineering & Architectural Leadership",
 };
 
 export const ENGINEERING_PHILOSOPHY = {
   overview:
-    "Software is not merely sequential instructions; it is dynamic engineering leverage that translates mathematical, physical, and business constraints into resilient digital systems.",
+    "Software is dynamic engineering leverage that translates mathematical, physical, and domain constraints into resilient digital systems.",
   principles: [
     {
       number: "01",
       title: "First-Principles Problem Solving",
       description:
-        "Before selecting a framework or AI model, I analyze the underlying mathematical and physical domain constraints to construct tailored architectures.",
+        "Before selecting a framework or AI model, I analyze the underlying domain constraints to construct tailored, low-latency architectures.",
     },
     {
       number: "02",
@@ -85,13 +86,13 @@ export const ENGINEERING_PHILOSOPHY = {
       number: "03",
       title: "Pragmatic AI & Deterministic Guardrails",
       description:
-        "AI is a powerful primitive, but probabilistic LLMs must be coupled with strict deterministic validation state machines for production reliability.",
+        "AI is a powerful primitive, but probabilistic LLMs must be coupled with strict AST parsing and validation state machines for production reliability.",
     },
     {
       number: "04",
       title: "Luxury Craft & Perceived Speed",
       description:
-        "Low latency, intuitive visual hierarchy, tactile micro-interactions, and high accessibility standards (WCAG AA) build long-term user trust.",
+        "Low latency, intuitive visual hierarchy, tactile micro-interactions, and high accessibility standards build long-term user trust.",
     },
   ],
   whySoftware:
@@ -122,9 +123,9 @@ export const PROJECTS: Project[] = [
       problemStatement:
         "Geoscientists spend hundreds of manual hours annotating seismic reflection profiles to identify faults and hydrocarbon reservoirs. Manual interpretation is prone to human fatigue and subjective bias.",
       motivation:
-        "During my research and exposure to subsurface exploration workflows (including insights during my ONGC internship), I identified the need for an automated visual AI assistant to accelerate seismic interpretation.",
+        "During my exposure to subsurface exploration workflows during my ONGC summer internship, I identified the need for an automated visual AI assistant to accelerate seismic interpretation.",
       research:
-        "Researched U-Net architectures, Vision Transformers (ViT), and edge detection algorithms for 2D/3D seismic slices. Evaluated loss functions suitable for sparse fault boundary annotations.",
+        "Researched U-Net architectures, Vision Transformers (ViT), and bilateral filtering edge detection algorithms for 2D/3D seismic slices. Evaluated combined SSIM + Dice loss functions for sparse fault boundary annotations.",
       systemArchitecture: [
         "FastAPI backend serving PyTorch U-Net fault segmentation models via TensorRT ONNX runtime.",
         "WebGL (Three.js) interactive canvas allowing geoscientists to slice 3D seismic cubes in real time.",
@@ -193,7 +194,7 @@ export const PROJECTS: Project[] = [
       problemStatement:
         "ECL (Enterprise Control Language) is a specialized declarative dataflow language used for big data parallel processing on HPCC Systems. Due to limited public syntax datasets, developers face a steep learning curve.",
       motivation:
-        "I wanted to bridge the gap for big-data engineers by building a dedicated AI copilot that deeply understands ECL syntax, dataset definitions, THOR cluster transformations, and best practices.",
+        "Bridge the gap for big-data engineers by building a dedicated AI copilot that deeply understands ECL syntax, dataset definitions, THOR cluster transformations, and best practices.",
       research:
         "Studied RAG architectures over specialized domain documentation, AST parsing for declarative dataflow languages, and context compression techniques.",
       systemArchitecture: [
@@ -467,18 +468,18 @@ export const PROJECTS: Project[] = [
 export const TIMELINE_JOURNEY: TimelineEntry[] = [
   {
     period: "2024 — PRESENT",
-    title: "AI Engineering & Systems Architecture Focus",
-    organization: "Independent Research & Flagship Projects",
-    type: "Research",
-    location: "Bengaluru, India",
+    title: "Apple iOS Student Developer Program Selection",
+    organization: "Apple Student Developer Program",
+    type: "Milestone",
+    location: "India",
     description:
-      "Deeply engaged in building production-grade AI systems, Vision Transformer applications (SeisVision AI), and HPC copilot tools (HPCC Copilot). Focusing on sub-50ms inference workflows and software architecture.",
+      "Selected for the Apple iOS Student Developer Program. Focusing on native Swift/SwiftUI development, high-performance mobile UI architectures, and Apple platform ecosystem design patterns.",
     highlights: [
-      "Engineered SeisVision AI segmentation platform achieving 94.2% IoU on seismic profiles.",
-      "Architected HPCC Copilot RAG framework for specialized dataflow languages.",
-      "Designed and published high-craft personal digital identity web application.",
+      "Selected among candidate developer applicants for Apple iOS track.",
+      "Explored low-latency client architecture and iOS UI design standards.",
     ],
-    skillsUsed: ["PyTorch", "Python", "TypeScript", "Next.js 15", "Three.js", "Docker"],
+    skillsUsed: ["Swift", "iOS", "Mobile Architecture", "UI Design"],
+    logoSrc: "/assets/ios.jpg",
   },
   {
     period: "SUMMER 2024",
@@ -487,54 +488,89 @@ export const TIMELINE_JOURNEY: TimelineEntry[] = [
     type: "Internship",
     location: "India",
     description:
-      "Gained invaluable industrial exposure at India's premier energy organization. Worked alongside senior engineers and geoscientists, analyzing seismic data processing workflows, industrial software systems, and data infrastructure.",
+      "Gained industrial exposure at India's premier energy organization. Analyzed seismic data processing workflows, industrial software systems, and domain data pipelines, directly inspiring SeisVision AI.",
     highlights: [
       "Analyzed large-scale seismic data storage pipelines and geophysical interpretation software tools.",
-      "Gained firsthand understanding of domain challenges in oil & gas exploration, inspiring the creation of SeisVision AI.",
-      "Received commendable feedback for technical curiosity, software discipline, and engineering problem-solving.",
+      "Identified subsurface exploration challenges, inspiring SeisVision AI.",
+      "Received commendable feedback for technical discipline and engineering curiosity.",
     ],
     skillsUsed: ["Seismic Data Workflows", "Data Processing", "Python", "Systems Architecture"],
+    logoSrc: "/assets/ongc.png",
+  },
+  {
+    period: "2024",
+    title: "AI / ML Engineering Intern",
+    organization: "StudAI One",
+    type: "Internship",
+    location: "India",
+    description:
+      "Engineered machine learning pipelines and AI solution modules at StudAI One, optimizing model latency and integrating predictive backend APIs.",
+    highlights: [
+      "Trained and tuned computer vision and ML predictive models.",
+      "Built clean API integration boundaries for web client delivery.",
+    ],
+    skillsUsed: ["Python", "Machine Learning", "FastAPI", "PyTorch"],
+    logoSrc: "/assets/studai.jpg",
+  },
+  {
+    period: "2024",
+    title: "Google for Developers AICTE Virtual Intern",
+    organization: "Google for Developers & AICTE",
+    type: "Internship",
+    location: "India",
+    description:
+      "Completed hands-on software development and cloud/AI engineering curriculum under Google for Developers and AICTE initiative.",
+    highlights: [
+      "Mastered cloud computing fundamentals, Android development, and AI integration practices.",
+      "Awarded official Google for Developers AICTE completion badge.",
+    ],
+    skillsUsed: ["Google Cloud", "AI/ML", "Android", "Software Engineering"],
+    logoSrc: "/assets/google.png",
+  },
+  {
+    period: "2023 — PRESENT",
+    title: "Undergraduate Research & UROP Researcher",
+    organization: "SRM Institute of Science and Technology",
+    type: "Research",
+    location: "Kattankulathur, Tamil Nadu",
+    description:
+      "Participated in UROP (Undergraduate Research Opportunities Program) at SRM Institute of Science and Technology. Focused on computer vision models, satellite remote sensing, and AI-driven screening systems.",
+    highlights: [
+      "Researched deep learning segmentation architectures for environmental & medical data.",
+      "Mentored by university research faculty on algorithmic rigor and peer publications.",
+    ],
+    skillsUsed: ["Deep Learning", "Computer Vision", "PyTorch", "Research"],
+    logoSrc: "/assets/urop.jpg",
   },
   {
     period: "2022 — PRESENT",
-    title: "Bachelor of Technology in Computer Science",
-    organization: "University Computer Science & Engineering",
+    title: "B.Tech in Computer Science & Engineering (AI & ML)",
+    organization: "SRM Institute of Science and Technology",
     type: "Education",
-    location: "India",
+    location: "Kattankulathur, Tamil Nadu",
     description:
-      "Pursuing rigorous Computer Science degree with focus on Artificial Intelligence, Data Structures & Algorithms, Operating Systems, Database Management Systems, and Software Engineering.",
+      "Pursuing Bachelor of Technology degree in Computer Science with specialization in Artificial Intelligence and Machine Learning. Building strong foundation in Data Structures, OS, Systems Architecture, and Deep Learning.",
     highlights: [
-      "Maintained strong academic standing while spearheading multiple national-level engineering hackathon submissions.",
-      "Led team projects in computer vision, environmental IoT, and healthcare AI.",
+      "Maintained strong academic standing in AI & ML specialization.",
+      "Spearheaded national-level engineering hackathon submissions and research initiatives.",
     ],
-    skillsUsed: ["Data Structures & Algorithms", "Operating Systems", "Computer Vision", "Software Design"],
+    skillsUsed: ["AI & ML Specialization", "Data Structures", "Operating Systems", "Computer Vision"],
+    logoSrc: "/assets/srm.png",
   },
   {
-    period: "2023 — 2024",
-    title: "Engineering Hackathons & Competitions",
-    organization: "Guidewire DevTrails & National Tech Summits",
+    period: "2024",
+    title: "Guidewire DevTrails National Finalist",
+    organization: "Guidewire Software",
     type: "Competition",
     location: "India",
     description:
-      "Participated in high-intensity software development competitions, designing enterprise microservices, environmental solutions, and healthcare AI applications under tight deadlines.",
+      "Engineered cloud-native insurance microservices and integration UI during Guidewire DevTrails, recognized as a top national finalist project.",
     highlights: [
-      "Guidewire DevTrails finalist/featured engineer for cloud integration design.",
-      "Built and deployed ForestNet satellite monitoring prototype during 36-hour hackathon.",
+      "Architected Spring Boot microservice adhering to enterprise REST OpenAPI standards.",
+      "Selected as featured finalist for software architecture quality.",
     ],
-    skillsUsed: ["Java", "Spring Boot", "PyTorch", "React", "Rapid Prototyping"],
-  },
-  {
-    period: "2020 — 2022",
-    title: "Foundational STEM & Computer Science Training",
-    organization: "Higher Secondary Education",
-    type: "Education",
-    location: "India",
-    description:
-      "Built strong foundation in Mathematics (Calculus, Linear Algebra), Physics, and C/C++ Programming, igniting a lifelong passion for software engineering.",
-    highlights: [
-      "Developed first C++ algorithm projects and basic physics simulation engines.",
-    ],
-    skillsUsed: ["Mathematics", "Physics", "C++", "Algorithmic Thinking"],
+    skillsUsed: ["Java", "Spring Boot", "React", "RESTful Microservices"],
+    logoSrc: "/assets/guidewire.jpg",
   },
 ];
 
@@ -590,28 +626,68 @@ export const SKILL_GROUPS: SkillGroup[] = [
 
 export const ACHIEVEMENTS: Achievement[] = [
   {
+    title: "Apple iOS Student Developer Program Selection",
+    organization: "Apple",
+    year: "2024",
+    description: "Selected for Apple iOS Student Developer Program focusing on native Swift/SwiftUI engineering.",
+    badge: "Apple Developer",
+    logoSrc: "/assets/ios.jpg",
+  },
+  {
     title: "ONGC Software & Engineering Internship",
     organization: "Oil and Natural Gas Corporation (ONGC)",
     year: "2024",
-    description:
-      "Completed prestigious industrial internship examining seismic processing pipelines, enterprise software systems, and domain data workflows.",
+    description: "Completed prestigious industrial internship examining seismic processing pipelines and data workflows.",
     badge: "Industrial Internship",
+    logoSrc: "/assets/ongc.png",
+  },
+  {
+    title: "StudAI One AI/ML Internship",
+    organization: "StudAI One",
+    year: "2024",
+    description: "Built predictive ML algorithms and computer vision API integrations.",
+    badge: "AI/ML Internship",
+    logoSrc: "/assets/studai.jpg",
+  },
+  {
+    title: "Google for Developers AICTE Internship",
+    organization: "Google for Developers",
+    year: "2024",
+    description: "Completed virtual software engineering, AI, and cloud development internship program.",
+    badge: "Google Certification",
+    logoSrc: "/assets/google.png",
   },
   {
     title: "Guidewire DevTrails Finalist",
     organization: "Guidewire Software",
     year: "2024",
-    description:
-      "Recognized for engineering cloud microservices and insurance management UI integrations adhering to strict enterprise API standards.",
+    description: "Recognized as national finalist for enterprise cloud microservices and insurance integration architecture.",
     badge: "National Finalist",
+    logoSrc: "/assets/guidewire.jpg",
   },
   {
-    title: "AI & Innovation Hackathon Winner / Featured",
-    organization: "National Tech Summits",
+    title: "IBM Machine Learning Professional Certification",
+    organization: "IBM",
+    year: "2023",
+    description: "Earned professional certification in supervised/unsupervised machine learning algorithms and PyTorch workflows.",
+    badge: "IBM Professional",
+    logoSrc: "/assets/ibm.jpg",
+  },
+  {
+    title: "OpenAI Generative AI Workshop",
+    organization: "OpenAI / Tech Summits",
+    year: "2024",
+    description: "Participated in advanced Generative AI & Large Language Model architecture workshop.",
+    badge: "AI Workshop",
+    logoSrc: "/assets/openai.jpg",
+  },
+  {
+    title: "UROP Research Scholar",
+    organization: "SRM Institute of Science and Technology",
     year: "2023 - 2024",
-    description:
-      "Awarded top recognition for rapid development of ForestNet satellite vision monitor and Smart Irrigation IoT system.",
-    badge: "Hackathon Award",
+    description: "Conducted computer vision research under Undergraduate Research Opportunities Program at SRM.",
+    badge: "SRM Research",
+    logoSrc: "/assets/urop.jpg",
   },
 ];
 
