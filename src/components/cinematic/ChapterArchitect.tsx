@@ -1,20 +1,20 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { ArrowRight, Sparkles, MapPin } from "lucide-react";
+import { MapPin, GraduationCap, Sparkles, ChevronRight, Activity, Info } from "lucide-react";
+import { IDENTITY_DATA } from "@/config/content";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import { soundFX } from "@/lib/sound";
-import { SITE_CONFIG } from "@/config/site";
 
-interface StageProps {
+interface ChapterArchitectProps {
   onNextChapter: () => void;
 }
 
-export function ChapterArchitect({ onNextChapter }: StageProps) {
+export function ChapterArchitect({ onNextChapter }: ChapterArchitectProps) {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [activeCard, setActiveCard] = useState<"apple" | "ongc" | "srm" | null>(null);
+  const [hoveredAffiliation, setHoveredAffiliation] = useState<string | null>(null);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -27,18 +27,22 @@ export function ChapterArchitect({ onNextChapter }: StageProps) {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
+  const activeAffiliationObj = IDENTITY_DATA.affiliations.find(
+    (a) => a.name.toLowerCase() === hoveredAffiliation?.toLowerCase()
+  );
+
   return (
-    <section className="relative min-h-screen w-full overflow-hidden bg-[#030305] flex items-center">
-      {/* ── Editorial Full-Bleed Portrait (Right Half) ── */}
+    <section className="relative min-h-screen w-full overflow-hidden bg-[#030305] text-white flex flex-col justify-center">
+      {/* Static Bright Editorial Right Half Image Frame */}
       <motion.div
-        className="pointer-events-none absolute inset-y-0 right-0 w-[52vw] lg:w-[55vw] z-0"
-        initial={{ opacity: 0, scale: 1.05, filter: "blur(12px)" }}
-        animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-        transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+        initial={{ opacity: 0, scale: 1 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
         style={{
           transform: `translate3d(${mousePos.x}px, ${mousePos.y}px, 0)`,
           transition: "transform 0.05s ease-out",
         }}
+        className="absolute right-0 top-0 bottom-0 w-full lg:w-[52vw] pointer-events-none z-0"
       >
         <div className="relative h-full w-full">
           <Image
@@ -46,65 +50,52 @@ export function ChapterArchitect({ onNextChapter }: StageProps) {
             alt="Swarnava Sarkar — AI & ML Engineer"
             fill
             priority
-            sizes="55vw"
+            sizes="(max-width: 1024px) 100vw, 52vw"
             className="object-cover"
-            style={{ objectPosition: "center 22%" }}
-          />
-          {/* Seamless edge gradient blend into page dark background */}
-          <div
-            className="pointer-events-none absolute inset-0"
             style={{
-              background: `linear-gradient(
-                to right,
-                #030305 0%,
-                rgba(3,3,5,0.92) 15%,
-                rgba(3,3,5,0.5) 40%,
-                rgba(3,3,5,0.15) 75%,
-                transparent 100%
-              )`,
+              objectPosition: "center 25%",
+              filter: "brightness(1.06) contrast(1.02)",
+            }}
+          />
+
+          {/* Clean Soft Blend Gradients */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to right, #030305 0%, rgba(3,3,5,0.4) 35%, transparent 75%, #030305 100%)",
             }}
           />
           <div
-            className="pointer-events-none absolute inset-0"
+            className="absolute inset-0"
             style={{
-              background: "linear-gradient(to bottom, rgba(3,3,5,0.7) 0%, transparent 20%, transparent 80%, rgba(3,3,5,0.95) 100%)",
+              background:
+                "linear-gradient(to bottom, #030305 0%, transparent 15%, transparent 80%, #030305 100%)",
             }}
-          />
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background: "linear-gradient(135deg, rgba(0,240,255,0.06) 0%, transparent 50%)",
-              mixBlendMode: "screen",
-            }}
-          />
-          {/* Hologram scanline */}
-          <div
-            className="pointer-events-none absolute inset-x-0 h-[1.5px] bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent animate-scanline"
-            style={{ top: "0%" }}
           />
         </div>
       </motion.div>
 
-      {/* ── Left Editorial Magazine Layout ── */}
-      <div className="relative z-10 flex flex-col justify-center px-6 pt-24 pb-16 lg:px-16 xl:px-24 max-w-[55vw] w-full">
-        {/* Chapter Tag */}
+      {/* ── Left Editorial Identity Layout ── */}
+      <div className="relative z-10 flex flex-col justify-center px-6 pt-24 pb-16 lg:px-16 xl:px-24 max-w-[58vw] w-full">
+        {/* Chapter Header */}
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-6 flex items-center justify-between"
         >
-          <div className="flex items-center gap-2 font-mono text-[11px] font-bold text-cyan-400 uppercase tracking-widest">
+          <div className="flex items-center gap-2 font-mono text-xs font-bold text-cyan-400 uppercase tracking-widest">
             <span className="h-2 w-2 rounded-full bg-cyan-400 animate-ping" />
-            <span>01 — ARCHITECT</span>
+            <span>CHAPTER 01 — THE ARCHITECT</span>
           </div>
-          <div className="flex items-center gap-1 font-mono text-[10px] text-slate-500">
-            <MapPin className="h-3 w-3 text-cyan-400" />
-            <span>{SITE_CONFIG.author.location}</span>
+          <div className="flex items-center gap-1.5 font-mono text-xs text-slate-400">
+            <MapPin className="h-3.5 w-3.5 text-cyan-400" />
+            <span>{IDENTITY_DATA.location}</span>
           </div>
         </motion.div>
 
-        {/* Huge Magazine Title */}
+        {/* Name Title */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -113,161 +104,123 @@ export function ChapterArchitect({ onNextChapter }: StageProps) {
         >
           <h1
             className="font-black tracking-tight text-white leading-[0.88]"
-            style={{ fontSize: "clamp(3.5rem, 8.5vw, 8.5rem)" }}
+            style={{ fontSize: "clamp(3.5rem, 8vw, 8rem)" }}
           >
             SWARNAVA<br />
             <span className="text-gradient-cyan">SARKAR.</span>
           </h1>
         </motion.div>
 
-        {/* Role Subtitle */}
-        <motion.p
+        {/* Role & Institution */}
+        <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.5 }}
-          className="font-mono text-xs lg:text-sm font-bold text-cyan-400 tracking-wider uppercase mb-6"
+          className="mb-6"
         >
-          {SITE_CONFIG.author.role}
-        </motion.p>
+          <p className="font-mono text-sm lg:text-base font-bold text-cyan-400 tracking-widest uppercase mb-1">
+            {IDENTITY_DATA.role}
+          </p>
+          <p className="font-sans text-base lg:text-lg text-slate-200 flex items-center gap-2 font-medium">
+            <GraduationCap className="h-4.5 w-4.5 text-cyan-400 shrink-0" />
+            <span>{IDENTITY_DATA.university}</span>
+          </p>
+        </motion.div>
 
-        {/* 2-Line Headline Statement */}
-        <motion.p
+        {/* 1-Sentence Mission Statement */}
+        <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.6 }}
-          className="text-base lg:text-lg text-slate-300 font-light leading-relaxed max-w-lg mb-8"
+          className="rounded-2xl border border-cyan-500/30 bg-[#070712]/90 p-5 backdrop-blur-2xl shadow-[0_0_30px_rgba(0,240,255,0.15)] mb-6"
         >
-          Building enterprise AI systems, high-performance computer vision pipelines, and domain-specific RAG copilots.
-        </motion.p>
+          <div className="font-mono text-xs font-bold text-cyan-400 uppercase tracking-widest mb-1.5 flex items-center gap-2">
+            <Sparkles className="h-3.5 w-3.5 text-cyan-400" />
+            <span>ONE-LINE MISSION</span>
+          </div>
+          <p className="text-xl lg:text-2xl font-bold text-white leading-tight">
+            &ldquo;{IDENTITY_DATA.mission}&rdquo;
+          </p>
+        </motion.div>
 
-        {/* Interactive Verified Affiliations Bar */}
+        {/* Currently Building Badge */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.7 }}
-          className="flex items-center gap-3 mb-8 flex-wrap"
+          className="rounded-2xl border border-emerald-500/40 bg-emerald-500/10 p-4 backdrop-blur-md mb-6"
         >
-          <span className="font-mono text-[10px] text-slate-500 uppercase tracking-widest font-bold">Verified Affiliations:</span>
-
-          <div
-            onMouseEnter={() => { soundFX.playHoverBlip(); setActiveCard("apple"); }}
-            onMouseLeave={() => setActiveCard(null)}
-            className="cursor-pointer"
-          >
-            <BrandLogo name="Apple" size="md" />
+          <div className="font-mono text-[11px] font-bold text-emerald-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+            <Activity className="h-3.5 w-3.5 text-emerald-400 animate-pulse" />
+            <span>CURRENTLY BUILDING</span>
           </div>
-
-          <div
-            onMouseEnter={() => { soundFX.playHoverBlip(); setActiveCard("ongc"); }}
-            onMouseLeave={() => setActiveCard(null)}
-            className="cursor-pointer"
-          >
-            <BrandLogo name="ONGC" size="md" />
-          </div>
-
-          <div
-            onMouseEnter={() => { soundFX.playHoverBlip(); setActiveCard("srm"); }}
-            onMouseLeave={() => setActiveCard(null)}
-            className="cursor-pointer"
-          >
-            <BrandLogo name="SRMIST" size="md" />
+          <div className="flex flex-wrap gap-2">
+            {IDENTITY_DATA.currentlyBuildingList.map((item, i) => (
+              <span key={i} className="rounded-lg border border-emerald-500/30 bg-emerald-500/20 px-3 py-1 font-mono text-xs font-bold text-emerald-300">
+                {item}
+              </span>
+            ))}
           </div>
         </motion.div>
 
-        {/* Floating Spotlight Card on Hover */}
-        <div className="h-28 relative mb-8">
-          <AnimatePresence mode="wait">
-            {activeCard === "apple" && (
-              <motion.div
-                key="apple"
-                initial={{ opacity: 0, y: 10, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -10, scale: 0.98 }}
-                transition={{ duration: 0.2 }}
-                className="absolute inset-0 rounded-2xl border border-cyan-400/40 bg-[#070712]/95 p-4 backdrop-blur-2xl shadow-[0_0_30px_rgba(0,240,255,0.25)] flex items-center justify-between"
-              >
-                <div>
-                  <div className="flex items-center gap-2 font-mono text-xs text-cyan-400 font-bold mb-1">
-                    <BrandLogo name="Apple" size="sm" showText={false} />
-                    <span>APPLE iOS STUDENT DEVELOPER PROGRAM</span>
-                  </div>
-                  <p className="text-xs text-slate-300">Selected for Apple iOS Student Developer Program. Native Swift 5.9 &amp; SwiftUI mobile UI architecture.</p>
-                </div>
-                <div className="font-mono text-xs text-cyan-300 font-bold px-3 py-1 bg-cyan-500/10 rounded-lg border border-cyan-500/30">SELECTION</div>
-              </motion.div>
-            )}
-
-            {activeCard === "ongc" && (
-              <motion.div
-                key="ongc"
-                initial={{ opacity: 0, y: 10, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -10, scale: 0.98 }}
-                transition={{ duration: 0.2 }}
-                className="absolute inset-0 rounded-2xl border border-amber-400/40 bg-[#070712]/95 p-4 backdrop-blur-2xl shadow-[0_0_30px_rgba(251,191,36,0.25)] flex items-center justify-between"
-              >
-                <div>
-                  <div className="flex items-center gap-2 font-mono text-xs text-amber-400 font-bold mb-1">
-                    <BrandLogo name="ONGC" size="sm" showText={false} />
-                    <span>OIL AND NATURAL GAS CORPORATION</span>
-                  </div>
-                  <p className="text-xs text-slate-300">Software Engineering Intern. Industrial seismic data processing workflows &amp; AI-assisted interpretation.</p>
-                </div>
-                <div className="font-mono text-xs text-amber-300 font-bold px-3 py-1 bg-amber-500/10 rounded-lg border border-amber-500/30">INTERNSHIP</div>
-              </motion.div>
-            )}
-
-            {activeCard === "srm" && (
-              <motion.div
-                key="srm"
-                initial={{ opacity: 0, y: 10, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -10, scale: 0.98 }}
-                transition={{ duration: 0.2 }}
-                className="absolute inset-0 rounded-2xl border border-purple-400/40 bg-[#070712]/95 p-4 backdrop-blur-2xl shadow-[0_0_30px_rgba(168,85,247,0.25)] flex items-center justify-between"
-              >
-                <div>
-                  <div className="flex items-center gap-2 font-mono text-xs text-purple-400 font-bold mb-1">
-                    <BrandLogo name="SRM" size="sm" showText={false} />
-                    <span>SRM INSTITUTE OF SCIENCE AND TECHNOLOGY</span>
-                  </div>
-                  <p className="text-xs text-slate-300">Third Year B.Tech Student. Computer Science Engineering with Artificial Intelligence &amp; Machine Learning.</p>
-                </div>
-                <div className="font-mono text-xs text-purple-300 font-bold px-3 py-1 bg-purple-500/10 rounded-lg border border-purple-500/30">3RD YEAR</div>
-              </motion.div>
-            )}
-
-            {!activeCard && (
-              <motion.div
-                key="default"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="flex items-center gap-3 text-xs text-slate-500 font-mono italic"
-              >
-                <Sparkles className="h-4 w-4 text-cyan-400 animate-pulse" />
-                <span>Hover over verified brand logos to trigger interactive spotlight card</span>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-
-        {/* Action Button */}
+        {/* Verified Affiliations Bar with Zero-Layout-Shift Floating Popover */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.8 }}
+          className="relative flex flex-col gap-2"
+        >
+          <div className="flex items-center gap-2 font-mono text-xs text-cyan-400 uppercase tracking-widest font-bold">
+            <Info className="h-3.5 w-3.5 text-cyan-400" />
+            <span>VERIFIED AFFILIATIONS (HOVER TO SEE DETAILS):</span>
+          </div>
+
+          <div className="flex items-center gap-3 flex-wrap">
+            {IDENTITY_DATA.affiliations.map((aff) => (
+              <div
+                key={aff.name}
+                onMouseEnter={() => {
+                  soundFX.playHoverBlip();
+                  setHoveredAffiliation(aff.name);
+                }}
+                onMouseLeave={() => setHoveredAffiliation(null)}
+                className="relative"
+              >
+                <BrandLogo name={aff.name} logoSrc={aff.logoSrc} size="md" glow={false} />
+              </div>
+            ))}
+          </div>
+
+          {/* Absolute Floating Popover Overlay (No Layout Shift) */}
+          <AnimatePresence>
+            {activeAffiliationObj && (
+              <motion.div
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 6 }}
+                transition={{ duration: 0.2 }}
+                className="absolute bottom-full left-0 mb-2 w-80 max-w-full rounded-xl border border-cyan-400/50 bg-[#090918]/98 p-3.5 backdrop-blur-2xl shadow-[0_0_30px_rgba(0,240,255,0.3)] z-30 pointer-events-none"
+              >
+                <div className="font-mono text-xs font-bold text-cyan-300 mb-1">{activeAffiliationObj.name}</div>
+                <p className="text-xs text-slate-200 leading-relaxed font-medium">{activeAffiliationObj.details}</p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
+
+        {/* Next Chapter Button */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.9 }}
+          className="mt-8"
         >
           <button
-            onClick={() => {
-              soundFX.playChapterSweep();
-              onNextChapter();
-            }}
-            onMouseEnter={() => soundFX.playHoverBlip()}
-            className="group flex items-center gap-3 rounded-full btn-primary-glow px-8 py-4 font-mono text-sm font-bold text-black tracking-wide transition-all duration-300 hover:scale-105"
+            onClick={() => { soundFX.playClickSnap(); onNextChapter(); }}
+            className="group flex items-center gap-3 rounded-full border border-cyan-400/40 bg-cyan-500/10 px-6 py-3 font-mono text-xs font-bold text-cyan-300 backdrop-blur-xl transition-all duration-300 hover:border-cyan-400 hover:bg-cyan-500/20 hover:shadow-[0_0_25px_rgba(0,240,255,0.3)]"
           >
-            <span>Enter the Artifacts</span>
-            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            <span>PROCEED TO CHAPTER 02 — THE ARTIFACTS</span>
+            <ChevronRight className="h-4 w-4 text-cyan-400 transition-transform duration-300 group-hover:translate-x-1" />
           </button>
         </motion.div>
       </div>

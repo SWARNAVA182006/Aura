@@ -1,20 +1,13 @@
-export type SkillCategory = 
-  | "AI & Machine Learning" 
-  | "Backend & Systems Architecture" 
-  | "Frontend & User Experience" 
-  | "Tools, Cloud & DevOps";
+export type SkillCategory = string;
 
-export interface SkillItem {
+export interface EvidenceSkill {
   name: string;
-  level: number; // 1-100
-  tag: string;
-  highlight?: boolean;
-}
-
-export interface SkillGroup {
   category: SkillCategory;
-  description: string;
-  skills: SkillItem[];
+  tag: string;
+  projectsUsed: { title: string; id: string }[];
+  internshipsUsed: string[];
+  yearsUsed: string;
+  evidenceSummary: string;
 }
 
 export interface CaseStudy {
@@ -34,7 +27,7 @@ export interface Project {
   title: string;
   subtitle: string;
   tagline: string;
-  category: "AI & Computer Vision" | "HPC & Developer Tools" | "Full-Stack & Systems" | "IoT & Environmental" | "Healthcare AI";
+  category: string;
   featured: boolean;
   year: string;
   impactMetrics: { label: string; value: string }[];
@@ -54,12 +47,79 @@ export interface TimelineEntry {
   period: string;
   title: string;
   organization: string;
-  type: "Education" | "Internship" | "Research" | "Competition" | "Milestone";
+  type: "Education" | "Internship" | "Research" | "Competition" | "Milestone" | "Program";
   location: string;
   description: string;
   highlights: string[];
   skillsUsed: string[];
   logoSrc?: string;
+  verificationLink?: string;
+}
+
+export interface EducationEntry {
+  institution: string;
+  degree: string;
+  specialization: string;
+  period: string;
+  location: string;
+  currentCgpa?: string;
+  relevantCoursework: string[];
+  researchHighlights: string[];
+  academicAchievements: string[];
+}
+
+export interface IndustrialCaseStudy {
+  id: string;
+  company: string;
+  role: string;
+  period: string;
+  mentor?: string;
+  location: string;
+  objective: string;
+  whatIWorkedOn: string[];
+  technologies: string[];
+  challenges: string[];
+  learnings: string[];
+  outcome: string;
+  logoSrc?: string;
+  certificateLink?: string;
+}
+
+export interface CertificationEntry {
+  id: string;
+  title: string;
+  issuer: string;
+  date: string;
+  credentialId?: string;
+  description: string;
+  logoSrc?: string;
+  verificationUrl?: string;
+}
+
+export interface CurrentlyBuildingItem {
+  category: "Research" | "Project" | "Learning" | "Future Focus";
+  title: string;
+  description: string;
+  techStack: string[];
+  status: "In Active Development" | "Research Phase" | "Upcoming Release";
+}
+
+export interface ProofItem {
+  id: string;
+  title: string;
+  category: "Internship Letter" | "Certificate" | "GitHub Code" | "LinkedIn Verification" | "Media & Awards";
+  issuer: string;
+  date: string;
+  description: string;
+  evidenceUrl: string;
+  logoSrc?: string;
+}
+
+export interface FutureRoadmapItem {
+  year: string;
+  focusArea: string;
+  milestones: string[];
+  objective: string;
 }
 
 export interface Essay {
@@ -70,7 +130,7 @@ export interface Essay {
   readTime: string;
   category: string;
   summary: string;
-  content: string; // Markdown / prose content
+  content: string;
 }
 
 export interface Achievement {
@@ -80,6 +140,7 @@ export interface Achievement {
   description: string;
   badge: string;
   logoSrc?: string;
+  verificationUrl?: string;
 }
 
 export interface Chapter {

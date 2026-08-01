@@ -13,6 +13,7 @@ import { ChapterTransmission } from "@/components/cinematic/ChapterTransmission"
 import { CommandMenu } from "@/components/ui/CommandMenu";
 import { CursorFollower } from "@/components/ui/CursorFollower";
 import { AuroraBackground } from "@/components/ui/AuroraBackground";
+import { CHAPTERS } from "@/config/content";
 
 export function ChapterController() {
   const [booted, setBooted] = useState(false);
@@ -21,11 +22,12 @@ export function ChapterController() {
   const [cmdOpen, setCmdOpen] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
 
-  const totalChapters = 5;
+  const totalChapters = CHAPTERS.length;
 
   const goToChapter = useCallback((index: number) => {
     if (index >= 0 && index < totalChapters) {
       setChapterIndex(index);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }, [totalChapters]);
 
@@ -37,7 +39,7 @@ export function ChapterController() {
     goToChapter(Math.max(0, chapterIndex - 1));
   }, [chapterIndex, goToChapter]);
 
-  // Keyboard Shortcuts Listener
+  // Keyboard Shortcuts Listener (1-5, Arrows)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (cmdOpen) return;

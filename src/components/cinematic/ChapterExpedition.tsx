@@ -1,307 +1,252 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { GraduationCap, Briefcase, Trophy, Sparkles, ArrowRight, ShieldCheck, Cpu, Terminal } from "lucide-react";
-import { TIMELINE_JOURNEY, SKILL_GROUPS, ACHIEVEMENTS } from "@/config/content";
+import { TIMELINE_EVENTS, EVIDENCE_SKILLS, ACHIEVEMENTS_DATA } from "@/config/content";
 import { BrandLogo } from "@/components/ui/BrandLogo";
+import { ChevronRight, Calendar, MapPin, ExternalLink, Sparkles, Layers, Trophy, CheckCircle2 } from "lucide-react";
 import { soundFX } from "@/lib/sound";
 
-interface StageProps {
+interface ChapterExpeditionProps {
   onNextChapter: () => void;
 }
 
-function getTypeIcon(type: string) {
-  switch (type) {
-    case "Education":   return GraduationCap;
-    case "Internship":  return Briefcase;
-    case "Competition": return Trophy;
-    default:            return Sparkles;
-  }
-}
-
-function getTypeColor(type: string) {
-  switch (type) {
-    case "Education":   return "#818CF8";
-    case "Internship":  return "#00F0FF";
-    case "Competition": return "#FFD700";
-    default:            return "#00E599";
-  }
-}
-
-export function ChapterExpedition({ onNextChapter }: StageProps) {
+export function ChapterExpedition({ onNextChapter }: ChapterExpeditionProps) {
   const [activeTab, setActiveTab] = useState<"milestones" | "skills" | "achievements">("milestones");
-  const [selectedGroup, setSelectedGroup] = useState<string>(SKILL_GROUPS[0].category);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({
-        x: (e.clientX / window.innerWidth - 0.5) * 12,
-        y: (e.clientY / window.innerHeight - 0.5) * 10,
-      });
-    };
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
-  const activeSkills = SKILL_GROUPS.find((g) => g.category === selectedGroup) || SKILL_GROUPS[0];
+  const [expandedTimelineIndex, setExpandedTimelineIndex] = useState<number | null>(0);
 
   return (
-    <section className="relative min-h-screen w-full overflow-hidden bg-[#030305] flex items-center px-6 lg:px-12 py-24">
-      <div className="mx-auto w-full max-w-7xl grid grid-cols-12 gap-8 items-center">
+    <section className="relative min-h-screen w-full bg-[#030305] text-white py-24 px-6 lg:px-16 xl:px-24 flex flex-col justify-center">
+      {/* Background Orbs */}
+      <div className="pointer-events-none absolute left-10 top-1/4 h-[550px] w-[550px] rounded-full bg-cyan-500/10 blur-[180px]" />
+      <div className="pointer-events-none absolute right-10 bottom-1/4 h-[550px] w-[550px] rounded-full bg-indigo-600/10 blur-[180px]" />
 
-        {/* ── Left: High-Tech Cybernetic Editorial Portrait Frame for me1.png ── */}
-        <motion.div
-          className="col-span-12 lg:col-span-5 flex justify-center"
-          initial={{ opacity: 0, x: -30, filter: "blur(10px)" }}
-          animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          style={{
-            transform: `translate3d(${mousePos.x}px, ${mousePos.y}px, 0)`,
-            transition: "transform 0.05s ease-out",
-          }}
-        >
-          <div className="relative w-full max-w-md h-[68vh] rounded-3xl overflow-hidden border border-indigo-500/40 bg-[#070712]/90 shadow-[0_0_50px_rgba(99,102,241,0.25)] backdrop-blur-2xl group">
-            {/* Cybernetic HUD Corner Brackets */}
-            <div className="absolute top-3 left-3 z-20 font-mono text-[9px] font-bold text-cyan-400 flex items-center gap-1.5 bg-black/60 px-2.5 py-1 rounded-md border border-cyan-500/30">
-              <Cpu className="h-3 w-3 animate-pulse" />
-              <span>SUBJECT // SWARNAVA SARKAR</span>
-            </div>
-            <div className="absolute top-3 right-3 z-20 font-mono text-[9px] font-bold text-indigo-400 bg-black/60 px-2.5 py-1 rounded-md border border-indigo-500/30">
-              FRAME 03 // EXPEDITION
-            </div>
-            <div className="absolute bottom-3 left-3 z-20 font-mono text-[9px] font-bold text-emerald-400 flex items-center gap-1 bg-black/60 px-2.5 py-1 rounded-md border border-emerald-500/30">
-              <ShieldCheck className="h-3 w-3" />
-              <span>VERIFIED identity</span>
-            </div>
-
-            {/* Photo Framing — me1.png */}
-            <div className="relative h-full w-full">
-              <Image
-                src="/assets/me1.png"
-                alt="Swarnava Sarkar — AI & ML Engineer"
-                fill
-                priority
-                sizes="(max-width: 1024px) 100vw, 40vw"
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-                style={{ objectPosition: "center 22%", filter: "saturate(0.95) contrast(1.08)" }}
-              />
-
-              {/* Gradient Vignette & Lens Highlights */}
-              <div
-                className="pointer-events-none absolute inset-0"
-                style={{
-                  background: "linear-gradient(to bottom, rgba(7,7,18,0.4) 0%, transparent 20%, transparent 70%, rgba(7,7,18,0.9) 100%)",
-                }}
-              />
-              <div
-                className="pointer-events-none absolute inset-0"
-                style={{
-                  background: "radial-gradient(ellipse at 50% 30%, transparent 30%, rgba(3,3,5,0.7) 100%)",
-                }}
-              />
-              <div
-                className="pointer-events-none absolute inset-0"
-                style={{
-                  background: "linear-gradient(135deg, rgba(99,102,241,0.08) 0%, transparent 60%)",
-                  mixBlendMode: "screen",
-                }}
-              />
-
-              {/* Animated Hologram Beam */}
-              <div
-                className="pointer-events-none absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent animate-scanline"
-                style={{ top: "0%" }}
-              />
-            </div>
+      <div className="relative z-10 max-w-6xl mx-auto w-full">
+        {/* Header Tag & Title */}
+        <div className="mb-8">
+          <div className="inline-flex items-center gap-2 rounded-full border border-indigo-500/40 bg-indigo-500/10 px-4 py-1.5 font-mono text-xs font-bold text-indigo-300 uppercase tracking-widest backdrop-blur-md mb-3">
+            <span className="h-2 w-2 rounded-full bg-indigo-400 animate-ping" />
+            CHAPTER 03 — THE EXPEDITION
           </div>
-        </motion.div>
-
-        {/* ── Right: Expedition Content ── */}
-        <div className="col-span-12 lg:col-span-7 flex flex-col justify-center">
-          {/* Header Tag */}
-          <div className="mb-4 flex items-center justify-between">
-            <div className="inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/8 px-4 py-1.5 font-mono text-[11px] font-bold text-indigo-300 uppercase tracking-widest backdrop-blur-md">
-              <span className="h-1.5 w-1.5 rounded-full bg-indigo-400 animate-ping" />
-              03 — THE EXPEDITION
-            </div>
-            <span className="font-mono text-[10px] text-slate-500 uppercase tracking-widest hidden sm:block">
-              VERIFIED MILESTONES &amp; CAPABILITIES
-            </span>
-          </div>
-
-          {/* Huge Headline */}
-          <h2 className="text-3xl lg:text-5xl font-black text-white tracking-tight mb-5 leading-tight">
-            From SRM AI &amp; ML to <span className="text-gradient-cyan">Industrial Leadership.</span>
+          <h2 className="text-4xl lg:text-6xl font-black text-white tracking-tight leading-tight">
+            Journey, Skill Mesh &amp; <span className="text-gradient-cyan">Credentials.</span>
           </h2>
-
-          {/* Verified Affiliation Logos Bar */}
-          <div className="mb-6 flex flex-wrap gap-2 items-center">
-            <BrandLogo name="SRM" size="md" />
-            <BrandLogo name="ONGC" size="md" />
-            <BrandLogo name="Apple" size="md" />
-            <BrandLogo name="Google" size="md" />
-            <BrandLogo name="IBM" size="md" />
-            <BrandLogo name="Guidewire" size="md" />
-            <BrandLogo name="StudAI" size="md" />
-          </div>
-
-          {/* View Switcher Pills */}
-          <div className="mb-6 flex gap-1 rounded-xl border border-white/8 bg-white/3 p-1 w-fit backdrop-blur-md">
-            {[
-              { key: "milestones" as const, label: "Milestones" },
-              { key: "skills" as const, label: "Skill Mesh" },
-              { key: "achievements" as const, label: "Credentials" },
-            ].map((tab) => (
-              <button
-                key={tab.key}
-                onClick={() => { soundFX.playHoverBlip(); setActiveTab(tab.key); }}
-                className={`rounded-lg px-4 py-1.5 font-mono text-xs font-semibold tracking-wide transition-all duration-300 ${
-                  activeTab === tab.key
-                    ? "bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 shadow-[0_0_15px_rgba(129,140,248,0.3)]"
-                    : "text-slate-500 hover:text-slate-200"
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-
-          {/* Interactive Content Container */}
-          <AnimatePresence mode="wait">
-            {activeTab === "milestones" && (
-              <motion.div
-                key="milestones"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
-                className="flex flex-col gap-3 max-h-[46vh] overflow-y-auto pr-2 custom-scrollbar"
-              >
-                {TIMELINE_JOURNEY.map((entry, idx) => {
-                  const Icon = getTypeIcon(entry.type);
-                  const color = getTypeColor(entry.type);
-                  return (
-                    <div
-                      key={idx}
-                      onMouseEnter={() => soundFX.playHoverBlip()}
-                      className="group rounded-2xl border border-white/8 bg-[#070712]/80 p-4 backdrop-blur-xl transition-all duration-300 hover:border-indigo-500/40 hover:bg-indigo-500/8 hover:scale-[1.01]"
-                    >
-                      <div className="flex items-center justify-between font-mono text-[10px] mb-1.5">
-                        <span className="font-bold tracking-wider" style={{ color }}>{entry.period}</span>
-                        <span className="rounded-md border border-white/10 px-2 py-0.5 text-slate-400 font-semibold">{entry.type}</span>
-                      </div>
-                      <div className="flex items-center gap-2.5">
-                        {entry.logoSrc && (
-                          <div className="relative h-5 w-5 shrink-0 overflow-hidden rounded-md border border-white/10">
-                            <Image src={entry.logoSrc} alt={entry.organization} fill sizes="20px" className="object-contain" />
-                          </div>
-                        )}
-                        <h4 className="text-sm font-bold text-white group-hover:text-cyan-300 transition-colors">{entry.title}</h4>
-                      </div>
-                      <p className="font-mono text-[10px] text-slate-500 mt-1">{entry.organization} · {entry.location}</p>
-                    </div>
-                  );
-                })}
-              </motion.div>
-            )}
-
-            {activeTab === "skills" && (
-              <motion.div
-                key="skills"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
-                className="flex flex-col gap-4"
-              >
-                <div className="flex flex-wrap gap-1.5">
-                  {SKILL_GROUPS.map((g) => (
-                    <button
-                      key={g.category}
-                      onClick={() => { soundFX.playClickSnap(); setSelectedGroup(g.category); }}
-                      onMouseEnter={() => soundFX.playHoverBlip()}
-                      className={`rounded-xl px-3 py-1.5 font-mono text-xs transition-all duration-200 ${
-                        selectedGroup === g.category
-                          ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-bold shadow-[0_0_12px_rgba(0,240,255,0.2)]"
-                          : "border border-white/8 bg-white/3 text-slate-400 hover:text-white"
-                      }`}
-                    >
-                      {g.category}
-                    </button>
-                  ))}
-                </div>
-
-                <div className="rounded-2xl border border-white/8 bg-[#070712]/80 p-5 backdrop-blur-xl flex flex-col gap-3">
-                  <div className="font-mono text-xs font-bold text-white mb-2">{activeSkills.category}</div>
-                  <div className="grid grid-cols-2 gap-2.5">
-                    {activeSkills.skills.map((s) => (
-                      <div
-                        key={s.name}
-                        onMouseEnter={() => soundFX.playHoverBlip()}
-                        className="flex items-center justify-between rounded-xl border border-white/8 bg-white/3 px-3.5 py-2.5 text-xs font-mono transition-all hover:border-cyan-400/40 hover:bg-cyan-500/5"
-                      >
-                        <span className="text-slate-200 font-semibold">{s.name}</span>
-                        <span className="text-cyan-400 font-bold">{s.level}%</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            )}
-
-            {activeTab === "achievements" && (
-              <motion.div
-                key="achievements"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
-                className="grid grid-cols-1 sm:grid-cols-2 gap-3"
-              >
-                {ACHIEVEMENTS.map((ach, idx) => (
-                  <div
-                    key={idx}
-                    onMouseEnter={() => soundFX.playHoverBlip()}
-                    className="group rounded-2xl border border-white/8 bg-[#070712]/80 p-4 backdrop-blur-xl transition-all duration-300 hover:border-indigo-500/40 hover:bg-indigo-500/8 hover:scale-[1.02]"
-                  >
-                    <div className="flex items-center justify-between font-mono text-[10px] text-cyan-400 font-bold mb-1.5">
-                      <span>{ach.badge}</span>
-                      <span className="text-slate-500">{ach.year}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {ach.logoSrc && (
-                        <div className="relative h-4 w-4 shrink-0 overflow-hidden rounded-md border border-white/10">
-                          <Image src={ach.logoSrc} alt={ach.organization} fill sizes="16px" className="object-contain" />
-                        </div>
-                      )}
-                      <h4 className="text-xs font-bold text-white group-hover:text-indigo-300 transition-colors">{ach.title}</h4>
-                    </div>
-                    <p className="font-mono text-[10px] text-slate-500 mt-1">{ach.organization}</p>
-                  </div>
-                ))}
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* CTA Footer */}
-          <div className="mt-8 border-t border-white/10 pt-6 flex justify-end">
-            <button
-              onClick={() => {
-                soundFX.playChapterSweep();
-                onNextChapter();
-              }}
-              onMouseEnter={() => soundFX.playHoverBlip()}
-              className="flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 px-7 py-3 font-mono text-xs font-bold text-white transition-all duration-300 hover:scale-105 shadow-[0_0_20px_rgba(99,102,241,0.4)]"
-            >
-              <span>Proceed to Journal</span>
-              <ArrowRight className="h-4 w-4" />
-            </button>
-          </div>
         </div>
 
+        {/* 3-Tab Interactive Switcher Bar */}
+        <div className="mb-8 flex gap-2 rounded-2xl border border-white/15 bg-[#070712]/90 p-1.5 w-fit backdrop-blur-2xl shadow-2xl">
+          {[
+            { key: "milestones" as const, label: "Milestones Timeline" },
+            { key: "skills" as const, label: "Evidence Skill Mesh" },
+            { key: "achievements" as const, label: "Verified Credentials" },
+          ].map((tab) => (
+            <button
+              key={tab.key}
+              onClick={() => {
+                soundFX.playHoverBlip();
+                setActiveTab(tab.key);
+              }}
+              className={`rounded-xl px-5 py-2 font-mono text-xs md:text-sm font-bold tracking-wide transition-all duration-300 ${
+                activeTab === tab.key
+                  ? "bg-indigo-500/25 text-indigo-200 border border-indigo-500/50 shadow-[0_0_20px_rgba(129,140,248,0.35)]"
+                  : "text-slate-400 hover:text-slate-100"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Tab 1: Expandable Milestones Timeline */}
+        {activeTab === "milestones" && (
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="relative border-l-2 border-cyan-500/30 ml-4 lg:ml-6 space-y-5 mb-12"
+          >
+            {TIMELINE_EVENTS.map((evt, idx) => {
+              const isExpanded = expandedTimelineIndex === idx;
+              return (
+                <div key={idx} className="relative pl-7 group">
+                  {/* Node Bullet Dot */}
+                  <button
+                    onClick={() => {
+                      soundFX.playClickSnap();
+                      setExpandedTimelineIndex(isExpanded ? null : idx);
+                    }}
+                    className={`absolute -left-[17px] top-1.5 h-8 w-8 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
+                      isExpanded
+                        ? "border-cyan-400 bg-cyan-500 shadow-[0_0_20px_rgba(0,240,255,0.6)] scale-110"
+                        : "border-slate-600 bg-[#070712] hover:border-cyan-400 hover:scale-105"
+                    }`}
+                  >
+                    <span className={`h-2.5 w-2.5 rounded-full ${isExpanded ? "bg-black" : "bg-cyan-400"}`} />
+                  </button>
+
+                  {/* Summary Card */}
+                  <div
+                    onClick={() => {
+                      soundFX.playHoverBlip();
+                      setExpandedTimelineIndex(isExpanded ? null : idx);
+                    }}
+                    className={`cursor-pointer rounded-2xl border p-5 transition-all duration-300 backdrop-blur-xl ${
+                      isExpanded
+                        ? "border-cyan-400/60 bg-[#090918]/95 shadow-[0_0_30px_rgba(0,240,255,0.15)]"
+                        : "border-white/10 bg-[#070712]/80 hover:border-white/20 hover:bg-[#090918]"
+                    }`}
+                  >
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <div className="flex items-center gap-3">
+                        <span className="font-mono text-xs font-bold text-cyan-400 bg-cyan-500/10 border border-cyan-500/30 px-3 py-1 rounded-full">
+                          {evt.period}
+                        </span>
+                        <h3 className="font-bold text-lg text-white group-hover:text-cyan-300 transition-colors">
+                          {evt.title}
+                        </h3>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        {evt.logoSrc && <BrandLogo name={evt.organization} logoSrc={evt.logoSrc} size="sm" showText={false} />}
+                        <span className="font-mono text-xs text-slate-400 font-semibold">{evt.organization}</span>
+                      </div>
+                    </div>
+
+                    {/* Expandable Details */}
+                    <AnimatePresence>
+                      {isExpanded && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="mt-4 pt-4 border-t border-white/10 space-y-3"
+                        >
+                          <p className="text-slate-300 text-sm leading-relaxed">{evt.description}</p>
+
+                          <div className="flex flex-wrap gap-2 pt-2">
+                            {evt.skillsUsed.map((sk, i) => (
+                              <span
+                                key={i}
+                                className="rounded-lg border border-white/15 bg-white/5 px-2.5 py-1 font-mono text-xs text-slate-200 font-medium"
+                              >
+                                {sk}
+                              </span>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </div>
+              );
+            })}
+          </motion.div>
+        )}
+
+        {/* Tab 2: Evidence Skill Mesh */}
+        {activeTab === "skills" && (
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
+          >
+            {EVIDENCE_SKILLS.map((sk, idx) => (
+              <div
+                key={idx}
+                className="rounded-3xl border border-white/10 bg-[#070712]/90 p-6 backdrop-blur-2xl transition-all duration-300 hover:border-cyan-400/60 hover:bg-[#090918] flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="font-mono text-xs font-bold text-cyan-400 border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 rounded-full">
+                      {sk.tag}
+                    </span>
+                    <span className="font-mono text-xs text-slate-400 font-semibold">{sk.yearsUsed}</span>
+                  </div>
+                  <h3 className="text-2xl font-black text-white mb-2">{sk.name}</h3>
+                  <p className="text-xs text-slate-300 leading-relaxed mb-4">{sk.evidenceSummary}</p>
+
+                  {/* Projects Used */}
+                  {sk.projectsUsed.length > 0 && (
+                    <div className="mb-3">
+                      <div className="font-mono text-[10px] text-cyan-400 uppercase tracking-wider font-bold mb-1.5">PROJECT PROOF</div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {sk.projectsUsed.map((p, i) => (
+                          <span key={i} className="rounded-lg border border-white/15 bg-white/5 px-2.5 py-1 font-mono text-[11px] text-slate-200">
+                            {p.title}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Internships Used */}
+                  {sk.internshipsUsed.length > 0 && (
+                    <div className="mb-4">
+                      <div className="font-mono text-[10px] text-cyan-400 uppercase tracking-wider font-bold mb-1.5">INTERNSHIP PROOF</div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {sk.internshipsUsed.map((int, i) => (
+                          <span key={i} className="rounded-lg border border-indigo-500/30 bg-indigo-500/10 px-2.5 py-1 font-mono text-[11px] text-indigo-300 font-semibold">
+                            {int}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </motion.div>
+        )}
+
+        {/* Tab 3: Verified Credentials & Achievements */}
+        {activeTab === "achievements" && (
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
+          >
+            {ACHIEVEMENTS_DATA.map((ach, idx) => (
+              <motion.div
+                key={idx}
+                whileHover={{ scale: 1.03, y: -4 }}
+                onMouseEnter={() => soundFX.playHoverBlip()}
+                className="group rounded-3xl border border-white/10 bg-[#070712]/90 p-6 backdrop-blur-2xl transition-all duration-300 hover:border-cyan-400/60 hover:bg-[#090918] hover:shadow-[0_0_30px_rgba(0,240,255,0.2)] flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    {ach.logoSrc ? (
+                      <BrandLogo name={ach.organization} logoSrc={ach.logoSrc} size="md" showText={false} />
+                    ) : (
+                      <Trophy className="h-8 w-8 text-cyan-400" />
+                    )}
+                    <span className="font-mono text-xs font-bold text-cyan-400 border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 rounded-full">
+                      {ach.badge}
+                    </span>
+                  </div>
+                  <h3 className="font-bold text-lg text-white group-hover:text-cyan-300 transition-colors mb-2">
+                    {ach.title}
+                  </h3>
+                  <p className="font-mono text-xs text-slate-400 mb-2">{ach.organization} · {ach.year}</p>
+                  <p className="text-xs text-slate-300 leading-relaxed mb-4">{ach.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+
+        {/* Footer Navigation */}
+        <div className="flex justify-end">
+          <button
+            onClick={() => { soundFX.playClickSnap(); onNextChapter(); }}
+            className="group flex items-center gap-3 rounded-full border border-cyan-400/40 bg-cyan-500/10 px-6 py-3 font-mono text-xs font-bold text-cyan-300 backdrop-blur-xl transition-all duration-300 hover:border-cyan-400 hover:bg-cyan-500/20 hover:shadow-[0_0_25px_rgba(0,240,255,0.3)]"
+          >
+            <span>PROCEED TO CHAPTER 04 — THE JOURNAL</span>
+            <ChevronRight className="h-4 w-4 text-cyan-400 transition-transform duration-300 group-hover:translate-x-1" />
+          </button>
+        </div>
       </div>
     </section>
   );

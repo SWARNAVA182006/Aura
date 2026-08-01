@@ -3,12 +3,22 @@
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Play, Radio, Sparkles } from "lucide-react";
+import { Play, ShieldCheck, Terminal, Sparkles } from "lucide-react";
 import { soundFX } from "@/lib/sound";
 
 interface PrologueProps {
   onComplete: () => void;
 }
+
+const BOOT_LOGS = [
+  "Initializing Digital Identity...",
+  "Loading Engineering Timeline...",
+  "Verifying Academic Records (SRMIST CSE AI & ML)...",
+  "Connecting GitHub (SWARNAVA182006)...",
+  "Loading Industrial Experience (ONGC, StudAI, Apple)...",
+  "Loading Research & AI Systems...",
+  "Loading Vision & Future Roadmap...",
+];
 
 function SplitText({
   text,
@@ -43,6 +53,7 @@ function SplitText({
 export function PrologueLoader({ onComplete }: PrologueProps) {
   const [started, setStarted] = useState(false);
   const [phase, setPhase] = useState<"ready" | "scan" | "iris" | "dim" | "type" | "rule" | "done">("ready");
+  const [logIndex, setLogIndex] = useState(0);
   const [exiting, setExiting] = useState(false);
   const startedRef = useRef(false);
 
@@ -51,12 +62,10 @@ export function PrologueLoader({ onComplete }: PrologueProps) {
     startedRef.current = true;
     setStarted(true);
 
-    // Audio context unlock & sci-fi boot sound
     soundFX.playBootSubBass();
 
     const t = (ms: number, fn: () => void) => setTimeout(fn, ms);
 
-    // Full 4-second loading timeline
     const timers = [
       t(400, () => {
         soundFX.playScanBeam();
@@ -77,6 +86,15 @@ export function PrologueLoader({ onComplete }: PrologueProps) {
 
     return () => timers.forEach(clearTimeout);
   };
+
+  // Cycle boot logs
+  useEffect(() => {
+    if (!started) return;
+    const interval = setInterval(() => {
+      setLogIndex((prev) => (prev < BOOT_LOGS.length - 1 ? prev + 1 : prev));
+    }, 450);
+    return () => clearInterval(interval);
+  }, [started]);
 
   // Auto-start fallback after 2.5s if user hasn't clicked
   useEffect(() => {
@@ -208,8 +226,16 @@ export function PrologueLoader({ onComplete }: PrologueProps) {
               className="relative z-30 flex items-center gap-3 rounded-full border border-cyan-400/50 bg-[#070712]/95 px-8 py-4 font-mono text-xs font-bold text-cyan-300 backdrop-blur-2xl shadow-[0_0_40px_rgba(0,240,255,0.35)] animate-pulse"
             >
               <Play className="h-4 w-4 fill-cyan-400 text-cyan-400" />
-              <span>TAP TO START EXPERIENCE &amp; UNLOCK AUDIO</span>
+              <span>INITIALIZING DIGITAL IDENTITY... TAP TO ENTER</span>
             </motion.div>
+          )}
+
+          {/* Streaming Classified Boot Logs */}
+          {started && phase !== "ready" && (
+            <div className="absolute top-10 left-10 z-30 font-mono text-xs text-cyan-400/80 flex items-center gap-2 bg-black/60 px-4 py-2 rounded-lg border border-cyan-500/30 backdrop-blur-md">
+              <Terminal className="h-3.5 w-3.5 text-cyan-400 animate-pulse" />
+              <span>{BOOT_LOGS[logIndex]}</span>
+            </div>
           )}
 
           {/* Typography — appears after "type" phase */}
@@ -265,7 +291,7 @@ export function PrologueLoader({ onComplete }: PrologueProps) {
                     fontWeight: 600,
                   }}
                 >
-                  AI &amp; ML ENGINEER · SOFTWARE ENGINEER · AI RESEARCH ENTHUSIAST
+                  WELCOME · AI &amp; ML ENGINEER · CLASSIFIED PROFILE
                 </motion.p>
 
                 {/* Horizontal rule */}

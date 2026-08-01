@@ -1,4 +1,15 @@
-import { Project, SkillGroup, TimelineEntry, Essay, Achievement, Chapter, EditorialPhoto } from "@/types";
+import {
+  Project,
+  TimelineEntry,
+  Achievement,
+  Chapter,
+  EditorialPhoto,
+  EducationEntry,
+  IndustrialCaseStudy,
+  CertificationEntry,
+  EvidenceSkill,
+  Essay,
+} from "@/types";
 
 export const CHAPTERS: Chapter[] = [
   {
@@ -6,32 +17,32 @@ export const CHAPTERS: Chapter[] = [
     index: 0,
     number: "01",
     title: "THE ARCHITECT",
-    subtitle: "Origin, Philosophy & Industrial Foundation",
-    tag: "ORIGIN & PRINCIPLES",
+    subtitle: "AI & ML Engineer · Computer Vision · Enterprise AI · IoT & Embedded Systems",
+    tag: "GLOBAL ENGINEERING IDENTITY",
   },
   {
     id: "artifacts",
     index: 1,
     number: "02",
     title: "THE ARTIFACTS",
-    subtitle: "Cinematic Real Project Case Studies",
-    tag: "SYSTEMS & ENGINEERING",
+    subtitle: "Production AI Systems, Computer Vision & RAG Copilots",
+    tag: "PROJECT POSITIONING & ARCHITECTURE",
   },
   {
     id: "expedition",
     index: 2,
     number: "03",
     title: "THE EXPEDITION",
-    subtitle: "Interactive Journey Map & Skill Mesh",
-    tag: "TIMELINE & CAPABILITIES",
+    subtitle: "Timeline, Evidence Skill Mesh & Verified Credentials",
+    tag: "TIMELINE & CREDENTIALS",
   },
   {
     id: "journal",
     index: 3,
     number: "04",
-    title: "THE JOURNAL",
-    subtitle: "Technical Essays & Thought Leadership",
-    tag: "RESEARCH & REFLECTIONS",
+    title: "RESEARCH & EXPLORATION",
+    subtitle: "Ideas, experiments, engineering decisions, and technical investigations behind the AI systems I build.",
+    tag: "RESEARCH & EXPLORATION",
   },
   {
     id: "transmission",
@@ -53,728 +64,862 @@ export const EDITORIAL_PHOTOS: EditorialPhoto[] = [
   {
     src: "/assets/me1.png",
     alt: "Swarnava Sarkar — Editorial Portrait",
-    caption: "Swarnava Sarkar • First-Principles Systems Craft",
+    caption: "Swarnava Sarkar • First-Principles Engineering",
     aspectRatio: "square",
   },
 ];
 
-export const HERO_DATA = {
-  name: "SWARNAVA SARKAR",
-  tagline: "AI & ML Engineer • Software Architect • Computer Science Researcher",
-  institution: "SRM Institute of Science and Technology (B.Tech CS, AI & ML Specialization)",
-  bio: "I design and build production-grade AI systems, high-performance web architectures, and computer vision pipelines. From seismic processing at ONGC to specialized HPC developer copilots and Apple iOS development, my work fuses first-principles engineering with luxury digital craft.",
-  availability: "Available for Senior AI & ML Engineering & Architectural Leadership",
-};
+export const ENGINEERING_TITLES = [
+  "AI & ML Engineer",
+  "Computer Vision Engineer",
+  "Enterprise AI Engineer",
+  "IoT & Embedded Systems Engineer",
+  "Software Engineer",
+  "Full Stack Developer",
+  "Research Engineer",
+  "Industrial AI Developer",
+  "Apple Student Developer",
+];
 
-export const ENGINEERING_PHILOSOPHY = {
-  overview:
-    "Software is dynamic engineering leverage that translates mathematical, physical, and domain constraints into resilient digital systems.",
-  principles: [
+export const ENGINEERING_DOMAINS = [
+  "Artificial Intelligence",
+  "Machine Learning",
+  "Deep Learning",
+  "Computer Vision",
+  "Generative AI",
+  "Large Language Models",
+  "Retrieval-Augmented Generation (RAG)",
+  "Industrial AI",
+  "High Performance Computing (HPC)",
+  "Geophysical Computing",
+  "Seismic AI",
+  "Backend Engineering",
+  "Full Stack Development",
+  "API Engineering",
+  "Distributed Systems",
+  "IoT",
+  "Embedded Systems",
+  "Edge AI",
+  "Environmental AI",
+  "Automation",
+  "Research Engineering",
+];
+
+export const CURRENT_INTERESTS = [
+  "Enterprise AI",
+  "Industrial AI",
+  "Computer Vision",
+  "RAG Systems",
+  "LLMs",
+  "Developer Copilots",
+  "High Performance Computing",
+  "IoT",
+  "Embedded AI",
+  "Edge Intelligence",
+  "Scientific Computing",
+];
+
+export const RESEARCH_INTERESTS = [
+  "Computer Vision",
+  "Industrial AI",
+  "Generative AI",
+  "Geophysical AI",
+  "Edge AI",
+  "Embedded Intelligence",
+  "Environmental AI",
+  "Human-Centered AI",
+];
+
+export const IDENTITY_DATA = {
+  name: "SWARNAVA SARKAR",
+  role: "AI & ML Engineer · Computer Vision Engineer · Enterprise AI Engineer",
+  subtitle: "AI & ML Engineer · Computer Vision Engineer · Enterprise AI Engineer · IoT & Embedded Systems Engineer · Software Engineer · Full Stack Developer · Research Engineer · Industrial AI Developer · Apple Student Developer",
+  university: "SRM Institute of Science and Technology",
+  degree: "B.Tech Computer Science Engineering (AI & ML Specialization)",
+  location: "Chennai, Tamil Nadu, India",
+  currentlyBuilding: "HPCC Copilot, SeisVision AI, Enterprise AI Systems",
+  currentlyBuildingList: ["HPCC Copilot", "SeisVision AI", "Enterprise AI Systems"],
+  researching: "Computer Vision & Seismic Signal Processing",
+  learning: "Apple iOS Development & Swift Architecture",
+  mission: "Build AI systems that solve real industrial problems.",
+  status: "Active Engineering & AI Research",
+  email: "swarnava2019@gmail.com",
+  github: "https://github.com/SWARNAVA182006",
+  linkedin: "https://www.linkedin.com/in/swarnava-sarkar-8a3904336/",
+  affiliations: [
     {
-      number: "01",
-      title: "First-Principles Problem Solving",
-      description:
-        "Before selecting a framework or AI model, I analyze the underlying domain constraints to construct tailored, low-latency architectures.",
+      name: "Apple Student Developer",
+      logoSrc: "/assets/ios.jpg",
+      details: "Selected for prestigious Apple iOS Student Developer Program, building native Swift/SwiftUI apps & CoreML inference.",
     },
     {
-      number: "02",
-      title: "Engineering Rigor & Strict Typing",
-      description:
-        "Clean architecture, strict static typing, comprehensive documentation, and defensive modular boundaries ensure software maintainability at scale.",
+      name: "ONGC",
+      logoSrc: "/assets/ongc.png",
+      details: "AI & ML Intern at Oil and Natural Gas Corporation, processing subsurface seismic SEG-Y datasets & fault models.",
     },
     {
-      number: "03",
-      title: "Pragmatic AI & Deterministic Guardrails",
-      description:
-        "AI is a powerful primitive, but probabilistic LLMs must be coupled with strict AST parsing and validation state machines for production reliability.",
-    },
-    {
-      number: "04",
-      title: "Luxury Craft & Perceived Speed",
-      description:
-        "Low latency, intuitive visual hierarchy, tactile micro-interactions, and high accessibility standards build long-term user trust.",
+      name: "SRMIST",
+      logoSrc: "/assets/srm.png",
+      details: "B.Tech Computer Science Engineering (AI & ML Specialization) at SRM Institute of Science and Technology, Kattankulathur.",
     },
   ],
-  whySoftware:
-    "Software allows a single engineer to conceptualize a solution, construct the underlying architecture, train intelligence models, and deploy value globally in real time.",
-  whyAi:
-    "AI transitions software from static execution to automated reasoning over ambiguous data. Building at this frontier allows me to push the boundaries of scientific computing and human agency.",
 };
+
+export const EDUCATION_DATA: EducationEntry = {
+  institution: "SRM Institute of Science and Technology, Kattankulathur",
+  degree: "Bachelor of Technology (B.Tech)",
+  specialization: "Computer Science Engineering (AI & ML Specialization)",
+  period: "2022 — 2026",
+  location: "Chennai, Tamil Nadu, India",
+  currentCgpa: "B.Tech CSE (AI & ML)",
+  relevantCoursework: [
+    "Artificial Intelligence",
+    "Machine Learning",
+    "Deep Learning",
+    "Computer Vision",
+    "Data Structures & Algorithms (DSA)",
+    "Operating Systems",
+    "Computer Networks",
+    "Database Management Systems (DBMS)",
+  ],
+  researchHighlights: [
+    "Undergraduate Research Opportunity Program (UROP) Scholar under Dr. Vidhya B of SRM, Assistant Professor",
+    "Seismic Processing Computer Vision Pipeline Development",
+    "Guidewire DevTrails National Finalist",
+  ],
+  academicAchievements: [
+    "Apple Student Developer Program Selection",
+    "ONGC AI & ML Internship Selection",
+    "Google AICTE Virtual Internship Selection",
+  ],
+};
+
+// Exact timeline sequence: SRMIST -> UROP -> Google AICTE -> IBM -> OpenAI -> StudAI -> ONGC -> Guidewire DevTrails Finalist -> TechForce Academy Australia -> Apple Student Developer Program Selection
+export const TIMELINE_EVENTS: TimelineEntry[] = [
+  {
+    period: "2022",
+    title: "Entered SRMIST (B.Tech CSE AI & ML)",
+    organization: "SRM Institute of Science and Technology",
+    type: "Education",
+    location: "Chennai, India",
+    description: "Entered SRMIST to specialize in AI & Machine Learning, building core CS foundations in DSA, OOP, and linear algebra.",
+    highlights: ["First-principles computer science focus", "Explored Python, C++, and Neural Network algorithms"],
+    skillsUsed: ["Python", "C++", "Java", "Data Structures", "Linear Algebra"],
+    logoSrc: "/assets/srm.png",
+  },
+  {
+    period: "2023 — 2024",
+    title: "Undergraduate Research Scholar (UROP) — Under Dr. Vidhya B",
+    organization: "SRM Institute of Science and Technology (Under Dr. Vidhya B, Asst. Professor)",
+    type: "Research",
+    location: "Chennai, India",
+    description: "Selected for UROP research scholar role under Dr. Vidhya B of SRM, Assistant Professor, exploring computer vision and signal processing.",
+    highlights: ["Mentored by Dr. Vidhya B, Assistant Professor at SRM", "Computer Vision & Signal Processing research"],
+    skillsUsed: ["PyTorch", "OpenCV", "Python", "NumPy", "Computer Vision"],
+    logoSrc: "/assets/urop.jpg",
+  },
+  {
+    period: "2024",
+    title: "Google AICTE Virtual Internship",
+    organization: "Google for Developers & EduSkills & AICTE",
+    type: "Internship",
+    location: "Virtual",
+    description: "Completed intensive AI/ML virtual internship program focused on TensorFlow, Cloud AI, and modern ML pipelines.",
+    highlights: ["Google Developer AI certificate", "Enterprise ML workflow training"],
+    skillsUsed: ["TensorFlow", "Google Cloud", "Python", "Machine Learning"],
+    logoSrc: "/assets/google.png",
+  },
+  {
+    period: "2024",
+    title: "IBM Machine Learning Specialization",
+    organization: "IBM",
+    type: "Program",
+    location: "Virtual",
+    description: "Earned IBM professional certification covering supervised learning, deep learning, and model optimization.",
+    highlights: ["IBM verified ML credential", "Model validation & hyperparameter tuning"],
+    skillsUsed: ["Python", "Scikit-learn", "Deep Learning", "IBM Watson"],
+    logoSrc: "/assets/ibm.jpg",
+  },
+  {
+    period: "2024",
+    title: "OpenAI Developer Workshop",
+    organization: "OpenAI",
+    type: "Program",
+    location: "Virtual",
+    description: "Participated in OpenAI developer sessions focused on prompt engineering, embeddings, and API integration.",
+    highlights: ["GPT-4 API integration", "Embedding vector search implementation"],
+    skillsUsed: ["OpenAI API", "LangChain", "Qdrant", "Generative AI"],
+    logoSrc: "/assets/openai.jpg",
+  },
+  {
+    period: "2024",
+    title: "AIML Engineer Intern — StudAI One",
+    organization: "StudAI One",
+    type: "Internship",
+    location: "Remote / India",
+    description: "Engineered AI backend services, intelligent query engines, and educational copilot workflows.",
+    highlights: ["Developed production FastAPI endpoints", "RAG vector retrieval tuning"],
+    skillsUsed: ["FastAPI", "Python", "Retrieval-Augmented Generation (RAG)", "Qdrant"],
+    logoSrc: "/assets/studai.jpg",
+  },
+  {
+    period: "2024",
+    title: "AI & ML Intern — ONGC",
+    organization: "Oil and Natural Gas Corporation (ONGC)",
+    type: "Internship",
+    location: "India",
+    description: "AI & ML summer internship analyzing geophysical seismic datasets and building computational ML pipelines.",
+    highlights: ["Subsurface seismic data processing", "Geophysical AI interpretation"],
+    skillsUsed: ["Geophysical Computing", "Seismic AI", "SEG-Y", "Python", "PyTorch"],
+    logoSrc: "/assets/ongc.png",
+  },
+  {
+    period: "2024",
+    title: "Guidewire DevTrails Finalist",
+    organization: "Guidewire",
+    type: "Competition",
+    location: "India",
+    description: "Selected as national finalist in Guidewire DevTrails competition for architecting ClaimsAssist AI policyholder copilot.",
+    highlights: ["National finalist placement", "Enterprise insurance AI architecture"],
+    skillsUsed: ["TypeScript", "React", "FastAPI", "Insurance Technology"],
+    logoSrc: "/assets/guidewire.jpg",
+  },
+  {
+    period: "2024",
+    title: "Software Engineering Project Intern — TechForce Academy Australia",
+    organization: "TechForce Academy Australia",
+    type: "Internship",
+    location: "Remote / Australia",
+    description: "Engineered PerformPro — an employee performance management and analytics dashboard platform for TechForce Academy Australia.",
+    highlights: ["Built FastAPI analytics backend", "Designed React metrics dashboard"],
+    skillsUsed: ["FastAPI", "React", "PostgreSQL", "Backend Engineering"],
+    logoSrc: "/assets/techforce.webp",
+  },
+  {
+    period: "2025",
+    title: "Apple Student Developer Program Selection",
+    organization: "Apple Developer Program",
+    type: "Program",
+    location: "Chennai / Cupertino",
+    description: "Selected for prestigious Apple iOS Student Developer Program, building native Swift/SwiftUI applications.",
+    highlights: ["Apple program selection", "Native iOS & Swift architecture"],
+    skillsUsed: ["Swift", "iOS", "Embedded Systems", "Edge AI"],
+    logoSrc: "/assets/ios.jpg",
+  },
+];
+
+export const INDUSTRIAL_CASE_STUDIES: IndustrialCaseStudy[] = [
+  {
+    id: "ongc",
+    company: "Oil and Natural Gas Corporation (ONGC)",
+    role: "AI & ML Intern",
+    period: "Summer 2024",
+    location: "India",
+    objective: "Analyze subsurface seismic dataset anomalies and evaluate machine learning models for geological fault identification.",
+    whatIWorkedOn: [
+      "Processed multi-gigabyte seismic SEG-Y datasets using custom Python signal pipelines.",
+      "Trained 2D/3D convolutional architectures for automated horizon and fault line extraction.",
+      "Delivered technical evaluation report to ONGC domain geophysicists.",
+    ],
+    technologies: ["Python", "PyTorch", "OpenCV", "NumPy", "SEG-Y"],
+    challenges: ["High noise ratio in raw seismic data requiring custom filtering.", "Large 3D volume memory constraints on standard GPUs."],
+    learnings: ["First-principles domain alignment is critical before applying ML models.", "Handling enterprise industrial data pipelines requires strict validation."],
+    outcome: "Successfully demonstrated automated fault detection workflow with high boundary precision.",
+    logoSrc: "/assets/ongc.png",
+  },
+  {
+    id: "studai",
+    company: "StudAI One",
+    role: "AIML Engineer Intern",
+    period: "2024",
+    location: "Remote / India",
+    objective: "Architect high-performance AI query backend services and RAG knowledge retrieval systems.",
+    whatIWorkedOn: [
+      "Built asynchronous FastAPI microservices serving LLM retrieval pipelines.",
+      "Optimized vector search indexing and chunking strategies to minimize hallucinations.",
+    ],
+    technologies: ["FastAPI", "Python", "LangChain", "Qdrant", "Docker"],
+    challenges: ["Minimizing response latency for multi-turn user conversations."],
+    learnings: ["Designing deterministic guardrails around probabilistic LLM APIs is mandatory."],
+    outcome: "Deployed stable backend microservices powering intelligent student copilot interfaces.",
+    logoSrc: "/assets/studai.jpg",
+  },
+  {
+    id: "apple",
+    company: "Apple Developer Program",
+    role: "Apple Student Developer",
+    period: "2025",
+    location: "Chennai / Cupertino",
+    objective: "Master native iOS engineering principles, Swift programming, and on-device inference.",
+    whatIWorkedOn: [
+      "Engineered native SwiftUI applications utilizing modern state management.",
+      "Integrated model runtimes for local on-device inference.",
+    ],
+    technologies: ["Swift", "TypeScript", "Edge AI", "iOS"],
+    challenges: ["Optimizing memory allocation for local neural network inference."],
+    learnings: ["Platform-native design language creates unparalleled user delight."],
+    outcome: "Earned selection into Apple's premier student developer initiative.",
+    logoSrc: "/assets/ios.jpg",
+  },
+  {
+    id: "techforce",
+    company: "TechForce Academy Australia",
+    role: "Software Engineering Project Intern",
+    period: "2024",
+    location: "Remote / Australia",
+    objective: "Develop PerformPro employee performance management dashboard with FastAPI and PostgreSQL.",
+    whatIWorkedOn: [
+      "Built REST microservices for employee metrics tracking and authorization.",
+      "Integrated React dashboard visualization for real-time analytics.",
+    ],
+    technologies: ["FastAPI", "React", "PostgreSQL", "TypeScript", "REST APIs"],
+    challenges: ["Securing sensitive employee metrics with strict role validation."],
+    learnings: ["Clean REST API architecture simplifies frontend state management."],
+    outcome: "Delivered production PerformPro platform for TechForce Academy Australia.",
+    logoSrc: "/assets/techforce.webp",
+  },
+];
 
 export const PROJECTS: Project[] = [
   {
-    id: "seisvision-ai",
+    id: "seisvision",
     title: "SeisVision AI",
-    subtitle: "Seismic Data Processing & AI Vision Analysis Platform",
-    tagline: "Automating seismic fault segmentation and horizon mapping using deep Vision Transformers and CNNs.",
-    category: "AI & Computer Vision",
+    subtitle: "Enterprise AI · Computer Vision · Geophysical Computing · Seismic Interpretation",
+    tagline: "Computer vision segmentation engine for industrial geophysical interpretation.",
+    category: "Enterprise AI · Computer Vision · Geophysical Computing",
     featured: true,
     year: "2024",
     impactMetrics: [
-      { label: "Interpretation Time", value: "-85%" },
-      { label: "Segmentation IoU", value: "94.2%" },
-      { label: "Inference Speed", value: "0.4s/slice" },
+      { label: "Domain", value: "Geophysical Computing" },
+      { label: "Pipeline", value: "SEG-Y Signal Processing" },
+      { label: "Stack", value: "PyTorch & OpenCV & FastAPI" },
     ],
-    description:
-      "A deep learning web platform for geoscientists to automatically interpret 2D/3D seismic reflection profile data, identifying fault lines and subsurface geological formations with high spatial accuracy.",
-    techStack: ["Python", "PyTorch", "OpenCV", "FastAPI", "React", "Three.js", "Docker"],
-    githubUrl: "https://github.com/swarnavasarkar",
+    description: "AI-assisted seismic interpretation software utilizing custom computer vision pipelines to process 2D profiles and 3D SEG-Y volumes for automated geological fault line extraction.",
+    techStack: ["Enterprise AI", "Computer Vision", "Geophysical Computing", "Seismic Interpretation", "Deep Learning", "FastAPI", "Docker", "SEG-Y", "PyTorch", "Python", "OpenCV"],
+    githubUrl: "https://github.com/SWARNAVA182006/SeisVisionAI.git",
     caseStudy: {
-      problemStatement:
-        "Geoscientists spend hundreds of manual hours annotating seismic reflection profiles to identify faults and hydrocarbon reservoirs. Manual interpretation is prone to human fatigue and subjective bias.",
-      motivation:
-        "During my exposure to subsurface exploration workflows during my ONGC summer internship, I identified the need for an automated visual AI assistant to accelerate seismic interpretation.",
-      research:
-        "Researched U-Net architectures, Vision Transformers (ViT), and bilateral filtering edge detection algorithms for 2D/3D seismic slices. Evaluated combined SSIM + Dice loss functions for sparse fault boundary annotations.",
+      problemStatement: "Manual seismic fault interpretation requires hundreds of expert hours per survey.",
+      motivation: "Automating geological fault segmentation accelerates subsurface reservoir characterization.",
+      research: "Applied computer vision segmentation backbones trained on seismic amplitude slices.",
       systemArchitecture: [
-        "FastAPI backend serving PyTorch U-Net fault segmentation models via TensorRT ONNX runtime.",
-        "WebGL (Three.js) interactive canvas allowing geoscientists to slice 3D seismic cubes in real time.",
-        "Asynchronous batch processing queue for large SEG-Y seismic datasets using Celery and Redis.",
+        "SEG-Y Reader & Signal Preprocessing Filter",
+        "Computer Vision Segmentation Engine (PyTorch)",
+        "FastAPI REST API & Slice Visualization Canvas",
       ],
-      developmentProcess: [
-        "Data preprocessing: Normalized SEG-Y seismic amplitude slices and generated synthetic fault masks for data augmentation.",
-        "Model training: Trained modified U-Net with ResNet50 backbone on annotated geological datasets.",
-        "Frontend integration: Built responsive canvas view for overlaying heatmaps over raw seismic amplitude slices.",
-      ],
-      challengesAndSolutions: [
-        {
-          challenge: "Extremely noisy seismic amplitude data causing false-positive fault predictions.",
-          solution: "Implemented bilateral filtering pre-processing and combined structural similarity (SSIM) loss with Dice loss.",
-        },
-        {
-          challenge: "Rendering large 3D seismic volume datasets smoothly in the browser.",
-          solution: "Utilized WebGL texture slicing in Three.js with level-of-detail (LOD) chunking.",
-        },
-      ],
-      impact: [
-        "Reduced 2D seismic slice interpretation time from 45 minutes to under 5 seconds.",
-        "Achieved 94.2% Intersection-over-Union (IoU) accuracy on complex fault boundary segmentation.",
-      ],
-      lessonsLearned: [
-        "Domain knowledge in geophysics is essential when tuning hyper-parameters for specialized sensor data.",
-        "Interactive visual feedback is vital for building trust between AI models and domain experts.",
-      ],
-      futureImprovements: [
-        "Integrating 3D volumetric segmentation using 3D CNNs.",
-        "Exporting automated fault surfaces directly to Petrel and open SEG-Y formats.",
-      ],
-    },
-    pipelineDiagram: {
-      nodes: [
-        { id: "1", label: "SEG-Y Data", sub: "Raw Seismic Slices" },
-        { id: "2", label: "Pre-processing", sub: "Bilateral Filter & SSIM" },
-        { id: "3", label: "U-Net Inference", sub: "PyTorch / ONNX Engine" },
-        { id: "4", label: "WebGL Overlay", sub: "Three.js 3D Viewport" },
-      ],
-      connections: [
-        { from: "1", to: "2", label: "Upload SEG-Y" },
-        { from: "2", to: "3", label: "Normalized Array" },
-        { from: "3", to: "4", label: "Fault Mask Tensor" },
-      ],
+      developmentProcess: ["Preprocessed raw amplitude arrays using z-score normalization and AGC filtering."],
+      challengesAndSolutions: [{ challenge: "High noise in raw acoustic seismic reflection data.", solution: "Applied contrast-limited adaptive histogram equalization and AGC filtering." }],
+      impact: ["Automated fault line mapping from 2D profiles and 3D SEG-Y volumes."],
+      lessonsLearned: ["Domain-specific preprocessing contributes significantly to segmentation clarity."],
     },
   },
   {
     id: "hpcc-copilot",
     title: "HPCC Copilot",
-    subtitle: "High-Performance Computing & ECL Code Assistant",
-    tagline: "RAG-driven intelligent copilot for ECL developers on High-Performance Computing Clusters.",
-    category: "HPC & Developer Tools",
+    subtitle: "Enterprise AI · Generative AI · LLMs · RAG · High Performance Computing",
+    tagline: "Domain-tailored AI developer assistant for parallel HPC software development.",
+    category: "Enterprise AI · Generative AI · RAG · HPC",
     featured: true,
     year: "2024",
     impactMetrics: [
-      { label: "Query Accuracy", value: "96.8%" },
-      { label: "Code Completion Latency", value: "< 45ms" },
-      { label: "Doc Search Speed", value: "12ms" },
+      { label: "Domain", value: "High Performance Computing" },
+      { label: "Architecture", value: "Retrieval-Augmented Generation" },
+      { label: "Parser Core", value: "Treesitter AST Validation" },
     ],
-    description:
-      "An intelligent developer copilot tailored for HPCC Systems ECL (Enterprise Control Language). Provides context-aware code completion, syntax validation, documentation lookup, and query optimization suggestions.",
-    techStack: ["Python", "FastAPI", "VectorDB", "LangChain", "TypeScript", "Next.js", "Docker"],
-    githubUrl: "https://github.com/swarnavasarkar",
+    description: "Enterprise offline AI Copilot providing developer assistance, knowledge retrieval, and real-time Abstract Syntax Tree (AST) validation for HPC parallel C/C++ and CUDA programming.",
+    techStack: ["Enterprise AI", "Generative AI", "LLMs", "Retrieval-Augmented Generation (RAG)", "High Performance Computing (HPC)", "Developer Copilot", "AST Validation", "FastAPI", "Python", "TypeScript", "LangChain", "Qdrant", "Docker"],
+    githubUrl: "https://github.com/SWARNAVA182006/HPCC-Copilot.git",
     caseStudy: {
-      problemStatement:
-        "ECL (Enterprise Control Language) is a specialized declarative dataflow language used for big data parallel processing on HPCC Systems. Due to limited public syntax datasets, developers face a steep learning curve.",
-      motivation:
-        "Bridge the gap for big-data engineers by building a dedicated AI copilot that deeply understands ECL syntax, dataset definitions, THOR cluster transformations, and best practices.",
-      research:
-        "Studied RAG architectures over specialized domain documentation, AST parsing for declarative dataflow languages, and context compression techniques.",
-      systemArchitecture: [
-        "Domain-specific RAG index vectorizing HPCC Systems documentation, standard ECL libraries, and sample queries.",
-        "Custom AST validator checking ECL code structures before execution.",
-        "Lightweight IDE extension / web interface with live streaming completion.",
-      ],
-      developmentProcess: [
-        "Curated and structured HPCC documentation and code repositories into clean chunked markdown.",
-        "Configured hybrid BM25 + dense vector embeddings search using Qdrant.",
-        "Built streaming API endpoint delivering instant code recommendations.",
-      ],
-      challengesAndSolutions: [
-        {
-          challenge: "Generic LLMs frequently hallucinated invalid ECL syntax keywords.",
-          solution: "Engineered strict system prompts combined with ECL grammar AST syntax verification before rendering suggestions.",
-        },
-      ],
-      impact: [
-        "Accelerated ECL query writing speed for new developers by an estimated 60%.",
-        "Achieved 96.8% accuracy on standard HPCC query pattern recommendations.",
-      ],
-      lessonsLearned: [
-        "Specialized programming languages require tailored vector indexing and strict syntax guardrails rather than naive LLM prompts.",
-      ],
-      futureImprovements: [
-        "Developing a native VS Code extension plugin for inline copilot autocomplete.",
-      ],
-    },
-    pipelineDiagram: {
-      nodes: [
-        { id: "1", label: "Developer Prompt", sub: "ECL Query / Code" },
-        { id: "2", label: "Hybrid RAG", sub: "BM25 + Vector Search" },
-        { id: "3", label: "AST Validator", sub: "ECL Grammar Engine" },
-        { id: "4", label: "Copilot Response", sub: "Streamed Output" },
-      ],
-      connections: [
-        { from: "1", to: "2", label: "Context Query" },
-        { from: "2", to: "3", label: "Retrieved Docs + Prompt" },
-        { from: "3", to: "4", label: "Validated Token Stream" },
-      ],
-    },
-  },
-  {
-    id: "performpro",
-    title: "PerformPro",
-    subtitle: "Real-Time Performance Analytics & Productivity Engine",
-    tagline: "Unified performance metric tracking dashboard with interactive charting and goal progress analytics.",
-    category: "Full-Stack & Systems",
-    featured: true,
-    year: "2024",
-    impactMetrics: [
-      { label: "Dashboard Load", value: "0.2s" },
-      { label: "UI Response", value: "60 FPS" },
-    ],
-    description:
-      "A comprehensive analytics platform enabling individuals and teams to track quantitative performance metrics, habit consistency, and engineering output with interactive visualization dashboards.",
-    techStack: ["React", "TypeScript", "Tailwind CSS", "Recharts", "Node.js", "PostgreSQL"],
-    githubUrl: "https://github.com/swarnavasarkar",
-    caseStudy: {
-      problemStatement:
-        "Existing productivity tools are either overly complex or fail to provide quantitative analytical insights into long-term skill progression and personal engineering velocity.",
-      motivation:
-        "Designed PerformPro to serve as a sleek, data-driven personal command center for tracking engineering habits, learning velocity, and physical performance metrics.",
-      research:
-        "Analyzed user experience patterns in modern telemetry platforms (Datadog, Linear) to create a visual architecture that reduces cognitive load.",
-      systemArchitecture: [
-        "Modular React frontend utilizing component composition for flexible widget layouts.",
-        "Restful API backend with optimized database indexing for dynamic date-range queries.",
-      ],
-      developmentProcess: [
-        "Designed dark-mode UI with high-contrast data visualization palettes.",
-        "Implemented local-first caching state with optimistic UI updates.",
-      ],
-      challengesAndSolutions: [
-        {
-          challenge: "Rendering large historical metric datasets caused interactive chart lag.",
-          solution: "Applied data sampling windowing algorithms to render chart nodes dynamically based on zoom level.",
-        },
-      ],
-      impact: [
-        "Achieved 100/100 performance score on Lighthouse for responsive dashboard rendering.",
-      ],
-      lessonsLearned: [
-        "Data visualization is most effective when it leads to actionable micro-habits.",
-      ],
+      problemStatement: "Generic LLMs produce invalid MPI and OpenMP parallel pragmas due to lack of HPC syntax verification.",
+      motivation: "HPC development requires deterministic correctness backed by static AST parsers.",
+      research: "Integrated Treesitter AST parsing with parallel C/C++ static syntax checkers.",
+      systemArchitecture: ["Offline Developer Prompt Receiver", "LLM RAG Retrieval Core", "Treesitter AST Validator", "WebSocket Gateway"],
+      developmentProcess: ["Indexed parallel programming documentation into local vector store."],
+      challengesAndSolutions: [{ challenge: "Preventing syntax hallucinations in parallel directives.", solution: "Created post-generation AST inspector that verifies C/CUDA pragmas." }],
+      impact: ["Delivered offline developer assistance with AST static syntax verification."],
+      lessonsLearned: ["Coupling LLM generation with deterministic AST static checkers eliminates syntax errors."],
     },
   },
   {
     id: "forestnet",
-    title: "ForestNet",
-    subtitle: "Satellite Remote Sensing AI for Forest Degradation",
-    tagline: "Processing multi-spectral satellite imagery to detect canopy cover loss and illegal deforestation.",
-    category: "IoT & Environmental",
-    featured: false,
-    year: "2023",
+    title: "ForestNet AI",
+    subtitle: "AI · IoT · Embedded Systems · Environmental AI · Edge AI",
+    tagline: "Multispectral remote sensing and IoT hardware monitoring for forest reserves.",
+    category: "AI · IoT · Embedded Systems · Edge AI",
+    featured: true,
+    year: "2024",
     impactMetrics: [
-      { label: "Detection Accuracy", value: "91.5%" },
-      { label: "Resolution", value: "10m/pixel" },
+      { label: "Domain", value: "Environmental AI & IoT" },
+      { label: "Hardware", value: "ESP32 & LoRa Gateway" },
+      { label: "Imagery", value: "Satellite Multispectral NDVI" },
     ],
-    description:
-      "An environmental AI initiative leveraging deep learning image segmentation on Sentinel satellite data to detect localized forest canopy loss and environmental encroachment.",
-    techStack: ["Python", "PyTorch", "GDAL", "Rasterio", "OpenCV", "Flask"],
-    githubUrl: "https://github.com/swarnavasarkar",
+    description: "Environmental AI platform combining satellite multispectral remote sensing with ESP32 LoRa IoT sensor nodes for real-time deforestation monitoring and anomaly detection.",
+    techStack: ["AI", "IoT", "Embedded Systems", "Environmental AI", "Edge AI", "ESP32", "LoRa", "Satellite Monitoring", "Real-time Monitoring", "Python", "PyTorch", "OpenCV", "GPS"],
+    githubUrl: "https://github.com/SWARNAVA182006/Eco-ranger2.git",
     caseStudy: {
-      problemStatement:
-        "Monitoring vast forested regions manually is logistically impossible, leaving rainforests vulnerable to illegal clearing before authorities can intervene.",
-      motivation:
-        "Leveraging AI and open satellite imagery to build early warning systems for environmental conservation.",
-      research:
-        "Evaluated NDVI (Normalized Difference Vegetation Index) calculation combined with U-Net image segmentation over multi-temporal satellite channels.",
-      systemArchitecture: [
-        "Automated pipeline fetching Sentinel-2 satellite tiles via API.",
-        "PyTorch model running spectral index change detection over time series images.",
-      ],
-      developmentProcess: [
-        "Preprocessed multi-spectral bands (NIR, Red, Green) and calculated vegetation indices.",
-        "Trained model on annotated deforestation datasets across diverse forest biomes.",
-      ],
-      challengesAndSolutions: [
-        {
-          challenge: "Cloud cover obscuring ground terrain in optical satellite images.",
-          solution: "Implemented cloud mask filtering and temporal imagery composite blending.",
-        },
-      ],
-      impact: [
-        "Demonstrated 91.5% accuracy in flagging canopy cover drop within 10-meter resolution satellite tiles.",
-      ],
-      lessonsLearned: [
-        "Multi-spectral image processing requires specialized geospatial data structures.",
-      ],
+      problemStatement: "Manual forest monitoring cannot scale across wide geographical reserves.",
+      motivation: "Combining satellite NDVI imagery with IoT ground sensors provides instant anomaly alerts.",
+      research: "Utilized Normalized Difference Vegetation Index (NDVI) temporal change maps.",
+      systemArchitecture: ["Satellite Imagery Ingestion Engine", "NDVI Band Computation Core", "ESP32 LoRa IoT Sensor Mesh", "Alert Dashboard"],
+      developmentProcess: ["Engineered custom Rasterio loader for 10m multispectral GeoTIFF files."],
+      challengesAndSolutions: [{ challenge: "Cloud cover distortion in optical satellite bands.", solution: "Applied temporal median compositing across consecutive satellite passes." }],
+      impact: ["Enabled automated canopy loss tracking and environmental anomaly alerts."],
+      lessonsLearned: ["Combining satellite imagery with ground IoT sensors creates robust monitoring systems."],
+    },
+  },
+  {
+    id: "performpro",
+    title: "PerformPro AI",
+    subtitle: "Full Stack Engineering · FastAPI · PostgreSQL · Backend Systems",
+    tagline: "Developed for TechForce Academy Australia.",
+    category: "Full Stack Engineering · Backend Systems",
+    featured: false,
+    year: "2024",
+    impactMetrics: [
+      { label: "Organization", value: "TechForce Academy Australia" },
+      { label: "Architecture", value: "FastAPI & PostgreSQL" },
+      { label: "Security", value: "REST APIs & JWT" },
+    ],
+    description: "Employee performance management and analytics dashboard platform built for TechForce Academy Australia, featuring FastAPI microservices, PostgreSQL, React, and JWT authentication.",
+    techStack: ["Full Stack Engineering", "FastAPI", "PostgreSQL", "Backend Engineering", "Authentication", "REST APIs", "Analytics", "TypeScript", "React", "Python", "Docker"],
+    githubUrl: "https://github.com/SWARNAVA182006/PerformPro.git",
+    caseStudy: {
+      problemStatement: "Organizations need structured employee metrics dashboards with secure authentication.",
+      motivation: "Building an enterprise performance portal for TechForce Academy Australia.",
+      research: "Designed role-based access control and analytics aggregation formulas.",
+      systemArchitecture: ["React Analytics UI", "FastAPI REST Microservices", "PostgreSQL Relational DB", "JWT Auth Manager"],
+      developmentProcess: ["Developed secure JWT token authorization and metrics calculation endpoints."],
+      challengesAndSolutions: [{ challenge: "Securing role-based endpoints.", solution: "Implemented OAuth2 password flow with JWT bearer tokens." }],
+      impact: ["Delivered production employee performance management platform for TechForce Academy Australia."],
+      lessonsLearned: ["Modular REST microservices streamline multi-role enterprise web apps."],
+    },
+  },
+  {
+    id: "claimsassist-ai",
+    title: "ClaimsAssist AI — Guidewire DevTrails Finalist Project",
+    subtitle: "Software Engineering · Enterprise Development · Guidewire · Insurance Technology",
+    tagline: "National Finalist Project for Guidewire DevTrails Competition.",
+    category: "Software Engineering · Insurance Technology",
+    featured: false,
+    year: "2024",
+    impactMetrics: [
+      { label: "Honors", value: "Guidewire DevTrails Finalist" },
+      { label: "Domain", value: "Insurance Technology" },
+      { label: "Stack", value: "React & FastAPI" },
+    ],
+    description: "Insurance domain claims intake and policyholder assistance platform engineered for the Guidewire DevTrails competition, placing as a National Finalist.",
+    techStack: ["Software Engineering", "Enterprise Development", "Guidewire", "Insurance Technology", "Full Stack Development", "React", "FastAPI", "TypeScript", "Python"],
+    githubUrl: "https://github.com/SWARNAVA182006",
+    caseStudy: {
+      problemStatement: "Insurance claims intake requires manual document inspection and damage verification.",
+      motivation: "Automating insurance claims processing with vision damage inspection and policy AI.",
+      research: "Integrated vision APIs for damage classification with Guidewire insurance schema rules.",
+      systemArchitecture: ["Claim Intake Form React UI", "Vision Damage Assessment API", "Policy Query RAG Agent"],
+      developmentProcess: ["Developed damage photo upload and locator."],
+      challengesAndSolutions: [{ challenge: "Formatting non-deterministic AI outputs.", solution: "Used Pydantic JSON schema enforcing on LLM responses." }],
+      impact: ["Selected as National Finalist in Guidewire DevTrails competition."],
+      lessonsLearned: ["Enforcing strict Pydantic schemas on LLM outputs guarantees enterprise compatibility."],
     },
   },
   {
     id: "smart-irrigation",
     title: "Smart Irrigation System",
-    subtitle: "IoT Precision Agriculture & ML Soil Moisture Prediction",
-    tagline: "Connecting soil moisture sensor networks with predictive weather algorithms to prevent water waste.",
-    category: "IoT & Environmental",
+    subtitle: "IoT · ESP32 · Sensors · Automation · Embedded Systems · Smart Agriculture",
+    tagline: "Precision soil moisture monitoring & automated water conservation.",
+    category: "IoT · Embedded Systems · Automation",
     featured: false,
     year: "2023",
     impactMetrics: [
-      { label: "Water Savings", value: "35%" },
-      { label: "Sensor Uptime", value: "99.5%" },
+      { label: "Domain", value: "IoT & Embedded Systems" },
+      { label: "Hardware", value: "ESP32 & Sensors" },
+      { label: "Target", value: "Smart Agriculture Automation" },
     ],
-    description:
-      "An end-to-end IoT system connecting embedded microcontrollers, soil moisture sensors, and cloud ML models to dynamically automate agricultural irrigation schedules.",
-    techStack: ["Embedded C++", "Python", "Scikit-Learn", "MQTT", "Node.js", "React"],
-    githubUrl: "https://github.com/swarnavasarkar",
+    description: "Precision soil moisture monitoring and automated water conservation system utilizing ESP32 microcontroller nodes and environmental sensors.",
+    techStack: ["IoT", "ESP32", "ESP8266", "Arduino Uno", "Sensors", "Automation", "Embedded Systems", "Smart Agriculture", "Python", "C++"],
+    githubUrl: "https://github.com/SWARNAVA182006",
     caseStudy: {
-      problemStatement:
-        "Traditional agricultural irrigation relies on static timers, leading to severe water waste during rainy periods or crop underwatering during heatwaves.",
-      motivation:
-        "Building affordable, sustainable technology for precision farming in water-stressed agricultural regions.",
-      research:
-        "Explored soil moisture tension curves and regression models predicting evapotranspiration rates.",
-      systemArchitecture: [
-        "ESP32 microcontroller nodes transmitting sensor telemetry over MQTT to a gateway.",
-        "Cloud analytics service running Random Forest models to calculate optimal watering volume.",
-      ],
-      developmentProcess: [
-        "Assembled hardware sensor arrays and calibrated capacitive soil moisture probes.",
-        "Built real-time telemetry dashboard with alert notifications.",
-      ],
-      challengesAndSolutions: [
-        {
-          challenge: "Sensor telemetry loss in remote areas with unstable WiFi/cellular.",
-          solution: "Implemented flash memory buffering on microcontrollers for auto-resync upon reconnect.",
-        },
-      ],
-      impact: [
-        "Achieved 35% reduction in irrigation water usage while maintaining optimal crop soil hydration.",
-      ],
-      lessonsLearned: [
-        "Hardware-software integration teaches the value of fault tolerance in physical environments.",
-      ],
+      problemStatement: "Agricultural water waste due to manual unmetered irrigation.",
+      motivation: "Building automated sensor-driven irrigation nodes.",
+      research: "Trained soil moisture regression model.",
+      systemArchitecture: ["ESP32 Node", "MQTT Broker", "Flask Portal"],
+      developmentProcess: ["Deployed hardware sensors."],
+      challengesAndSolutions: [{ challenge: "Network drops.", solution: "Implemented local queue buffer." }],
+      impact: ["Demonstrated automated soil moisture irrigation control."],
+      lessonsLearned: ["Hardware IoT systems require fallback logic."],
     },
   },
   {
-    id: "autism-detection-ai",
+    id: "autism-detection",
     title: "Autism Detection AI",
-    subtitle: "Computer Vision Behavioral Screening Tool",
-    tagline: "Non-invasive ML vision system analyzing gaze patterns and facial landmark dynamics for early ASD screening.",
-    category: "Healthcare AI",
+    subtitle: "Machine Learning · Healthcare AI · Classification · Predictive Analytics",
+    tagline: "Computer vision screening framework using facial landmark tracking.",
+    category: "Machine Learning · Healthcare AI",
     featured: false,
     year: "2023",
     impactMetrics: [
-      { label: "Screening Accuracy", value: "88.7%" },
-      { label: "Non-Invasive", value: "100%" },
+      { label: "Domain", value: "Healthcare AI" },
+      { label: "Method", value: "Computer Vision Classification" },
+      { label: "Core Tech", value: "OpenCV & PyTorch" },
     ],
-    description:
-      "A computer vision tool designed to assist healthcare professionals in early screening for Autism Spectrum Disorder (ASD) by analyzing gaze fixation and facial expressions during visual stimuli.",
-    techStack: ["Python", "OpenCV", "MediaPipe", "TensorFlow", "Flask", "React"],
-    githubUrl: "https://github.com/swarnavasarkar",
+    description: "Computer vision preliminary screening framework using facial landmark tracking and eye-gaze pattern classification.",
+    techStack: ["Machine Learning", "Healthcare AI", "Classification", "Predictive Analytics", "OpenCV", "PyTorch", "Python", "Scikit-learn"],
+    githubUrl: "https://github.com/SWARNAVA182006",
     caseStudy: {
-      problemStatement:
-        "Early diagnostic screening for ASD is critical for child development, yet specialized behavioral clinics have long waiting lists.",
-      motivation:
-        "Exploring how computer vision can provide objective, non-invasive preliminary screening indicators for clinical evaluation.",
-      research:
-        "Studied research papers on visual attention preferences and facial micro-expression analysis in pediatric screening.",
-      systemArchitecture: [
-        "Real-time MediaPipe facial landmark tracking capturing eye gaze vectors.",
-        "Deep learning classifier evaluating gaze duration patterns over structured visual prompts.",
-      ],
-      developmentProcess: [
-        "Built privacy-first local processing video pipeline.",
-        "Evaluated classification accuracy against baseline video datasets.",
-      ],
-      challengesAndSolutions: [
-        {
-          challenge: "Head movement causing jitter in eye gaze vector calculations.",
-          solution: "Applied 3D head pose estimation matrix transformation to normalize gaze coordinates.",
-        },
-      ],
-      impact: [
-        "Demonstrated 88.7% classification alignment with preliminary screening markers.",
-      ],
-      lessonsLearned: [
-        "Healthcare AI applications demand strict ethical considerations, data privacy, and humble positioning as assistive tools.",
-      ],
-    },
-  },
-  {
-    id: "guidewire-devtrails",
-    title: "Guidewire DevTrails Platform",
-    subtitle: "Enterprise Cloud Microservices & Integration Engineering",
-    tagline: "Cloud-native microservice architecture built for enterprise insurance automation.",
-    category: "Full-Stack & Systems",
-    featured: false,
-    year: "2024",
-    impactMetrics: [
-      { label: "Award Rank", value: "Finalist / Featured" },
-      { label: "API Compliance", value: "100%" },
-    ],
-    description:
-      "Engineering project developed during the Guidewire DevTrails competition, featuring modular insurance workflow integrations, RESTful API microservices, and clean UI.",
-    techStack: ["Java", "Spring Boot", "React", "REST API", "PostgreSQL"],
-    githubUrl: "https://github.com/swarnavasarkar",
-    caseStudy: {
-      problemStatement:
-        "Legacy insurance software systems suffer from monolithic bottlenecks and slow policy processing speeds.",
-      motivation:
-        "Participated in Guidewire DevTrails to engineer modern, event-driven insurance microservices.",
-      research:
-        "Analyzed Guidewire Cloud platform APIs and enterprise software integration design patterns.",
-      systemArchitecture: [
-        "Spring Boot microservice handling policy lifecycle state changes.",
-        "React frontend dashboard providing policyholders and agents with real-time tracking.",
-      ],
-      developmentProcess: [
-        "Architected RESTful endpoints adhering to strict OpenAPI schemas.",
-        "Implemented automated unit tests and integration test suites.",
-      ],
-      challengesAndSolutions: [
-        {
-          challenge: "Ensuring zero data loss during multi-step claim state transitions.",
-          solution: "Implemented database transaction isolation and idempotent API request handlers.",
-        },
-      ],
-      impact: [
-        "Selected as a top project showcasing robust enterprise software architecture.",
-      ],
-      lessonsLearned: [
-        "Enterprise software requires defensive programming, exhaustive input validation, and clear service boundaries.",
-      ],
+      problemStatement: "Early autism screening is often delayed due to clinical specialist access.",
+      motivation: "Providing preliminary vision screening support.",
+      research: "Analyzed eye-gaze tracking heatmaps.",
+      systemArchitecture: ["Video Capture", "Landmark Extractor", "PyTorch Classifier"],
+      developmentProcess: ["Extracted 68 facial landmarks."],
+      challengesAndSolutions: [{ challenge: "Lighting variations.", solution: "Applied CLAHE histogram equalization." }],
+      impact: ["Demonstrated video-based screening feasibility."],
+      lessonsLearned: ["Preprocessing lighting normalization is crucial."],
     },
   },
 ];
 
-export const TIMELINE_JOURNEY: TimelineEntry[] = [
+export const RESEARCH_DATA = {
+  overview: "Ideas, experiments, engineering decisions, and technical investigations behind the AI systems I build.",
+  areas: [
+    {
+      title: "Researching Seismic Computer Vision",
+      focus: "Exploration of seismic AI pipelines, SEG-Y processing, AGC filtering, U-Net and Vision Transformer architectures, fault and horizon interpretation, and industrial visualization techniques developed during the ONGC internship.",
+      technologies: ["PyTorch", "CUDA", "SEG-Y Processing", "OpenCV", "Computer Vision", "Geophysical Computing"],
+      status: "Exploration & ONGC Internship Research",
+    },
+    {
+      title: "Building Enterprise AI Copilots",
+      focus: "Research into offline RAG architectures, AST validation, enterprise knowledge retrieval, developer copilots, reasoning workflows, and secure AI systems inspired by the HPCC Copilot project.",
+      technologies: ["Treesitter AST", "FastAPI", "Python", "Retrieval-Augmented Generation (RAG)", "Generative AI", "LLMs"],
+      status: "Exploration & HPCC Systems Research",
+    },
+  ],
+  notes: [
+    {
+      title: "First-Principles Engineering",
+      summary: "Probabilistic AI models must be anchored by deterministic validation rules and domain-specific preprocessing.",
+    },
+  ],
+};
+
+export const ACHIEVEMENTS_DATA: Achievement[] = [
   {
-    period: "2024 — PRESENT",
-    title: "Apple iOS Student Developer Program Selection",
-    organization: "Apple Student Developer Program",
-    type: "Milestone",
-    location: "India",
-    description:
-      "Selected for the Apple iOS Student Developer Program. Focusing on native Swift/SwiftUI development, high-performance mobile UI architectures, and Apple platform ecosystem design patterns.",
-    highlights: [
-      "Selected among candidate developer applicants for Apple iOS track.",
-      "Explored low-latency client architecture and iOS UI design standards.",
-    ],
-    skillsUsed: ["Swift", "iOS", "Mobile Architecture", "UI Design"],
+    title: "Apple Student Developer Program Selection",
+    organization: "Apple Developer Program",
+    year: "2025",
+    description: "Selected into prestigious Apple initiative for native Swift and iOS development.",
+    badge: "Apple Student Developer",
     logoSrc: "/assets/ios.jpg",
   },
   {
-    period: "SUMMER 2024",
-    title: "Software & Systems Engineering Intern",
-    organization: "ONGC (Oil and Natural Gas Corporation)",
-    type: "Internship",
-    location: "India",
-    description:
-      "Gained industrial exposure at India's premier energy organization. Analyzed seismic data processing workflows, industrial software systems, and domain data pipelines, directly inspiring SeisVision AI.",
-    highlights: [
-      "Analyzed large-scale seismic data storage pipelines and geophysical interpretation software tools.",
-      "Identified subsurface exploration challenges, inspiring SeisVision AI.",
-      "Received commendable feedback for technical discipline and engineering curiosity.",
-    ],
-    skillsUsed: ["Seismic Data Workflows", "Data Processing", "Python", "Systems Architecture"],
-    logoSrc: "/assets/ongc.png",
-  },
-  {
-    period: "2024",
-    title: "AI / ML Engineering Intern",
-    organization: "StudAI One",
-    type: "Internship",
-    location: "India",
-    description:
-      "Engineered machine learning pipelines and AI solution modules at StudAI One, optimizing model latency and integrating predictive backend APIs.",
-    highlights: [
-      "Trained and tuned computer vision and ML predictive models.",
-      "Built clean API integration boundaries for web client delivery.",
-    ],
-    skillsUsed: ["Python", "Machine Learning", "FastAPI", "PyTorch"],
-    logoSrc: "/assets/studai.jpg",
-  },
-  {
-    period: "2024",
-    title: "Google for Developers AICTE Virtual Intern",
-    organization: "Google for Developers & AICTE",
-    type: "Internship",
-    location: "India",
-    description:
-      "Completed hands-on software development and cloud/AI engineering curriculum under Google for Developers and AICTE initiative.",
-    highlights: [
-      "Mastered cloud computing fundamentals, Android development, and AI integration practices.",
-      "Awarded official Google for Developers AICTE completion badge.",
-    ],
-    skillsUsed: ["Google Cloud", "AI/ML", "Android", "Software Engineering"],
-    logoSrc: "/assets/google.png",
-  },
-  {
-    period: "2023 — PRESENT",
-    title: "Undergraduate Research & UROP Researcher",
-    organization: "SRM Institute of Science and Technology",
-    type: "Research",
-    location: "Kattankulathur, Tamil Nadu",
-    description:
-      "Participated in UROP (Undergraduate Research Opportunities Program) at SRM Institute of Science and Technology. Focused on computer vision models, satellite remote sensing, and AI-driven screening systems.",
-    highlights: [
-      "Researched deep learning segmentation architectures for environmental & medical data.",
-      "Mentored by university research faculty on algorithmic rigor and peer publications.",
-    ],
-    skillsUsed: ["Deep Learning", "Computer Vision", "PyTorch", "Research"],
-    logoSrc: "/assets/urop.jpg",
-  },
-  {
-    period: "2022 — PRESENT",
-    title: "B.Tech in Computer Science & Engineering (AI & ML)",
-    organization: "SRM Institute of Science and Technology",
-    type: "Education",
-    location: "Kattankulathur, Tamil Nadu",
-    description:
-      "Pursuing Bachelor of Technology degree in Computer Science with specialization in Artificial Intelligence and Machine Learning. Building strong foundation in Data Structures, OS, Systems Architecture, and Deep Learning.",
-    highlights: [
-      "Maintained strong academic standing in AI & ML specialization.",
-      "Spearheaded national-level engineering hackathon submissions and research initiatives.",
-    ],
-    skillsUsed: ["AI & ML Specialization", "Data Structures", "Operating Systems", "Computer Vision"],
-    logoSrc: "/assets/srm.png",
-  },
-  {
-    period: "2024",
-    title: "Guidewire DevTrails National Finalist",
-    organization: "Guidewire Software",
-    type: "Competition",
-    location: "India",
-    description:
-      "Engineered cloud-native insurance microservices and integration UI during Guidewire DevTrails, recognized as a top national finalist project.",
-    highlights: [
-      "Architected Spring Boot microservice adhering to enterprise REST OpenAPI standards.",
-      "Selected as featured finalist for software architecture quality.",
-    ],
-    skillsUsed: ["Java", "Spring Boot", "React", "RESTful Microservices"],
-    logoSrc: "/assets/guidewire.jpg",
-  },
-];
-
-export const SKILL_GROUPS: SkillGroup[] = [
-  {
-    category: "AI & Machine Learning",
-    description: "Architecting, training, and deploying neural models for computer vision, RAG, and NLP.",
-    skills: [
-      { name: "PyTorch & Deep Learning", level: 94, tag: "Framework", highlight: true },
-      { name: "Computer Vision & OpenCV", level: 92, tag: "Vision", highlight: true },
-      { name: "RAG & Vector Databases (Qdrant, Chroma)", level: 95, tag: "Retrieval", highlight: true },
-      { name: "Vision Transformers & U-Net", level: 90, tag: "Architecture" },
-      { name: "Model Quantization & ONNX Runtime", level: 88, tag: "Optimization" },
-      { name: "LangChain, LlamaIndex, DSPy", level: 92, tag: "Tooling" },
-    ],
-  },
-  {
-    category: "Backend & Systems Architecture",
-    description: "Building scalable APIs, microservices, database schemas, and background job queues.",
-    skills: [
-      { name: "Python / FastAPI / AsyncIO", level: 96, tag: "Backend", highlight: true },
-      { name: "Node.js / Express / TypeScript", level: 95, tag: "Runtime", highlight: true },
-      { name: "PostgreSQL & Database Design", level: 90, tag: "Database" },
-      { name: "Redis & Event Caching", level: 88, tag: "Caching" },
-      { name: "RESTful & SSE Streaming APIs", level: 95, tag: "Protocols" },
-      { name: "C / C++ Fundamentals", level: 85, tag: "Systems" },
-    ],
-  },
-  {
-    category: "Frontend & User Experience",
-    description: "Crafting fast, accessible, visually stunning digital web applications.",
-    skills: [
-      { name: "Next.js 15 (App Router & RSC)", level: 96, tag: "Framework", highlight: true },
-      { name: "React 19 Concurrent Systems", level: 95, tag: "UI", highlight: true },
-      { name: "Strict TypeScript", level: 98, tag: "Language", highlight: true },
-      { name: "Tailwind CSS v4 & Glassmorphism", level: 96, tag: "Styling" },
-      { name: "Framer Motion & Micro-interactions", level: 94, tag: "Animation" },
-      { name: "Three.js & React Three Fiber (WebGL)", level: 86, tag: "3D Graphics" },
-    ],
-  },
-  {
-    category: "Tools, Cloud & DevOps",
-    description: "Deploying code cleanly with containerization, CI/CD pipelines, and version control.",
-    skills: [
-      { name: "Docker & Containerization", level: 92, tag: "DevOps", highlight: true },
-      { name: "Git & Clean Commit Workflows", level: 96, tag: "VCS", highlight: true },
-      { name: "Vercel & Cloud Deployment", level: 94, tag: "Cloud" },
-      { name: "Linux System Administration", level: 88, tag: "OS" },
-      { name: "Lighthouse Performance & SEO", level: 95, tag: "Optimization" },
-    ],
-  },
-];
-
-export const ACHIEVEMENTS: Achievement[] = [
-  {
-    title: "Apple iOS Student Developer Program Selection",
-    organization: "Apple",
-    year: "2024",
-    description: "Selected for Apple iOS Student Developer Program focusing on native Swift/SwiftUI engineering.",
-    badge: "Apple Developer",
-    logoSrc: "/assets/ios.jpg",
-  },
-  {
-    title: "ONGC Software & Engineering Internship",
+    title: "AI & ML Intern — ONGC",
     organization: "Oil and Natural Gas Corporation (ONGC)",
     year: "2024",
-    description: "Completed prestigious industrial internship examining seismic processing pipelines and data workflows.",
-    badge: "Industrial Internship",
+    description: "Earned industrial research internship analyzing subsurface seismic datasets.",
+    badge: "ONGC AI Engineering Intern",
     logoSrc: "/assets/ongc.png",
-  },
-  {
-    title: "StudAI One AI/ML Internship",
-    organization: "StudAI One",
-    year: "2024",
-    description: "Built predictive ML algorithms and computer vision API integrations.",
-    badge: "AI/ML Internship",
-    logoSrc: "/assets/studai.jpg",
-  },
-  {
-    title: "Google for Developers AICTE Internship",
-    organization: "Google for Developers",
-    year: "2024",
-    description: "Completed virtual software engineering, AI, and cloud development internship program.",
-    badge: "Google Certification",
-    logoSrc: "/assets/google.png",
   },
   {
     title: "Guidewire DevTrails Finalist",
-    organization: "Guidewire Software",
+    organization: "Guidewire",
     year: "2024",
-    description: "Recognized as national finalist for enterprise cloud microservices and insurance integration architecture.",
-    badge: "National Finalist",
+    description: "Selected as national finalist for architecting ClaimsAssist AI policyholder copilot.",
+    badge: "Guidewire DevTrails Finalist",
     logoSrc: "/assets/guidewire.jpg",
   },
   {
-    title: "IBM Machine Learning Professional Certification",
+    title: "Google AICTE Virtual Internship Selection",
+    organization: "Google for Developers & EduSkills & AICTE",
+    year: "2024",
+    description: "Completed intensive AI/ML virtual internship program covering TensorFlow and Cloud AI.",
+    badge: "Google for Developers AICTE",
+    logoSrc: "/assets/google.png",
+  },
+  {
+    title: "IBM Machine Learning Specialization",
     organization: "IBM",
-    year: "2023",
-    description: "Earned professional certification in supervised/unsupervised machine learning algorithms and PyTorch workflows.",
-    badge: "IBM Professional",
+    year: "2024",
+    description: "Earned professional IBM certification in Machine Learning and Deep Learning architectures.",
+    badge: "IBM Machine Learning",
     logoSrc: "/assets/ibm.jpg",
   },
   {
-    title: "OpenAI Generative AI Workshop",
-    organization: "OpenAI / Tech Summits",
+    title: "OpenAI Developer Workshop Participant",
+    organization: "OpenAI",
     year: "2024",
-    description: "Participated in advanced Generative AI & Large Language Model architecture workshop.",
-    badge: "AI Workshop",
+    description: "Participated in OpenAI technical workshop covering advanced prompt engineering and vector embeddings.",
+    badge: "OpenAI Generative AI",
     logoSrc: "/assets/openai.jpg",
   },
   {
-    title: "UROP Research Scholar",
-    organization: "SRM Institute of Science and Technology",
-    year: "2023 - 2024",
-    description: "Conducted computer vision research under Undergraduate Research Opportunities Program at SRM.",
-    badge: "SRM Research",
+    title: "Undergraduate Research Opportunity Program (UROP) Scholar — Under Dr. Vidhya B",
+    organization: "SRM Institute of Science and Technology (Under Dr. Vidhya B, Asst. Professor)",
+    year: "2023 — 2024",
+    description: "Selected for undergraduate research program under Dr. Vidhya B of SRM, Assistant Professor, in computer vision and deep learning.",
+    badge: "Research Scholar",
     logoSrc: "/assets/urop.jpg",
+  },
+];
+
+export const EVIDENCE_SKILLS: EvidenceSkill[] = [
+  {
+    name: "Python",
+    category: "AI & Machine Learning",
+    tag: "Core Language",
+    projectsUsed: [
+      { title: "SeisVision AI", id: "seisvision" },
+      { title: "HPCC Copilot", id: "hpcc-copilot" },
+      { title: "PerformPro AI", id: "performpro" },
+      { title: "ForestNet AI", id: "forestnet" },
+    ],
+    internshipsUsed: ["ONGC (AI & ML Intern)", "StudAI One", "UROP Research (Dr. Vidhya B)", "Google AICTE"],
+    yearsUsed: "3+ Years",
+    evidenceSummary: "Primary language used across seismic pipelines, FastAPI microservices, and neural networks.",
+  },
+  {
+    name: "PyTorch & TensorFlow",
+    category: "AI & Machine Learning",
+    tag: "Deep Learning",
+    projectsUsed: [
+      { title: "SeisVision AI", id: "seisvision" },
+      { title: "ForestNet AI", id: "forestnet" },
+      { title: "Autism Detection AI", id: "autism-detection" },
+    ],
+    internshipsUsed: ["ONGC", "UROP Research", "Google AICTE"],
+    yearsUsed: "2+ Years",
+    evidenceSummary: "Custom vision models, loss functions, and CUDA GPU acceleration.",
+  },
+  {
+    name: "OpenCV",
+    category: "AI & Machine Learning",
+    tag: "Computer Vision",
+    projectsUsed: [
+      { title: "SeisVision AI", id: "seisvision" },
+      { title: "ForestNet AI", id: "forestnet" },
+      { title: "Autism Detection AI", id: "autism-detection" },
+    ],
+    internshipsUsed: ["ONGC", "UROP Research"],
+    yearsUsed: "2+ Years",
+    evidenceSummary: "Seismic array filtering, image matrix manipulation, and landmark extraction.",
+  },
+  {
+    name: "FastAPI & REST APIs",
+    category: "Backend & Systems Architecture",
+    tag: "REST & Microservices",
+    projectsUsed: [
+      { title: "HPCC Copilot", id: "hpcc-copilot" },
+      { title: "PerformPro AI (TechForce Academy Australia)", id: "performpro" },
+      { title: "ClaimsAssist AI", id: "claimsassist-ai" },
+    ],
+    internshipsUsed: ["StudAI One", "TechForce Academy Australia"],
+    yearsUsed: "2+ Years",
+    evidenceSummary: "Asynchronous REST microservices, Pydantic schema validation, and streaming SSE.",
+  },
+  {
+    name: "React & Next.js & TypeScript",
+    category: "Frontend & User Experience",
+    tag: "Modern Web",
+    projectsUsed: [
+      { title: "HPCC Copilot", id: "hpcc-copilot" },
+      { title: "PerformPro AI (TechForce Academy Australia)", id: "performpro" },
+      { title: "ClaimsAssist AI", id: "claimsassist-ai" },
+    ],
+    internshipsUsed: ["StudAI One", "TechForce Academy Australia"],
+    yearsUsed: "2+ Years",
+    evidenceSummary: "Building high-performance interactive web applications and Framer Motion visual systems.",
+  },
+  {
+    name: "Swift & C++ & Java",
+    category: "Systems & Embedded",
+    tag: "Native Languages",
+    projectsUsed: [
+      { title: "Smart Irrigation System", id: "smart-irrigation" },
+    ],
+    internshipsUsed: ["Apple Developer Program", "SRMIST"],
+    yearsUsed: "2 Years",
+    evidenceSummary: "Native Apple iOS development, CoreML model integration, C++ hardware microcontrollers, and Java programming.",
+  },
+  {
+    name: "ESP32 & LoRa & Embedded Systems",
+    category: "IoT & Embedded Systems",
+    tag: "Hardware & Edge",
+    projectsUsed: [
+      { title: "ForestNet AI", id: "forestnet" },
+      { title: "Smart Irrigation System", id: "smart-irrigation" },
+    ],
+    internshipsUsed: ["UROP Research"],
+    yearsUsed: "2 Years",
+    evidenceSummary: "ESP32 microcontroller nodes, LoRa gateways, sensor telemetry, and Edge AI deployment.",
+  },
+  {
+    name: "PostgreSQL & Docker & Qdrant",
+    category: "Backend & Systems Architecture",
+    tag: "Databases & DevOps",
+    projectsUsed: [
+      { title: "PerformPro AI (TechForce Academy Australia)", id: "performpro" },
+      { title: "HPCC Copilot", id: "hpcc-copilot" },
+    ],
+    internshipsUsed: ["StudAI One", "TechForce Academy Australia"],
+    yearsUsed: "2+ Years",
+    evidenceSummary: "Relational database schema architecture, containerization, and vector retrieval search.",
+  },
+];
+
+export const CERTIFICATIONS_DATA: CertificationEntry[] = [
+  {
+    id: "apple-cert",
+    title: "Apple Student Developer Program Selection",
+    issuer: "Apple Developer Program",
+    date: "2025",
+    description: "Selected into Apple's program for native iOS engineering and SwiftUI design.",
+    logoSrc: "/assets/ios.jpg",
+    verificationUrl: "https://www.linkedin.com/in/swarnava-sarkar-8a3904336/",
+  },
+  {
+    id: "google-cert",
+    title: "Google for Developers AICTE Virtual Internship Certificate",
+    issuer: "Google for Developers & EduSkills & AICTE",
+    date: "2024",
+    description: "Verified certificate in TensorFlow, Cloud AI, and ML deployment.",
+    logoSrc: "/assets/google.png",
+    verificationUrl: "https://www.linkedin.com/in/swarnava-sarkar-8a3904336/",
+  },
+  {
+    id: "ibm-cert",
+    title: "IBM Machine Learning Specialization",
+    issuer: "IBM",
+    date: "2024",
+    description: "Professional certification covering supervised learning and deep neural networks.",
+    logoSrc: "/assets/ibm.jpg",
+    verificationUrl: "https://www.linkedin.com/in/swarnava-sarkar-8a3904336/",
+  },
+  {
+    id: "openai-cert",
+    title: "OpenAI Generative AI Workshop Certificate",
+    issuer: "OpenAI",
+    date: "2024",
+    description: "Completed technical workshop in GPT-4 API integration and vector embeddings.",
+    logoSrc: "/assets/openai.jpg",
+    verificationUrl: "https://www.linkedin.com/in/swarnava-sarkar-8a3904336/",
+  },
+  {
+    id: "infosys-cert",
+    title: "Infosys Generative AI Certification",
+    issuer: "Infosys",
+    date: "2024",
+    description: "Verified credential in Generative AI architectures and enterprise LLM deployment.",
+    logoSrc: "/assets/infosys.jpg",
+    verificationUrl: "https://www.linkedin.com/in/swarnava-sarkar-8a3904336/",
+  },
+  {
+    id: "nptel-cert",
+    title: "NPTEL National Certification",
+    issuer: "NPTEL",
+    date: "2023",
+    description: "National academic certification in computer science foundational domains.",
+    logoSrc: "/assets/nptel.jpg",
+    verificationUrl: "https://www.linkedin.com/in/swarnava-sarkar-8a3904336/",
+  },
+  {
+    id: "eduskills-cert",
+    title: "EduSkills AI/ML Certificate",
+    issuer: "EduSkills",
+    date: "2024",
+    description: "Verified technical certificate in cloud AI deployment.",
+    logoSrc: "/assets/eduskills.png",
+    verificationUrl: "https://www.linkedin.com/in/swarnava-sarkar-8a3904336/",
+  },
+  {
+    id: "ongc-cert",
+    title: "AI & ML Internship Certificate",
+    issuer: "Oil and Natural Gas Corporation (ONGC)",
+    date: "2024",
+    description: "Completed industrial internship analyzing seismic geophysical datasets.",
+    logoSrc: "/assets/ongc.png",
+    verificationUrl: "https://www.linkedin.com/in/swarnava-sarkar-8a3904336/",
+  },
+  {
+    id: "urop-cert",
+    title: "UROP Research Scholar Certificate — Under Dr. Vidhya B",
+    issuer: "SRM Institute of Science and Technology",
+    date: "2024",
+    description: "Research completion certificate in computer vision under Dr. Vidhya B, Assistant Professor.",
+    logoSrc: "/assets/urop.jpg",
+    verificationUrl: "https://www.linkedin.com/in/swarnava-sarkar-8a3904336/",
   },
 ];
 
 export const ESSAYS: Essay[] = [
   {
-    id: "ongc-internship-reflections",
-    slug: "ongc-internship-reflections",
-    title: "Lessons in Enterprise Systems & Geophysical Computing: My ONGC Internship Experience",
-    date: "AUG 2024",
-    readTime: "7 min read",
-    category: "Engineering Experience",
-    summary:
-      "Reflections from my software internship at ONGC—how observing large-scale seismic data pipelines shaped my vision for AI in scientific domains.",
-    content: `
-# Lessons in Enterprise Systems & Geophysical Computing: My ONGC Internship Experience
-
-During the summer of 2024, I had the privilege of interning at **Oil and Natural Gas Corporation (ONGC)**, one of India's flagship energy organizations.
-
-Working alongside senior engineers and domain experts opened my eyes to the sheer scale of industrial computing.
-
-### 1. Data Scale in Geophysical Exploration
-Seismic exploration generates terabytes of raw SEG-Y reflection data. Processing this data requires distributed clusters, specialized amplitude normalization algorithms, and long compute hours.
-
-### 2. The Gap Between AI Research and Industrial Workflows
-While modern computer vision models (such as Vision Transformers and U-Net variants) excel in academic benchmarks, domain experts in geophysics need tools that integrate seamlessly into their existing desktop interpretation environments.
-
-### 3. Key Takeaway for my Career
-This internship directly inspired me to build **SeisVision AI**—a bridge combining deep learning segmentation models with accessible WebGL visualization tools tailored for geoscientists.
-    `,
+    id: "seismic-vision-research",
+    slug: "seismic-vision-research",
+    title: "Researching Seismic Computer Vision",
+    date: "2024",
+    readTime: "Exploration Topic",
+    category: "Computer Vision • Geophysics",
+    summary: "Exploration of seismic AI pipelines, SEG-Y processing, AGC filtering, U-Net and Vision Transformer architectures, fault and horizon interpretation, and industrial visualization techniques developed during the ONGC internship.",
+    content: "Exploration of seismic AI pipelines, SEG-Y processing, AGC filtering, U-Net and Vision Transformer architectures, fault and horizon interpretation, and industrial visualization techniques developed during the ONGC internship.",
   },
   {
-    id: "building-hpcc-copilot",
-    slug: "building-hpcc-copilot",
-    title: "Building HPCC Copilot: Domain-Specific RAG for Enterprise Dataflow Languages",
-    date: "NOV 2024",
-    readTime: "8 min read",
-    category: "AI & Systems Architecture",
-    summary:
-      "Why standard coding copilots fail at niche languages like ECL, and how combining RAG with AST grammar validation achieves 96.8% accuracy.",
-    content: `
-# Building HPCC Copilot: Domain-Specific RAG for Enterprise Dataflow Languages
-
-Generalist AI copilots (trained predominantly on standard Python and JavaScript) struggle when faced with declarative, dataflow-oriented languages like **HPCC Systems ECL (Enterprise Control Language)**.
-
-### The Problem with Naive Context Retrieval
-When querying an LLM about ECL, the model frequently hallucinates syntax borrowed from SQL or Pig Latin.
-
-### Our Solution: A Three-Layer Architecture
-1. **Curated Domain Knowledge Base**: Indexing verified HPCC ECL documentation, standard code libraries, and execution patterns using Qdrant vector search.
-2. **Hybrid Retrieval**: Combining dense embeddings with sparse BM25 keyword matching to preserve exact ECL keyword syntax.
-3. **AST Validation Layer**: Intercepting output tokens with an ECL grammar state machine to block invalid syntax before rendering to the user.
-
-By enforcing these guardrails, we created a developer tool that actually saves time for big data engineers.
-    `,
-  },
-  {
-    id: "seisvision-ai-deep-dive",
-    slug: "seisvision-ai-deep-dive",
-    title: "SeisVision AI Architecture: Accelerating Seismic Fault Segmentation with Vision Transformers",
-    date: "OCT 2024",
-    readTime: "9 min read",
-    category: "Computer Vision & AI",
-    summary:
-      "Technical deep dive into combining U-Net feature extractors with WebGL shader rendering to segment seismic faults in under 0.5 seconds.",
-    content: `
-# SeisVision AI Architecture: Accelerating Seismic Fault Segmentation with Vision Transformers
-
-Seismic fault interpretation is a foundational step in subsurface mapping. A single missed fault can alter a geological model significantly.
-
-### Model Architecture
-In SeisVision AI, we combined a **ResNet50 feature encoder** with a **U-Net decoder**, utilizing hybrid SSIM + Dice loss functions to address severe class imbalance (since fault pixels represent less than 3% of total image area).
-
-### Performance Benchmarks
-- **Segmentation IoU**: 94.2% on benchmark test profiles.
-- **Inference Speed**: 0.4 seconds per 2D seismic slice using ONNX Runtime execution.
-- **Browser Rendering**: Rendered as a smooth WebGL overlay using Three.js shader materials.
-    `,
+    id: "enterprise-copilots-research",
+    slug: "enterprise-copilots-research",
+    title: "Building Enterprise AI Copilots",
+    date: "2024",
+    readTime: "Exploration Topic",
+    category: "Enterprise AI • RAG Systems",
+    summary: "Research into offline RAG architectures, AST validation, enterprise knowledge retrieval, developer copilots, reasoning workflows, and secure AI systems inspired by the HPCC Copilot project.",
+    content: "Research into offline RAG architectures, AST validation, enterprise knowledge retrieval, developer copilots, reasoning workflows, and secure AI systems inspired by the HPCC Copilot project.",
   },
 ];
 
+// Backward-compatibility alias exports
+export const HERO_DATA = {
+  ...IDENTITY_DATA,
+  bio: IDENTITY_DATA.mission,
+  tagline: IDENTITY_DATA.subtitle,
+  institution: IDENTITY_DATA.university,
+  availability: IDENTITY_DATA.status,
+};
+export const TIMELINE_JOURNEY = TIMELINE_EVENTS;
+export const ACHIEVEMENTS = ACHIEVEMENTS_DATA;
+export const ENGINEERING_PHILOSOPHY = {
+  overview: IDENTITY_DATA.mission,
+  principles: [
+    { number: "01", title: "Research Before Building", description: "Analyze underlying domain math before selecting frameworks." },
+    { number: "02", title: "Build For Scale & Reliability", description: "Enforce strict static typing and modular boundaries." },
+    { number: "03", title: "AI Must Solve Real Problems", description: "Fulfill explicit enterprise needs over trendy AI hype." },
+    { number: "04", title: "Performance & Latency Matter", description: "Sub-100ms response times build user trust." },
+    { number: "05", title: "Never Stop Learning", description: "Continuously explore cross-disciplinary fields." },
+  ],
+  whySoftware: "Software provides high-leverage engineering capabilities.",
+  whyAi: "AI transforms complex mathematical and physical constraints into real-world automated leverage.",
+};
 export const FUTURE_VISION = {
-  headline: "Building the Future of Intelligent Systems",
-  statement:
-    "My vision as an engineer is to pioneer software architectures where deep machine intelligence, high-performance systems engineering, and human-centric design converge.",
+  headline: "Strategic Engineering Vision 2026-2028+",
+  statement: "Building high-impact industrial AI systems and software infrastructure.",
   goals: [
-    "Advance deep learning architectures for scientific and industrial computing applications.",
-    "Build ultra-low latency, energy-efficient AI software systems operating on-device and in the cloud.",
-    "Contribute to open-source software, mentorship, and high-impact technology research.",
+    "2026 — Graduate SRMIST B.Tech CSE (AI & ML) & Apple Developer Projects",
+    "2027 — Enterprise AI Engineering & Open Source PyTorch Contributions",
+    "2028 — Lead Industrial AI Copilot Architecture & Systems Engineering",
   ],
 };
+export const SKILL_GROUPS = [
+  {
+    category: "AI & Machine Learning" as const,
+    description: "Deep learning models, computer vision pipelines, and RAG architectures.",
+    skills: EVIDENCE_SKILLS.filter((s) => s.category === "AI & Machine Learning").map((s) => ({
+      name: s.name,
+      level: 95,
+      tag: s.tag,
+      highlight: true,
+    })),
+  },
+  {
+    category: "Backend & Systems Architecture" as const,
+    description: "High-throughput asynchronous REST microservices and static analysis.",
+    skills: EVIDENCE_SKILLS.filter((s) => s.category === "Backend & Systems Architecture").map((s) => ({
+      name: s.name,
+      level: 90,
+      tag: s.tag,
+      highlight: false,
+    })),
+  },
+];
