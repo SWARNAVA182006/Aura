@@ -269,7 +269,7 @@ export function PrologueLoader({ onComplete }: PrologueProps) {
                   </div>
                   <div style={{ overflow: "hidden", display: "block" }}>
                     <SplitText
-                      text="SARKAR."
+                      text="SARKAR"
                       delay={0.25}
                       className="text-gradient-cyan"
                     />

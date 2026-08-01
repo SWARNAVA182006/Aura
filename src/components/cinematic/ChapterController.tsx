@@ -18,7 +18,7 @@ import { CHAPTERS } from "@/config/content";
 export function ChapterController() {
   const [booted, setBooted] = useState(false);
   const [chapterIndex, setChapterIndex] = useState(0);
-  const [activeProjectId, setActiveProjectId] = useState<string>("seisvision-ai");
+  const [activeProjectId, setActiveProjectId] = useState<string>("seisvision");
   const [cmdOpen, setCmdOpen] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
 
@@ -39,10 +39,20 @@ export function ChapterController() {
     goToChapter(Math.max(0, chapterIndex - 1));
   }, [chapterIndex, goToChapter]);
 
-  // Keyboard Shortcuts Listener (1-5, Arrows)
+  // Keyboard Shortcuts Listener (1-5, Arrows) with Input Guard
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (cmdOpen) return;
+
+      const target = e.target as HTMLElement | null;
+      const isInputTarget =
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.tagName === "SELECT" ||
+          target.isContentEditable);
+
+      if (isInputTarget) return;
 
       if (e.key === "1") goToChapter(0);
       if (e.key === "2") goToChapter(1);

@@ -107,7 +107,7 @@ export function ChapterArchitect({ onNextChapter }: ChapterArchitectProps) {
             style={{ fontSize: "clamp(3.5rem, 8vw, 8rem)" }}
           >
             SWARNAVA<br />
-            <span className="text-gradient-cyan">SARKAR.</span>
+            <span className="text-gradient-cyan">SARKAR</span>
           </h1>
         </motion.div>
 
