@@ -53,6 +53,7 @@ export interface TimelineEntry {
   highlights: string[];
   skillsUsed: string[];
   logoSrc?: string;
+  proofSrc?: string;
   verificationLink?: string;
 }
 
@@ -140,6 +141,7 @@ export interface Achievement {
   description: string;
   badge: string;
   logoSrc?: string;
+  proofSrc?: string;
   verificationUrl?: string;
 }
 

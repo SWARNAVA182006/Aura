@@ -17,10 +17,10 @@ export function ChapterExpedition({ onNextChapter }: ChapterExpeditionProps) {
   const [expandedTimelineIndex, setExpandedTimelineIndex] = useState<number | null>(0);
 
   return (
-    <section className="relative min-h-screen w-full bg-[#030305] text-white py-24 px-6 lg:px-16 xl:px-24 flex flex-col justify-center">
+    <section className="relative min-h-screen w-full bg-[#030305] text-white py-24 px-6 lg:px-16 xl:px-24 flex flex-col justify-center transform-gpu">
       {/* Background Orbs */}
-      <div className="pointer-events-none absolute left-10 top-1/4 h-[550px] w-[550px] rounded-full bg-cyan-500/10 blur-[180px]" />
-      <div className="pointer-events-none absolute right-10 bottom-1/4 h-[550px] w-[550px] rounded-full bg-indigo-600/10 blur-[180px]" />
+      <div className="pointer-events-none absolute left-10 top-1/4 h-[550px] w-[550px] rounded-full bg-cyan-500/10 blur-[120px] transform-gpu" />
+      <div className="pointer-events-none absolute right-10 bottom-1/4 h-[550px] w-[550px] rounded-full bg-indigo-600/10 blur-[120px] transform-gpu" />
 
       <div className="relative z-10 max-w-6xl mx-auto w-full">
         {/* Header Tag & Title */}
@@ -35,7 +35,7 @@ export function ChapterExpedition({ onNextChapter }: ChapterExpeditionProps) {
         </div>
 
         {/* 3-Tab Interactive Switcher Bar */}
-        <div className="mb-8 flex gap-2 rounded-2xl border border-white/15 bg-[#070712]/90 p-1.5 w-fit backdrop-blur-2xl shadow-2xl">
+        <div className="mb-8 flex gap-2 rounded-2xl border border-white/15 bg-[#070712]/95 p-1.5 w-fit backdrop-blur-md shadow-2xl transform-gpu">
           {[
             { key: "milestones" as const, label: "Milestones Timeline" },
             { key: "skills" as const, label: "Evidence Skill Mesh" },
@@ -64,12 +64,12 @@ export function ChapterExpedition({ onNextChapter }: ChapterExpeditionProps) {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="relative border-l-2 border-cyan-500/30 ml-4 lg:ml-6 space-y-5 mb-12"
+            className="relative border-l-2 border-cyan-500/30 ml-4 lg:ml-6 space-y-5 mb-12 transform-gpu"
           >
             {TIMELINE_EVENTS.map((evt, idx) => {
               const isExpanded = expandedTimelineIndex === idx;
               return (
-                <div key={idx} className="relative pl-7 group">
+                <div key={idx} className="relative pl-7 group transform-gpu">
                   {/* Node Bullet Dot */}
                   <button
                     onClick={() => {
@@ -91,10 +91,10 @@ export function ChapterExpedition({ onNextChapter }: ChapterExpeditionProps) {
                       soundFX.playHoverBlip();
                       setExpandedTimelineIndex(isExpanded ? null : idx);
                     }}
-                    className={`cursor-pointer rounded-2xl border p-5 transition-all duration-300 backdrop-blur-xl ${
+                    className={`cursor-pointer rounded-2xl border p-5 transition-all duration-300 transform-gpu ${
                       isExpanded
                         ? "border-cyan-400/60 bg-[#090918]/95 shadow-[0_0_30px_rgba(0,240,255,0.15)]"
-                        : "border-white/10 bg-[#070712]/80 hover:border-white/20 hover:bg-[#090918]"
+                        : "border-white/10 bg-[#070712]/95 hover:border-white/20 hover:bg-[#090918]"
                     }`}
                   >
                     <div className="flex flex-wrap items-center justify-between gap-3">
@@ -106,8 +106,13 @@ export function ChapterExpedition({ onNextChapter }: ChapterExpeditionProps) {
                           {evt.title}
                         </h3>
                       </div>
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2.5">
                         {evt.logoSrc && <BrandLogo name={evt.organization} logoSrc={evt.logoSrc} size="sm" showText={false} />}
+                        {evt.proofSrc && evt.proofSrc !== evt.logoSrc && (
+                          <div className="relative h-7 w-11 rounded border border-white/20 shadow-md overflow-hidden bg-black/60 shrink-0 transform-gpu">
+                            <Image src={evt.proofSrc} alt={`${evt.title} Proof Certificate`} fill className="object-cover" sizes="44px" />
+                          </div>
+                        )}
                         <span className="font-mono text-xs text-slate-400 font-semibold">{evt.organization}</span>
                       </div>
                     </div>
@@ -120,9 +125,21 @@ export function ChapterExpedition({ onNextChapter }: ChapterExpeditionProps) {
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.3 }}
-                          className="mt-4 pt-4 border-t border-white/10 space-y-3"
+                          className="mt-4 pt-4 border-t border-white/10 space-y-3 overflow-hidden transform-gpu"
                         >
                           <p className="text-slate-300 text-sm leading-relaxed">{evt.description}</p>
+
+                          {evt.proofSrc && (
+                            <div className="mt-2 overflow-hidden rounded-xl border border-cyan-500/25 bg-black/60 p-2.5 backdrop-blur-sm transform-gpu">
+                              <div className="flex items-center gap-2 mb-2 font-mono text-[11px] font-bold text-cyan-300 uppercase tracking-wider">
+                                <CheckCircle2 className="h-3.5 w-3.5 text-cyan-400" />
+                                Verified Proof &amp; Certificate
+                              </div>
+                              <div className="relative h-44 w-full max-w-md rounded-lg overflow-hidden border border-white/15 bg-slate-950 transform-gpu">
+                                <Image src={evt.proofSrc} alt={`${evt.title} Verified Proof`} fill className="object-contain" sizes="(max-width: 768px) 100vw, 448px" />
+                              </div>
+                            </div>
+                          )}
 
                           <div className="flex flex-wrap gap-2 pt-2">
                             {evt.skillsUsed.map((sk, i) => (
@@ -150,12 +167,12 @@ export function ChapterExpedition({ onNextChapter }: ChapterExpeditionProps) {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 transform-gpu"
           >
             {EVIDENCE_SKILLS.map((sk, idx) => (
               <div
                 key={idx}
-                className="rounded-3xl border border-white/10 bg-[#070712]/90 p-6 backdrop-blur-2xl transition-all duration-300 hover:border-cyan-400/60 hover:bg-[#090918] flex flex-col justify-between"
+                className="rounded-3xl border border-white/10 bg-[#070712]/95 p-6 transition-all duration-300 hover:border-cyan-400/60 hover:bg-[#090918] flex flex-col justify-between transform-gpu"
               >
                 <div>
                   <div className="flex items-center justify-between mb-3">
@@ -206,14 +223,13 @@ export function ChapterExpedition({ onNextChapter }: ChapterExpeditionProps) {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 transform-gpu"
           >
             {ACHIEVEMENTS_DATA.map((ach, idx) => (
               <motion.div
                 key={idx}
-                whileHover={{ scale: 1.03, y: -4 }}
-                onMouseEnter={() => soundFX.playHoverBlip()}
-                className="group rounded-3xl border border-white/10 bg-[#070712]/90 p-6 backdrop-blur-2xl transition-all duration-300 hover:border-cyan-400/60 hover:bg-[#090918] hover:shadow-[0_0_30px_rgba(0,240,255,0.2)] flex flex-col justify-between"
+                whileHover={{ scale: 1.02, y: -2 }}
+                className="group rounded-3xl border border-white/10 bg-[#070712]/95 p-6 transition-all duration-300 hover:border-cyan-400/60 hover:bg-[#090918] hover:shadow-[0_0_30px_rgba(0,240,255,0.15)] flex flex-col justify-between transform-gpu"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
@@ -241,7 +257,7 @@ export function ChapterExpedition({ onNextChapter }: ChapterExpeditionProps) {
         <div className="flex justify-end">
           <button
             onClick={() => { soundFX.playClickSnap(); onNextChapter(); }}
-            className="group flex items-center gap-3 rounded-full border border-cyan-400/40 bg-cyan-500/10 px-6 py-3 font-mono text-xs font-bold text-cyan-300 backdrop-blur-xl transition-all duration-300 hover:border-cyan-400 hover:bg-cyan-500/20 hover:shadow-[0_0_25px_rgba(0,240,255,0.3)]"
+            className="group flex items-center gap-3 rounded-full border border-cyan-400/40 bg-cyan-500/10 px-6 py-3 font-mono text-xs font-bold text-cyan-300 backdrop-blur-md transition-all duration-300 hover:border-cyan-400 hover:bg-cyan-500/20 hover:shadow-[0_0_25px_rgba(0,240,255,0.3)] transform-gpu"
           >
             <span>PROCEED TO CHAPTER 04 — THE JOURNAL</span>
             <ChevronRight className="h-4 w-4 text-cyan-400 transition-transform duration-300 group-hover:translate-x-1" />

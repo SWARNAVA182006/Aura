@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { TIMELINE_EVENTS } from "@/config/content";
 import { BrandLogo } from "@/components/ui/BrandLogo";
-import { ChevronRight, Calendar, MapPin, ExternalLink, Sparkles, Layers } from "lucide-react";
+import { ChevronRight, Calendar, MapPin, ExternalLink, Sparkles, Layers, CheckCircle2 } from "lucide-react";
 import { soundFX } from "@/lib/sound";
 
 interface ChapterJourneyProps {
@@ -77,8 +78,13 @@ export function ChapterJourney({ onNextChapter }: ChapterJourneyProps) {
                         {evt.title}
                       </h3>
                     </div>
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2.5">
                       {evt.logoSrc && <BrandLogo name={evt.organization} logoSrc={evt.logoSrc} size="sm" showText={false} />}
+                      {evt.proofSrc && evt.proofSrc !== evt.logoSrc && (
+                        <div className="relative h-7 w-11 rounded border border-white/20 shadow-md overflow-hidden bg-black/60 shrink-0">
+                          <Image src={evt.proofSrc} alt={`${evt.title} Proof Certificate`} fill className="object-cover" />
+                        </div>
+                      )}
                       <span className="font-mono text-xs text-slate-400">{evt.organization}</span>
                     </div>
                   </div>
